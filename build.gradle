@@ -1,0 +1,32 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+def mainClassName = 'groovyToExeConverter.GroovyToExeConverterRunner'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.2.1'
+    compile 'org.apache.ant:ant:1.7.1'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-cli:commons-cli:1.2'
+    compile 'com.google.guava:guava:15.0'
+    compile 'log4j:log4j:1.2.17'
+
+    testCompile 'junit:junit:4.11'
+//    testCompile 'org.spockframework:spock-converters:0.7-groovy-2.0'
+}
+
+task uberJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
+    description 'Copies all classes, resources, and jars into one executable uberJar'
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
