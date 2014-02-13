@@ -1,8 +1,9 @@
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'application'
 
-def mainClassName = 'groovyToExeConverter.GroovyToExeConverterRunner'
+mainClassName = 'groovyToExeConverter.GroovyToExeConverterRunner'
 
 repositories {
     mavenCentral()
@@ -11,6 +12,7 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.2.1'
     compile 'org.apache.ant:ant:1.7.1'
+    compile 'org.apache.commons:commons-lang3:3.1'
     compile 'commons-io:commons-io:2.4'
     compile 'commons-cli:commons-cli:1.2'
     compile 'com.google.guava:guava:15.0'
@@ -30,3 +32,31 @@ task uberJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
         attributes 'Main-Class': mainClassName
     }
 }
+
+
+
+
+//TODO: Package gradle plugin support with jar by default?
+task buildExe(dependsOn: [':run', ':renameExeToG2exe'])  {
+    run.dependsOn ':uberJar'
+    run {
+        final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
+        final G2EXE_ICON = new File(sourceSets.main.resources.getSrcDirs().iterator().next(), '/g2exeIcon.ico')
+        args "--fileToConvert", "${buildDir}/libs/${project.name}-${version}.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON
+    }
+}
+
+task renameExeToG2exe(){
+    doLast{
+        final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
+        def exeFile = new File(USER_DESKTOP, "${project.name}-${version}.exe")
+        def newExeFile = new File(USER_DESKTOP, 'g2exe.exe')
+
+        // Ensure newExeFile doesn't already exist, or the following rename will fail
+        newExeFile.delete()
+
+        if(!exeFile.renameTo(newExeFile)) throw new IOException("Failed to rename '$exeFile' to '$newExeFile'")
+    }
+}
+
+renameExeToG2exe.mustRunAfter run

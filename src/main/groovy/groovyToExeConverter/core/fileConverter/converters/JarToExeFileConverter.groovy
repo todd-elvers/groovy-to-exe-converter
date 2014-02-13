@@ -1,8 +1,9 @@
 package groovyToExeConverter.core.fileConverter.converters
+
 import groovy.util.logging.Log4j
-import groovyToExeConverter.core.fileConverter.core.Launch4jXmlHandler
 import groovyToExeConverter.core.exception.CompilationException
 import groovyToExeConverter.core.fileConverter.FileConverter
+import groovyToExeConverter.core.fileConverter.core.Launch4jXmlHandler
 
 @Log4j
 class JarToExeFileConverter extends FileConverter {
@@ -23,7 +24,6 @@ class JarToExeFileConverter extends FileConverter {
         executeLaunch4jcWithXmlFile(launch4jcXmlFile)
         validateExeCreation(exeFile)
 
-        log.info("Success! Result: $exeFile")
         return exeFile
     }
 
@@ -31,14 +31,18 @@ class JarToExeFileConverter extends FileConverter {
         def launch4jcExeFile = resourceHandler.resolveLaunch4jcExecutableHandle()
         def launch4jcCommand = "\"${launch4jcExeFile}\" \"${launch4jcXmlFile}\""
 
-        Process process = launch4jcCommand.execute()
-        process.text.split("\n").each { log.debug(it) }
-    }
-
-    private void validateExeCreation(File exeFile){
-        if(!exeFile.exists()) {
-            throw new CompilationException("An unknown error occurred while calling launch4jc.exe " +
-                    "to convert ${appConfig.jarFileName} to ${appConfig.exeFileName}.")
+        List commandOutputLines = launch4jcCommand.execute().text?.split("\r\n")
+        boolean commandFailed = !commandOutputLines?.any { it.contains("Successfully") }
+        commandOutputLines.each { String line ->
+            if (commandFailed) log.info(line.replace('launch4j: ', ''))
         }
     }
+
+//TODO: Compilation exception right kind of exception?
+    private void validateExeCreation(File exeFile) {
+        if (!exeFile.exists()) {
+            throw new CompilationException("Failed to convert ${appConfig.jarFileName} to ${appConfig.exeFileName}.")
+        }
+    }
+
 }

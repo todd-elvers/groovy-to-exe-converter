@@ -1,14 +1,11 @@
 package groovyToExeConverter.core.fileConverter.core
-
 import groovy.io.FileType
-import groovy.transform.ThreadInterrupt
 import groovy.util.logging.Log4j
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
-import static groovyToExeConverter.domain.AppConfigDefaults.DEFAULT_LAUNCH4JC_RESOURCES
+import static groovyToExeConverter.domain.AppConfigDefaults.LAUNCH4JC_RESOURCES
 
-@ThreadInterrupt
 @Log4j
 class ResourceHandler {
     final File TEMP_DIR
@@ -30,14 +27,15 @@ class ResourceHandler {
 
     private void copyLaunch4jcResourcesToTempDir() {
         log.debug("Folder 'g2exe' not found in temporary directory - creating temp dir and copying launch4j resources there.")
-        def resources = DEFAULT_LAUNCH4JC_RESOURCES.defaultValue
+        def resources = LAUNCH4JC_RESOURCES.defaultValue
         resources.each(extractToTempDir)
     }
 
     //TODO: If the system hold a file for too long again, consider using a timeout here
+
     private void cleanTempDir() {
         log.debug("Folder 'g2exe' found in temporary directory - removing all non-launch4j files.")
-        TEMP_DIR.eachFile(FileType.FILES) { it.delete() }
+        TEMP_DIR.eachFile(FileType.FILES) { it.delete() }//FileUtils.deleteQuietly(it) }
     }
 
     File findFileInTempDir(String fileName) {
@@ -49,7 +47,7 @@ class ResourceHandler {
     }
 
     File resolveLaunch4jcExecutableHandle() {
-        String launch4jcExeResourceFileName = DEFAULT_LAUNCH4JC_RESOURCES.defaultValue.find { 'launch4jc.exe' }
+        String launch4jcExeResourceFileName = LAUNCH4JC_RESOURCES.defaultValue.find { 'launch4jc.exe' }
         return findFileInTempDir(launch4jcExeResourceFileName)
     }
 

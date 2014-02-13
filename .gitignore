@@ -1,5 +1,7 @@
 # Compiled source #
 ###################
+out
+build
 *.com
 *.class
 *.dll
@@ -25,6 +27,15 @@
 *.log
 *.sql
 *.sqlite
+
+# IDE Generated Files #
+#######################
+.classpath
+.project
+.idea
+*.iml
+*.ipr
+*.iws
 
 # OS generated files #
 ######################

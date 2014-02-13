@@ -1,15 +1,19 @@
 package groovyToExeConverter.domain
 
-/**
- * Created by Todd on 1/26/14.
- */
 class AppConfig {
     File fileToConvert
     File destinationDirectory
     File temporaryDirectory
+    File iconFile
+    File javaHomeDirectory
+
+    int initialHeapSize
+    int maximumHeapSize
 
     String jarFileName
     String exeFileName
+    String minJreVersion
+    String maxJreVersion
 
     boolean showStackTrace
 }

@@ -2,12 +2,12 @@ package groovyToExeConverter.core.exception
 
 class InputValidationException extends Exception {
 
-    InputValidationException(String message){
-        super(message)
+    InputValidationException(){
+        super()
     }
 
-    InputValidationException(String message, Throwable cause){
-        super(message, cause)
+    InputValidationException(String message){
+        super(message)
     }
 
 }

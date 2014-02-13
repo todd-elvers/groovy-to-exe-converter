@@ -1,5 +1,4 @@
 package groovyToExeConverter
-
 import groovy.util.logging.Log4j
 import groovyToExeConverter.core.commandLine.CommandLineInputProcessor
 import groovyToExeConverter.core.fileConverter.FileConverterFactory
@@ -17,16 +16,17 @@ class GroovyToExeConverterRunner implements Runnable {
 
     @Override
     void run() {
-        def appConfig
+        def appConfig, fileConverter, exeFile
 
         try {
             appConfig = inputProcessor.processIntoAppConfig(commandLineInput)
 
-            def fileConverter = FileConverterFactory.getFileConverter(appConfig)
-            def exeFile = fileConverter.convert()
+            fileConverter = FileConverterFactory.getFileConverter(appConfig)
+            exeFile = fileConverter.convert()
 
             FileUtils.copyFileToDirectory(exeFile, appConfig.destinationDirectory)
-        } catch (Exception exception){
+            log.info("Result: ${new File(appConfig.destinationDirectory, exeFile.name)}")
+        } catch (Exception exception) {
             log.error(exception.message)
             if (appConfig?.showStackTrace) {
                 log.error("Stacktrace:", exception)
