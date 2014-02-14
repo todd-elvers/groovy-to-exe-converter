@@ -1,4 +1,4 @@
-package groovyToExeConverter.core.exception
+package groovyToExeConverter.exception
 
 class InputValidationException extends Exception {
 

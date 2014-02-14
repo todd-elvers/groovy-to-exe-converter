@@ -18,24 +18,29 @@ class GroovyToExeConverterRunnerTest {
                 '--stacktrace'
         ]
 
+        File expectedExeFile = new File(g2exeTemp, "Example.exe")
+        expectedExeFile.delete()
+
         GroovyToExeConverterRunner.main(args)
 
-        assert new File(g2exeTemp, "Example.exe").exists(): "Groovy -> Exe conversion failed."
+        assert expectedExeFile.exists(): "Groovy -> Exe conversion failed."
     }
 
     @Test
     void "can convert groovy script to an executable file with heap size parameters"() {
-        def groovyScriptFile = new File(g2exeTemp, "Example.groovy")
         String[] args = [
-                '-f', 'C:/users/todd/desktop/g2exe_temp/Example.groovy',
-                '-i', 'C:/users/todd/desktop/g2exe_temp/carfox_pilgrim.ico',
+                '-f', new File(g2exeTemp, 'Example.groovy').absolutePath,
+                '-i', new File(g2exeTemp, 'carfox_pilgrim.ico').absolutePath,
                 '-xms', 1024,
                 '-xmx', 2048
         ]
 
+        File expectedExeFile = new File(g2exeTemp, "Example.exe")
+        expectedExeFile.delete()
+
         GroovyToExeConverterRunner.main(args)
 
-        assert new File(g2exeTemp, "Example.exe").exists(): "Groovy -> Exe conversion failed."
+        assert expectedExeFile.exists(): "Groovy -> Exe conversion failed."
     }
 
     @Test
@@ -48,8 +53,20 @@ class GroovyToExeConverterRunnerTest {
                 '--icon', 'C:/Users/Todd/Desktop/g2exe_temp_old/cfx_icon.ico'
         ]
 
+        File expectedExeFile = new File(g2exeTemp, "Example2.exe")
+        expectedExeFile.delete()
+
         GroovyToExeConverterRunner.main(args)
 
-        assert new File(g2exeTemp, "Example2.exe").exists(): "Jar -> Exe conversion failed."
+        assert expectedExeFile.exists(): "Jar -> Exe conversion failed."
+    }
+
+    @Test
+    void "show help"() {
+        String[] args = ['--help']
+
+        GroovyToExeConverterRunner.main(args)
+
+        assert true
     }
 }

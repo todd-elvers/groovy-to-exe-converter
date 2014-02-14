@@ -1,8 +1,8 @@
-package groovyToExeConverter.core.fileConverter.converters
+package groovyToExeConverter.fileConverter.converters
 import groovy.util.logging.Log4j
-import groovyToExeConverter.core.exception.CompilationException
-import groovyToExeConverter.core.exception.ConfigurationException
-import groovyToExeConverter.core.fileConverter.FileConverter
+import groovyToExeConverter.exception.CompilationException
+import groovyToExeConverter.exception.ConfigurationException
+import groovyToExeConverter.fileConverter.FileConverter
 import org.codehaus.groovy.tools.FileSystemCompiler
 
 @Log4j

@@ -1,4 +1,4 @@
-package groovyToExeConverter.core.exception
+package groovyToExeConverter.exception
 
 class CompilationException extends Exception{
     CompilationException(String message) {

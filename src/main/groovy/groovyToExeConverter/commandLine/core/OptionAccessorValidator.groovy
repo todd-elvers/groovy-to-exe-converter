@@ -1,7 +1,7 @@
-package groovyToExeConverter.core.commandLine.core
+package groovyToExeConverter.commandLine.core
 
 import groovy.util.logging.Log4j
-import groovyToExeConverter.core.exception.InputValidationException
+import groovyToExeConverter.exception.InputValidationException
 import groovyToExeConverter.domain.AppConfigDefaults
 
 
@@ -11,6 +11,7 @@ class OptionAccessorValidator {
     private final DIGITS_ONLY_PATTERN = /^\d{1,}$/                  // Only digits, one or more
     private final JRE_VERSION_PATTERN = /^\d{1}.\d{1}.\d{1,2}$/     // Only digits and periods, in format x.x.x or x.x.xx
 
+    //TODO: Update tempDir message and mention how one should point it to an empty directory
     void validate(OptionAccessor optionAccessor) {
         switch (optionAccessor) {
             case fileToConvertIsMissing                 : throw new InputValidationException("The parameter 'fileToConvert' is missing or points to a file that doesn't exist.")
@@ -40,7 +41,7 @@ class OptionAccessorValidator {
     }
 
     private def destDirDoesNotExistOrIsNotDir = { OptionAccessor optionAccessor ->
-        // 'destDir' is optional, so we return false if it was never set
+        // optional, so return false if it was never set
         if (!optionAccessor.destDir) return false
 
         File destinationDirectory = optionAccessor.destDir as File
@@ -48,7 +49,7 @@ class OptionAccessorValidator {
     }
 
     private def tempDirDoesNotExistOrIsNotDir = { OptionAccessor optionAccessor ->
-        // 'tempDir' is optional, so we return false if it was never set
+        // optional, so return false if it was never set
         if (!optionAccessor.tempDir) return false
 
         File temporaryDirectory = optionAccessor.tempDir as File
@@ -61,38 +62,48 @@ class OptionAccessorValidator {
     }
 
     private def tempDirIsMissingAndCannotBeDetermined = { OptionAccessor optionAccessor ->
+        // optional, so return false if it was never set
         if (optionAccessor.tempDir) return false
+
         String sysTempPath = System.getenv("TEMP")
         return !sysTempPath
     }
 
     private def minJreInInvalidFormat = { OptionAccessor optionAccessor ->
+        // optional, so return false if it was never set
         if (!optionAccessor.minJre) return false
+
         String minJre = optionAccessor.minJre
         return !minJre.matches(JRE_VERSION_PATTERN)
     }
 
     private def iconDoesNotExistOrIsNotFile = { OptionAccessor optionAccessor ->
+        // optional, so return false if it was never set
         if (!optionAccessor.icon) return false
+
         File iconFile = optionAccessor.icon as File
         return !iconFile.exists() || !iconFile.isFile()
     }
 
     private def iconInIncorrectFormat = { OptionAccessor optionAccessor ->
+        // optional, so return false if it was never set
         if (!optionAccessor.icon) return false
+
         File iconFile = optionAccessor.icon as File
         return !iconFile.name.endsWith(".ico")
     }
 
     private def initHeapSizeIsNotNumberOrIsZeroOrLess = { OptionAccessor optionAccessor ->
+        // optional, so return false if it was never set
         if (!optionAccessor.initHeapSize) return false
         if (!String.valueOf(optionAccessor.initHeapSize).matches(DIGITS_ONLY_PATTERN)) return true
 
         int initialHeapSize = optionAccessor.initHeapSize as int
-        return initialHeapSize <= 0
+        initialHeapSize <= 0
     }
 
     private def maxHeapSizeIsNotNumberOrIsZeroOrLess = { OptionAccessor optionAccessor ->
+        // optional, so return false if it was never set
         if (!optionAccessor.maxHeapSize) return false
         if (!String.valueOf(optionAccessor.maxHeapSize).matches(DIGITS_ONLY_PATTERN)) return true
 

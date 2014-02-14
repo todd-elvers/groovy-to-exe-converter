@@ -1,9 +1,9 @@
-package groovyToExeConverter.core.fileConverter.converters
+package groovyToExeConverter.fileConverter.converters
 
 import groovy.util.logging.Log4j
-import groovyToExeConverter.core.exception.CompilationException
-import groovyToExeConverter.core.fileConverter.FileConverter
-import groovyToExeConverter.core.fileConverter.core.Launch4jXmlHandler
+import groovyToExeConverter.exception.CompilationException
+import groovyToExeConverter.fileConverter.FileConverter
+import groovyToExeConverter.fileConverter.core.Launch4jXmlHandler
 
 @Log4j
 class JarToExeFileConverter extends FileConverter {
@@ -31,14 +31,19 @@ class JarToExeFileConverter extends FileConverter {
         def launch4jcExeFile = resourceHandler.resolveLaunch4jcExecutableHandle()
         def launch4jcCommand = "\"${launch4jcExeFile}\" \"${launch4jcXmlFile}\""
 
-        List commandOutputLines = launch4jcCommand.execute().text?.split("\r\n")
+        Process command = launch4jcCommand.execute()
+        pipeCommandOutputToConsole(command)
+    }
+
+    private static void pipeCommandOutputToConsole(Process command){
+        List commandOutputLines = command.text?.split("\r\n")
         boolean commandFailed = !commandOutputLines?.any { it.contains("Successfully") }
         commandOutputLines.each { String line ->
             if (commandFailed) log.info(line.replace('launch4j: ', ''))
         }
     }
 
-//TODO: Compilation exception right kind of exception?
+    //TODO: Is a compilation exception the right kind of exception?
     private void validateExeCreation(File exeFile) {
         if (!exeFile.exists()) {
             throw new CompilationException("Failed to convert ${appConfig.jarFileName} to ${appConfig.exeFileName}.")

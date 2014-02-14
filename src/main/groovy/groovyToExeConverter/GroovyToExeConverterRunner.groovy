@@ -1,8 +1,11 @@
 package groovyToExeConverter
+
 import groovy.util.logging.Log4j
-import groovyToExeConverter.core.commandLine.CommandLineInputProcessor
-import groovyToExeConverter.core.fileConverter.FileConverterFactory
-import org.apache.commons.io.FileUtils
+import groovyToExeConverter.commandLine.CommandLineInputProcessor
+import groovyToExeConverter.fileConverter.FileConverterFactory
+
+import static groovyToExeConverter.fileConverter.FileConverterFactory.getFileConverter
+import static org.apache.commons.io.FileUtils.copyFileToDirectory
 
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
@@ -11,28 +14,22 @@ class GroovyToExeConverterRunner implements Runnable {
         new GroovyToExeConverterRunner(commandLineInput: args).run()
     }
 
-    private static CommandLineInputProcessor inputProcessor = new CommandLineInputProcessor()
-    String[] commandLineInput
+    private CommandLineInputProcessor commandLineInputProcessor = new CommandLineInputProcessor()
+    private String[] commandLineInput
 
     @Override
     void run() {
-        def appConfig, fileConverter, exeFile
+        def appConfig, exeFile
 
         try {
-            appConfig = inputProcessor.processIntoAppConfig(commandLineInput)
+            appConfig = commandLineInputProcessor.processIntoAppConfig(commandLineInput)
+            exeFile = getFileConverter(appConfig).convert()
+            copyFileToDirectory(exeFile, appConfig.destinationDirectory)
 
-            fileConverter = FileConverterFactory.getFileConverter(appConfig)
-            exeFile = fileConverter.convert()
-
-            FileUtils.copyFileToDirectory(exeFile, appConfig.destinationDirectory)
             log.info("Result: ${new File(appConfig.destinationDirectory, exeFile.name)}")
         } catch (Exception exception) {
-            log.error(exception.message)
-            if (appConfig?.showStackTrace) {
-                log.error("Stacktrace:", exception)
-            }
+            if (exception.message) log.error(exception.message)
+            if (appConfig?.showStackTrace) log.error("Stacktrace:", exception)
         }
     }
-
-
 }

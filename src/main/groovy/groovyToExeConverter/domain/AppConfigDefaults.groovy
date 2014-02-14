@@ -1,6 +1,13 @@
 package groovyToExeConverter.domain
 
 enum AppConfigDefaults {
+    G2EXE_TEMP_DIR_NAME("g2exe"),
+    MIN_JRE_VERSION("1.5.0"),
+    ICON_FILE_NAME("g2exeIcon.ico"),
+    INITIAL_HEAP_SIZE(128),
+    MAXIMUM_HEAP_SIZE(512),
+    SHOW_STACKTRACE(false),
+    TEMP_DIR_PATH(new File(System.getenv("TEMP")).absolutePath),
     LAUNCH4JC_RESOURCES([
             'launch4j/launch4jc.exe',
             'launch4j/launch4j.jar',
@@ -24,18 +31,12 @@ enum AppConfigDefaults {
             'launch4j/head/guihead.o',
             'launch4j/head/head.o',
             'launch4j/bin/ld.exe',
-            'launch4j/bin/windres.exe'
-    ]),
+            'launch4j/bin/windres.exe',
+            ICON_FILE_NAME as String
+    ])
 
-    MIN_JRE_VERSION("1.5.0"),
-    ICON_FILE_PATH(null),
-    INITIAL_HEAP_SIZE(128),
-    MAXIMUM_HEAP_SIZE(256),
-    SHOW_STACKTRACE(false),
 
-    //TODO: Do away with this or do more like it?
-    PERMISSIONS_ERROR_MESSAGE("You may have insufficient privileges to write to this system's temporary directory.  Use --tempDir <directory> to override the directory used to store temporary files."),
-    TEMP_DIR_PATH(new File(System.getenv("TEMP"), "g2exe").absolutePath)
+
 
 
     final defaultValue

@@ -1,7 +1,7 @@
-package groovyToExeConverter.core.fileConverter
+package groovyToExeConverter.fileConverter
 
 import groovy.transform.TupleConstructor
-import groovyToExeConverter.core.fileConverter.core.ResourceHandler
+import groovyToExeConverter.fileConverter.core.ResourceHandler
 import groovyToExeConverter.domain.AppConfig
 
 @TupleConstructor

@@ -1,13 +1,14 @@
-package groovyToExeConverter.core.fileConverter.converters
+package groovyToExeConverter.fileConverter.converters
 
 import groovy.util.logging.Log4j
-import groovyToExeConverter.core.fileConverter.FileConverter
+import groovyToExeConverter.fileConverter.FileConverter
 
 @Log4j
 class GroovyToExeFileConverter extends FileConverter {
 
     File convert() {
         log.info("Creating executable from ${appConfig.fileToConvert.name}")
+
         def g2jarConverter = new GroovyToJarFileConverter(
                 appConfig       : this.appConfig,
                 resourceHandler : this.resourceHandler
