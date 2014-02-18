@@ -19,7 +19,8 @@ gradlew buildExe
 ```
 3. If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop
 
-Download the latest g2exe.exe file from: [insert-download-link-here].
+
+Alternatively, you could download the latest g2exe.exe file from: [insert-download-link-here].
 
 ##Usage
 Add g2exe.exe to your system's path or navigate to its directory and run:
