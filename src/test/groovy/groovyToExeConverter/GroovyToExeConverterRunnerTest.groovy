@@ -4,6 +4,7 @@ import org.junit.Test
 
 //TODO: Move these to a /src/integration/groovy like directory
 //TODO: Update gradle file to recognize integration files
+//TODO: Figure out how to handle resources in these tests without duplicating the /launch4j/ folder
 class GroovyToExeConverterRunnerTest {
 
     private final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop")

@@ -18,7 +18,8 @@ class CommandLineInputProcessor {
     }
 
     private void setupCliOptions() {
-        cli.usage = "g2exe -f file.[groovy|jar] (options)\n"
+        cli.usage = "g2exe -f file.[groovy|jar] (optional-args)"
+        cli.header = "\nArguments:"
         cli.with {
             h(longOpt: 'help', 'Shows usage information')
             v(longOpt: 'version', 'Shows version information')
