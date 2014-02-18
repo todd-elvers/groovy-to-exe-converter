@@ -1,9 +1,11 @@
 package groovyToExeConverter.fileConverter.core
+
 import groovy.io.FileType
 import groovy.util.logging.Log4j
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
+import static groovyToExeConverter.domain.AppConfigDefaults.ICON_RESOURCE_FILE_NAME
 import static groovyToExeConverter.domain.AppConfigDefaults.LAUNCH4JC_RESOURCES
 
 @Log4j
@@ -14,20 +16,25 @@ class ResourceHandler {
     ResourceHandler(File temporaryDirectory) {
         TEMP_DIR = temporaryDirectory
 
-        if (tempDirIsMissingLaunch4jResources()) {
-            copyLaunch4jcResourcesToTempDir()
+        if (tempDirIsMissingResources()) {
+            copyResourcesToTempDir()
         } else {
-            cleanTempDirButKeepLaunch4jFolder()
+            deleteAllButResourcesFromTempDir()
         }
     }
 
-    private boolean tempDirIsMissingLaunch4jResources() {
+    //TODO: Actually check if all files are present?
+    //TODO: Possibly check version of app too?  Clean if the versions differ?
+    private boolean tempDirIsMissingResources() {
         !TEMP_DIR.exists() || !TEMP_DIR.listFiles()*.name.contains("launch4j")
     }
 
-    private void copyLaunch4jcResourcesToTempDir() {
+    private void copyResourcesToTempDir() {
         log.debug("Folder 'g2exe' not found in temporary directory - creating temp dir and copying launch4j resources there.")
-        def resources = LAUNCH4JC_RESOURCES.defaultValue
+        List resources = [
+                LAUNCH4JC_RESOURCES.defaultValue,
+                ICON_RESOURCE_FILE_NAME.defaultValue
+        ].flatten()
         resources.each(extractToTempDir)
     }
 
@@ -41,7 +48,7 @@ class ResourceHandler {
             outputStream = FileUtils.openOutputStream(tempFile)
             IOUtils.copy(inputStream, outputStream)
         } catch (Exception ex) {
-            log.error("Unable to copy g2exe files to temporary directory: ${TEMP_DIR}")
+            log.error("Unable to copy g2exe resource '${resourceFileName}' to temporary directory: ${TEMP_DIR}")
             throw ex
         } finally {
             outputStream?.close()
@@ -50,11 +57,11 @@ class ResourceHandler {
     }
 
     //TODO: If the system holds a file for too long again, consider using a timeout here. MicrosoftSecurityEssentials issue?
-    private void cleanTempDirButKeepLaunch4jFolder() {
-        log.debug("Folder 'g2exe' found in temporary directory - removing all non-launch4j files.")
+    private void deleteAllButResourcesFromTempDir() {
+        log.debug("Folder 'g2exe' found in temporary directory - removing all non-launch4j/g2exe files.")
         def fileTypesToRemove = ['.exe', '.groovy', '.jar', '.class', '.xml']
         TEMP_DIR.eachFile(FileType.FILES) { File file ->
-            if(fileTypesToRemove.any { file.name.endsWith(it) }){
+            if (fileTypesToRemove.any { file.name.endsWith(it) }) {
                 file.delete()
             }
         }
