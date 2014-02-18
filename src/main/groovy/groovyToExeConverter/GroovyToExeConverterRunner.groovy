@@ -22,7 +22,7 @@ class GroovyToExeConverterRunner implements Runnable {
 
         try {
             appConfig = commandLineInputProcessor.processIntoAppConfig(commandLineInput)
-            log.info("\nCreating executable from ${appConfig.fileToConvert.name}")
+            log.info("Converting '${appConfig.fileToConvert.name}' to an executable...")
 
             exeFile = getFileConverter(appConfig).convert()
             copyFileToDirectory(exeFile, appConfig.destinationDirectory)

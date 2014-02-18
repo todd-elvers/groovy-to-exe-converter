@@ -1,9 +1,8 @@
 package groovyToExeConverter.commandLine.core
 
 import groovy.util.logging.Log4j
-import groovyToExeConverter.exception.InputValidationException
 import groovyToExeConverter.domain.AppConfigDefaults
-
+import groovyToExeConverter.exception.InputValidationException
 
 @Log4j
 class OptionAccessorValidator {

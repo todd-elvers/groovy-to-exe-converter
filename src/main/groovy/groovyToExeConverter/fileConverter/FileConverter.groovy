@@ -1,8 +1,8 @@
 package groovyToExeConverter.fileConverter
 
 import groovy.transform.TupleConstructor
-import groovyToExeConverter.fileConverter.core.ResourceHandler
 import groovyToExeConverter.domain.AppConfig
+import groovyToExeConverter.fileConverter.core.ResourceHandler
 
 @TupleConstructor
 abstract class FileConverter {

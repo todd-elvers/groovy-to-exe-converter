@@ -22,7 +22,7 @@ dependencies {
 }
 
 task buildExe(dependsOn: [':run', ':renameExeToG2exe'])  {
-    run.dependsOn ':buildExecutableJar'
+    run.dependsOn ':buildJar'
     run {
         final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
         final G2EXE_ICON = new File(sourceSets.main.resources.getSrcDirs().iterator().next(), '/g2exeIcon.ico')
@@ -30,8 +30,8 @@ task buildExe(dependsOn: [':run', ':renameExeToG2exe'])  {
     }
 }
 
-task buildExecutableJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
-    description 'Copies all classes, resources, and jars into one executable uberJar'
+task buildJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
+    description 'Copies all classes, resources, and jar dependencies into one executable jar'
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }

@@ -1,9 +1,9 @@
 package groovyToExeConverter.fileConverter
 
+import groovyToExeConverter.domain.AppConfig
 import groovyToExeConverter.fileConverter.converters.GroovyToExeFileConverter
 import groovyToExeConverter.fileConverter.converters.JarToExeFileConverter
 import groovyToExeConverter.fileConverter.core.ResourceHandler
-import groovyToExeConverter.domain.AppConfig
 
 class FileConverterFactory {
 

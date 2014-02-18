@@ -23,7 +23,7 @@ class CommandLineInputProcessor {
             h(longOpt: 'help', 'Shows usage information')
             v(longOpt: 'version', 'Shows version information')
             s(longOpt: 'stacktrace', 'Prints the full stacktrace of any exception caught')
-            f(longOpt: 'fileToConvert', args: 1, argName: 'file', 'Required.  Fully qualified path to the groovy script or jar file you wish to convert to an exe')
+            f(longOpt: 'fileToConvert', args: 1, argName: 'file', 'Required.  Fully qualified path to the groovy script or jar file to convert to an exe.  Place the path in quotes.')
             d(longOpt: 'destDir', args: 1, argName: 'directory', 'Executable destination directory, defaults to parent directory of {fileToConvert}')
             t(longOpt: 'tempDir', args: 1, argName: 'directory', "Overrides the directory where temporary files are written to. When using this parameter, it's best to specify an empty directory.\n(Default = the system's temp)")
             m(longOpt: 'minJre', args: 1, argName: 'jre_version', "The minimum JRE the application will accept when searching a user's system for a JRE. Accepts values like 'x.x.x' or 'x.x.xx'. (Default = '1.5.0')")
@@ -40,7 +40,7 @@ class CommandLineInputProcessor {
             cli.usage()
         } else if (optionAccessor.version) {
             //TODO: Figure out how to not hard-code the version here
-            log.info("version 0.1.0-SNAPSHOT")
+            log.info("version 0.1.1-SNAPSHOT")
         } else {
             optionAccessorValidator.validate(optionAccessor)
             return optionAccessorTransformer.transform(optionAccessor)

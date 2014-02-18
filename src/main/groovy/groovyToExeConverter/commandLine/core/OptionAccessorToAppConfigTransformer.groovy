@@ -8,19 +8,19 @@ import static groovyToExeConverter.domain.AppConfigDefaults.*
 @Log4j
 class OptionAccessorToAppConfigTransformer {
 
-    AppConfig transform(OptionAccessor parsedArgs) {
-        File fileToConvert = parsedArgs.fileToConvert as File
+    AppConfig transform(OptionAccessor options) {
+        File fileToConvert = options.fileToConvert as File
 
-        def tempDirPath = (parsedArgs.tempDir ?: TEMP_DIR_PATH.defaultValue) as String
+        def tempDirPath = (options.tempDir ?: TEMP_DIR_PATH.defaultValue) as String
         File temporaryDirectory = new File(tempDirPath, G2EXE_TEMP_DIR_NAME.toString())
 
-        def iconFile = (parsedArgs.icon) ? parsedArgs.icon as File : new File(temporaryDirectory, ICON_FILE_NAME.defaultValue)
+        def iconFile = (options.icon) ? options.icon as File : new File(temporaryDirectory, ICON_FILE_NAME.defaultValue)
 
-        File destinationDirectory = (parsedArgs.destDir ?: fileToConvert.parent) as File
-        boolean showStackTrace = (parsedArgs.stacktrace ?: SHOW_STACKTRACE.defaultValue) as boolean
-        String minJreVersion = (parsedArgs.minJre ?: MIN_JRE_VERSION.defaultValue) as String
-        int initialHeapSize = (parsedArgs.initHeapSize ?: INITIAL_HEAP_SIZE.defaultValue) as int
-        int maximumHeapSize = (parsedArgs.maxHeapSize ?: MAXIMUM_HEAP_SIZE.defaultValue) as int
+        File destinationDirectory = (options.destDir ?: fileToConvert.parent) as File
+        boolean showStackTrace = (options.stacktrace ?: SHOW_STACKTRACE.defaultValue) as boolean
+        String minJreVersion = (options.minJre ?: MIN_JRE_VERSION.defaultValue) as String
+        int initialHeapSize = (options.initHeapSize ?: INITIAL_HEAP_SIZE.defaultValue) as int
+        int maximumHeapSize = (options.maxHeapSize ?: MAXIMUM_HEAP_SIZE.defaultValue) as int
 
 
         String fileNameNoFileExt = fileToConvert.name.substring(0, fileToConvert.name.lastIndexOf("."))
