@@ -17,8 +17,7 @@ Build g2exe your self:
 ```
 gradlew buildExe
 ```
-3. If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop
-
+If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop
 
 Alternatively, you could download the latest g2exe.exe file from: [insert-download-link-here].
 
