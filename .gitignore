@@ -6,8 +6,6 @@ build
 *.com
 *.class
 *.dll
-*.exe
-*.o
 *.so
 
 # Packages #
@@ -16,7 +14,6 @@ build
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
