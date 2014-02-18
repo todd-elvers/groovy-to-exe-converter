@@ -14,7 +14,7 @@ class OptionAccessorToAppConfigTransformer {
         def tempDirPath = (options.tempDir ?: TEMP_DIR_PATH.defaultValue) as String
         File temporaryDirectory = new File(tempDirPath, G2EXE_TEMP_DIR_NAME.toString())
 
-        def iconFile = (options.icon) ? options.icon as File : new File(temporaryDirectory, ICON_FILE_NAME.defaultValue)
+        def iconFile = (options.icon) ? options.icon as File : new File(temporaryDirectory, ICON_RESOURCE_FILE_NAME.defaultValue)
 
         File destinationDirectory = (options.destDir ?: fileToConvert.parent) as File
         boolean showStackTrace = (options.stacktrace ?: SHOW_STACKTRACE.defaultValue) as boolean
