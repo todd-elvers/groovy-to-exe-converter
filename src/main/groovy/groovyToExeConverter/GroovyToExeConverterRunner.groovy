@@ -2,7 +2,6 @@ package groovyToExeConverter
 
 import groovy.util.logging.Log4j
 import groovyToExeConverter.commandLine.CommandLineInputProcessor
-import groovyToExeConverter.fileConverter.FileConverterFactory
 
 import static groovyToExeConverter.fileConverter.FileConverterFactory.getFileConverter
 import static org.apache.commons.io.FileUtils.copyFileToDirectory
@@ -23,6 +22,8 @@ class GroovyToExeConverterRunner implements Runnable {
 
         try {
             appConfig = commandLineInputProcessor.processIntoAppConfig(commandLineInput)
+            log.info("\nCreating executable from ${appConfig.fileToConvert.name}")
+
             exeFile = getFileConverter(appConfig).convert()
             copyFileToDirectory(exeFile, appConfig.destinationDirectory)
 

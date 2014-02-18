@@ -7,8 +7,6 @@ import groovyToExeConverter.fileConverter.FileConverter
 class GroovyToExeFileConverter extends FileConverter {
 
     File convert() {
-        log.info("Creating executable from ${appConfig.fileToConvert.name}")
-
         def g2jarConverter = new GroovyToJarFileConverter(
                 appConfig       : this.appConfig,
                 resourceHandler : this.resourceHandler

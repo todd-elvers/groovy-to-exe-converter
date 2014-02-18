@@ -12,7 +12,7 @@ class GroovyToJarFileConverter extends FileConverter {
 
     @Override
     File convert() {
-        log.info("Converting ${appConfig.fileToConvert.name} --> ${appConfig.jarFileName}")
+        log.info("${appConfig.fileToConvert.name} --> ${appConfig.jarFileName}")
         if (!isGroovyHomeSetProperly()) {
             throw new ConfigurationException("Missing environment variable: GROOVY_HOME")
         }

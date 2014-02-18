@@ -10,7 +10,7 @@ class JarToExeFileConverter extends FileConverter {
 
     @Override
     File convert() {
-        log.info("Converting ${appConfig.jarFileName} --> ${appConfig.exeFileName}")
+        log.info("${appConfig.jarFileName.padRight(appConfig.fileToConvert.name.length())} --> ${appConfig.exeFileName}")
 
         def jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
         def exeFile = resourceHandler.createFileInTempDir(appConfig.exeFileName)
