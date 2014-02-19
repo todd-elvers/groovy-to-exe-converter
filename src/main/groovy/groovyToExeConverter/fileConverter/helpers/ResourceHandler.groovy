@@ -56,7 +56,6 @@ class ResourceHandler {
         }
     }
 
-    //TODO: If the system holds a file for too long again, consider using a timeout here. MicrosoftSecurityEssentials issue?
     private void deleteAllButResourcesFromTempDir() {
         log.debug("Folder 'g2exe' found in temporary directory - removing all non-launch4j/g2exe files.")
         def fileTypesToRemove = ['.exe', '.groovy', '.jar', '.class', '.xml']
