@@ -1,6 +1,6 @@
 package groovyToExeConverter.commandLine
-
 import groovy.util.logging.Log4j
+import groovyToExeConverter.PropertiesReader
 import groovyToExeConverter.commandLine.core.OptionAccessorToAppConfigTransformer
 import groovyToExeConverter.commandLine.core.OptionAccessorValidator
 import groovyToExeConverter.domain.AppConfig
@@ -8,7 +8,6 @@ import groovyToExeConverter.exception.InputValidationException
 
 @Log4j
 class CommandLineInputProcessor {
-
     private OptionAccessorValidator optionAccessorValidator = new OptionAccessorValidator()
     private OptionAccessorToAppConfigTransformer optionAccessorTransformer = new OptionAccessorToAppConfigTransformer()
     private CliBuilder cli = new CliBuilder()
@@ -40,8 +39,7 @@ class CommandLineInputProcessor {
         if (optionAccessor.help) {
             cli.usage()
         } else if (optionAccessor.version) {
-            //TODO: Figure out how to not hard-code the version here
-            log.info("version 0.1.1-SNAPSHOT")
+            log.info("Version: ${PropertiesReader.readProperty("version")}")
         } else {
             optionAccessorValidator.validate(optionAccessor)
             return optionAccessorTransformer.transform(optionAccessor)

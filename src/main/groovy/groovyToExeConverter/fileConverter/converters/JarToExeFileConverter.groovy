@@ -3,7 +3,7 @@ package groovyToExeConverter.fileConverter.converters
 import groovy.util.logging.Log4j
 import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConverter.FileConverter
-import groovyToExeConverter.fileConverter.core.Launch4jXmlHandler
+import groovyToExeConverter.fileConverter.helpers.Launch4jXmlHandler
 
 @Log4j
 class JarToExeFileConverter extends FileConverter {
@@ -14,14 +14,14 @@ class JarToExeFileConverter extends FileConverter {
 
         def jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
         def exeFile = resourceHandler.createFileInTempDir(appConfig.exeFileName)
-        def launch4jcXmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
+        def xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
 
         new Launch4jXmlHandler().with {
             generateXmlConfigContents(appConfig, jarFile, exeFile)
-            writeXmlConfigContentsTo(launch4jcXmlFile)
+            writeXmlConfigContentsTo(xmlFile)
         }
 
-        executeLaunch4jcWithXmlFile(launch4jcXmlFile)
+        executeLaunch4jcWithXmlFile(xmlFile)
         validateExeCreation(exeFile)
 
         return exeFile
