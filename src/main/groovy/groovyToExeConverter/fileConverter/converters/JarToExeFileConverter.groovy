@@ -3,7 +3,7 @@ package groovyToExeConverter.fileConverter.converters
 import groovy.util.logging.Log4j
 import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConverter.FileConverter
-import groovyToExeConverter.fileConverter.handlers.Launch4jXmlHandler
+import groovyToExeConverter.fileConverter.converterHelpers.Launch4jXmlHandler
 
 @Log4j
 class JarToExeFileConverter extends FileConverter {
@@ -43,7 +43,6 @@ class JarToExeFileConverter extends FileConverter {
         }
     }
 
-    //TODO: Is a compilation exception the right kind of exception?
     private void validateExeCreation(File exeFile) {
         if (!exeFile.exists()) {
             throw new CompilationException("Failed to convert ${appConfig.jarFileName} to ${appConfig.exeFileName}.")

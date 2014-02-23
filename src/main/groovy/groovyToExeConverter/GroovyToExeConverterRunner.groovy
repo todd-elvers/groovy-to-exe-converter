@@ -2,6 +2,7 @@ package groovyToExeConverter
 
 import groovy.util.logging.Log4j
 import groovyToExeConverter.commandLine.CommandLineInputProcessor
+import groovyToExeConverter.util.EnvironmentValidator
 
 import static groovyToExeConverter.fileConverter.FileConverterFactory.getFileConverter
 import static org.apache.commons.io.FileUtils.copyFileToDirectory
@@ -14,8 +15,12 @@ class GroovyToExeConverterRunner implements Runnable {
     }
 
 
+
+
     private CommandLineInputProcessor commandLineInputProcessor = new CommandLineInputProcessor()
-    private String[] commandLineInput
+    private EnvironmentValidator environmentValidator = new EnvironmentValidator()
+
+    String[] commandLineInput
 
     @Override
     void run() {
@@ -24,8 +29,9 @@ class GroovyToExeConverterRunner implements Runnable {
             exeFile
 
         try {
-            appConfig = commandLineInputProcessor.processIntoAppConfig(commandLineInput)
+            environmentValidator.validate()
 
+            appConfig = commandLineInputProcessor.processIntoAppConfig(commandLineInput)
             if (appConfig) {
                 log.info("Converting...")
 

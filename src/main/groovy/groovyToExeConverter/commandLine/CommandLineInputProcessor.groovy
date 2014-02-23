@@ -1,9 +1,10 @@
 package groovyToExeConverter.commandLine
+
 import groovy.util.logging.Log4j
-import groovyToExeConverter.PropertiesReader
 import groovyToExeConverter.commandLine.core.OptionAccessorToAppConfigTransformer
 import groovyToExeConverter.commandLine.core.OptionAccessorValidator
 import groovyToExeConverter.domain.AppConfig
+import groovyToExeConverter.util.PropertiesReader
 
 @Log4j
 class CommandLineInputProcessor {

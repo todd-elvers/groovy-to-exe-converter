@@ -1,13 +1,14 @@
-package groovyToExeConverter.fileConverter.handlers
+package groovyToExeConverter.fileConverter.converterHelpers
+
 import groovy.io.FileType
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.Resources
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
-import static groovyToExeConverter.PropertiesReader.readAppProperty
-import static groovyToExeConverter.PropertiesReader.readPropertyFromFile
 import static groovyToExeConverter.domain.Resources.LAUNCH4JC_RESOURCES
+import static groovyToExeConverter.util.PropertiesReader.readAppProperty
+import static groovyToExeConverter.util.PropertiesReader.readPropertyFromFile
 
 @Log4j
 class ResourceHandler {
@@ -66,7 +67,7 @@ class ResourceHandler {
 
     private static InputStream resolveResourceInputStream(String resourceFileName){
         // First try and read the resource from /main/resources/, if that fails try opening the file locally
-        def resourceInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceFileName)
+        def resourceInputStream = Thread.currentThread().contextClassLoader.getResourceAsStream(resourceFileName)
         resourceInputStream ?: FileUtils.openInputStream(resourceFileName as File)
     }
 
