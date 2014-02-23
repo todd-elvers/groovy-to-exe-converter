@@ -4,12 +4,11 @@ import groovyToExeConverter.PropertiesReader
 import groovyToExeConverter.commandLine.core.OptionAccessorToAppConfigTransformer
 import groovyToExeConverter.commandLine.core.OptionAccessorValidator
 import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.exception.InputValidationException
 
 @Log4j
 class CommandLineInputProcessor {
     private OptionAccessorValidator optionAccessorValidator = new OptionAccessorValidator()
-    private OptionAccessorToAppConfigTransformer optionAccessorTransformer = new OptionAccessorToAppConfigTransformer()
+    private OptionAccessorToAppConfigTransformer optionAccessorToAppConfigTransformer = new OptionAccessorToAppConfigTransformer()
     private CliBuilder cli = new CliBuilder()
 
     CommandLineInputProcessor() {
@@ -38,14 +37,14 @@ class CommandLineInputProcessor {
 
         if (optionAccessor.help) {
             cli.usage()
+            return
         } else if (optionAccessor.version) {
-            log.info("Version: ${PropertiesReader.readProperty("version")}")
-        } else {
-            optionAccessorValidator.validate(optionAccessor)
-            return optionAccessorTransformer.transform(optionAccessor)
+            log.info("Version: ${PropertiesReader.readAppProperty("version")}")
+            return
         }
 
-        throw new InputValidationException()
+        optionAccessorValidator.validate(optionAccessor)
+        optionAccessorToAppConfigTransformer.transform(optionAccessor)
     }
 
 }

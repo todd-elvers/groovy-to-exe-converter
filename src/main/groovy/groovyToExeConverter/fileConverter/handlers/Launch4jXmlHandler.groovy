@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConverter.helpers
+package groovyToExeConverter.fileConverter.handlers
 
 import groovy.xml.MarkupBuilder
 import groovyToExeConverter.domain.AppConfig

@@ -3,7 +3,7 @@ package groovyToExeConverter.fileConverter
 import groovyToExeConverter.domain.AppConfig
 import groovyToExeConverter.fileConverter.converters.GroovyToExeFileConverter
 import groovyToExeConverter.fileConverter.converters.JarToExeFileConverter
-import groovyToExeConverter.fileConverter.helpers.ResourceHandler
+import groovyToExeConverter.fileConverter.handlers.ResourceHandler
 
 class FileConverterFactory {
 

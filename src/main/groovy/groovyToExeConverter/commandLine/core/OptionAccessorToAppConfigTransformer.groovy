@@ -1,7 +1,7 @@
 package groovyToExeConverter.commandLine.core
-
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.AppConfig
+import groovyToExeConverter.domain.Resources
 
 import static groovyToExeConverter.domain.AppConfigDefaults.*
 
@@ -12,9 +12,10 @@ class OptionAccessorToAppConfigTransformer {
         File fileToConvert = options.fileToConvert as File
 
         def tempDirPath = (options.tempDir ?: TEMP_DIR_PATH.defaultValue) as String
-        File temporaryDirectory = new File(tempDirPath, G2EXE_TEMP_DIR_NAME.toString())
+        File temporaryDirectory = new File(tempDirPath, G2EXE_TEMP_DIR_NAME as String)
 
-        def iconFile = (options.icon) ? options.icon as File : new File(temporaryDirectory, ICON_RESOURCE_FILE_NAME.defaultValue)
+        def defaultIconFileName = Resources.G2EXE_RESOURCES.fileNames.find {String resource -> resource.endsWith("ico")} as String
+        File iconFile = (options.icon) ? options.icon as File : new File(temporaryDirectory, defaultIconFileName)
 
         File destinationDirectory = (options.destDir ?: fileToConvert.parent) as File
         boolean showStackTrace = (options.stacktrace ?: SHOW_STACKTRACE.defaultValue) as boolean

@@ -3,7 +3,7 @@ package groovyToExeConverter.fileConverter.converters
 import groovy.util.logging.Log4j
 import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConverter.FileConverter
-import groovyToExeConverter.fileConverter.helpers.Launch4jXmlHandler
+import groovyToExeConverter.fileConverter.handlers.Launch4jXmlHandler
 
 @Log4j
 class JarToExeFileConverter extends FileConverter {
