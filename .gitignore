@@ -26,6 +26,7 @@ build
 
 # IDE Generated Files #
 #######################
+.classes
 .classpath
 .project
 .idea
