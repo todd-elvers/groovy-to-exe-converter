@@ -1,0 +1,36 @@
+/* The following assumes the 'idea' gradle plugin as already been applied at this point */
+
+// Add integration test source sets
+sourceSets {
+    integration { sourceSet ->
+        ["java", "groovy", "scala", "resources"].each {
+            if (!sourceSet.hasProperty(it)) return
+            sourceSet."$it".srcDir file("src/integration/${it}")
+        }
+    }
+}
+
+// Ensure IDEA highlights the integration folders appropriately
+idea {
+    module {
+        testSourceDirs += file ('src/integration/groovy')
+        testSourceDirs += file ('src/integration/resources')
+    }
+}
+
+// Setup dependencies for integration testing
+dependencies {
+    integrationCompile sourceSets.main.output
+    integrationCompile sourceSets.test.output
+    integrationCompile configurations.testCompile
+    integrationRuntime configurations.testRuntime
+}
+
+// Define integration test task
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integration.output.classesDir
+    classpath = sourceSets.integration.runtimeClasspath
+}
+
+// Make sure 'check' task calls integration test
+check.dependsOn integrationTest
