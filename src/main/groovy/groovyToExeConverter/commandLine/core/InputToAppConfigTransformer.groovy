@@ -1,6 +1,6 @@
 package groovyToExeConverter.commandLine.core
 
-import groovy.util.OptionAccessor as Input
+import groovy.util.OptionAccessor as CommandLineInput
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.AppConfig
 import groovyToExeConverter.domain.Resources
@@ -11,7 +11,7 @@ import static groovyToExeConverter.domain.AppConfigDefaults.*
 @Log4j
 class InputToAppConfigTransformer {
 
-    AppConfig transform(Input input) {
+    AppConfig transform(CommandLineInput input) {
         File fileToConvert = input.fileToConvert as File
 
         def tempDirPath = (input.tempDir ?: TEMP_DIR_PATH.defaultValue) as String

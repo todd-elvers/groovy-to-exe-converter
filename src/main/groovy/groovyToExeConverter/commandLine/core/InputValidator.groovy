@@ -1,6 +1,6 @@
 package groovyToExeConverter.commandLine.core
 
-import groovy.util.OptionAccessor as Input
+import groovy.util.OptionAccessor as CommandLineInput
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.AppConfigDefaults
 import groovyToExeConverter.exception.InputValidationException
@@ -11,7 +11,7 @@ class InputValidator {
     private final DIGITS_ONLY_PATTERN = /^\d{1,}$/                  // Only digits, one or more
     private final JRE_VERSION_PATTERN = /^\d{1}.\d{1}.\d{1,2}$/     // Only digits and periods, in format x.x.x or x.x.xx
 
-    void validate(Input input) {
+    void validate(CommandLineInput input) {
         switch (input) {
             case fileToConvertIsMissing                 : throw new InputValidationException("The parameter 'fileToConvert' is missing or points to a file that doesn't exist. Use 'g2exe --help' to display available commands.")
             case fileToConvertIsIncorrectFileType       : throw new InputValidationException("Invalid file type for 'fileToConvert' - only .groovy and .jar files are allowed.")
@@ -27,7 +27,7 @@ class InputValidator {
         }
     }
 
-    private def fileToConvertIsMissing = { Input input ->
+    private def fileToConvertIsMissing = { CommandLineInput input ->
         File fileToConvert
         if (input.fileToConvert) {
             fileToConvert = input.fileToConvert as File
@@ -35,59 +35,59 @@ class InputValidator {
         return !fileToConvert || !fileToConvert.exists()
     }
 
-    private def fileToConvertIsIncorrectFileType = { Input input ->
+    private def fileToConvertIsIncorrectFileType = { CommandLineInput input ->
         File fileToConvert = input.fileToConvert as File
         return !fileToConvert.isFile() || (!fileToConvert.name.endsWith(".groovy") && !fileToConvert.name.endsWith(".jar"))
     }
 
-    private def destDirDoesNotExistOrIsNotDir = { Input input ->
+    private def destDirDoesNotExistOrIsNotDir = { CommandLineInput input ->
         if (optionalArgNotSet(input.destDir)) return false
 
         File destinationDirectory = input.destDir as File
         return !destinationDirectory.exists() || !destinationDirectory.isDirectory()
     }
 
-    private def tempDirDoesNotExistOrIsNotDir = { Input input ->
+    private def tempDirDoesNotExistOrIsNotDir = { CommandLineInput input ->
         if (optionalArgNotSet(input.tempDir)) return false
 
         File temporaryDirectory = input.tempDir as File
         return !temporaryDirectory.exists() || !temporaryDirectory.isDirectory()
     }
 
-    private def tempDirPathContainsSpaces = { Input input ->
+    private def tempDirPathContainsSpaces = { CommandLineInput input ->
         String tempDirPath = input.tempDir ?: AppConfigDefaults.TEMP_DIR_PATH.defaultValue
         return tempDirPath && tempDirPath.contains(" ")
     }
 
-    private def tempDirIsMissingAndCannotBeDetermined = { Input input ->
+    private def tempDirIsMissingAndCannotBeDetermined = { CommandLineInput input ->
         if (optionalArgNotSet(input.tempDir)) return false
 
         String sysTempPath = System.getenv("TEMP")
         return !sysTempPath
     }
 
-    private def minJreInInvalidFormat = { Input input ->
+    private def minJreInInvalidFormat = { CommandLineInput input ->
         if (optionalArgNotSet(input.minJre)) return false
 
         String minJre = input.minJre
         return !minJre.matches(JRE_VERSION_PATTERN)
     }
 
-    private def iconDoesNotExistOrIsNotFile = { Input input ->
+    private def iconDoesNotExistOrIsNotFile = { CommandLineInput input ->
         if (optionalArgNotSet(input.icon)) return false
 
         File iconFile = input.icon as File
         return !iconFile.exists() || !iconFile.isFile()
     }
 
-    private def iconInIncorrectFormat = { Input input ->
+    private def iconInIncorrectFormat = { CommandLineInput input ->
         if (optionalArgNotSet(input.icon)) return false
 
         File iconFile = input.icon as File
         return !iconFile.name.endsWith(".ico")
     }
 
-    private def initHeapSizeIsNotNumberOrIsZeroOrLess = { Input input ->
+    private def initHeapSizeIsNotNumberOrIsZeroOrLess = { CommandLineInput input ->
         if (optionalArgNotSet(input.initHeapSize)) return false
         if (!String.valueOf(input.initHeapSize).matches(DIGITS_ONLY_PATTERN)) return true
 
@@ -95,7 +95,7 @@ class InputValidator {
         initialHeapSize <= 0
     }
 
-    private def maxHeapSizeIsNotNumberOrIsZeroOrLess = { Input input ->
+    private def maxHeapSizeIsNotNumberOrIsZeroOrLess = { CommandLineInput input ->
         if (optionalArgNotSet(input.maxHeapSize)) return false
         if (!String.valueOf(input.maxHeapSize).matches(DIGITS_ONLY_PATTERN)) return true
 
