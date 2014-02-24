@@ -47,9 +47,8 @@ class ResourceHandler {
                 tempFile = new File(TEMP_DIR, resourceFileName)
                 inputStream = resolveResourceInputStream(resourceFileName)
                 FileUtils.copyInputStreamToFile(inputStream, tempFile)
-                inputStream.close()
             } catch (Exception ex) {
-                log.error("Unable to copy g2exe resource '${resourceFileName}' to ${tempFile}")
+                log.error("Unable to copy g2exe resource '${resourceFileName}' to '${tempFile}'")
                 throw ex
             } finally {
                 IOUtils.closeQuietly(inputStream)

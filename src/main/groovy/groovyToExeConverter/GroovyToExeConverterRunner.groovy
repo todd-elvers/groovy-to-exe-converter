@@ -1,7 +1,6 @@
 package groovyToExeConverter
-
 import groovy.util.logging.Log4j
-import groovyToExeConverter.commandLine.CommandLineInputProcessor
+import groovyToExeConverter.commandLine.InputProcessor
 import groovyToExeConverter.util.EnvironmentValidator
 
 import static groovyToExeConverter.fileConverter.FileConverterFactory.getFileConverter
@@ -11,38 +10,35 @@ import static org.apache.commons.io.FileUtils.copyFileToDirectory
 class GroovyToExeConverterRunner implements Runnable {
 
     static void main(String[] args) {
-        new GroovyToExeConverterRunner(commandLineInput: args).run()
+        new GroovyToExeConverterRunner(input: args).run()
     }
 
 
 
 
-    private CommandLineInputProcessor commandLineInputProcessor = new CommandLineInputProcessor()
-    private EnvironmentValidator environmentValidator = new EnvironmentValidator()
+    private def inputProcessor = new InputProcessor()
+    private def environmentValidator = new EnvironmentValidator()
 
-    String[] commandLineInput
+    String[] input
 
     @Override
     void run() {
-        def appConfig,
-            fileConverter,
-            exeFile
-
+        def appConfig, exeFile
         try {
             environmentValidator.validate()
 
-            appConfig = commandLineInputProcessor.processIntoAppConfig(commandLineInput)
+            appConfig = inputProcessor.processIntoAppConfig(input)
             if (appConfig) {
                 log.info("Converting...")
 
-                fileConverter = getFileConverter(appConfig)
-                exeFile = fileConverter.convert()
+                exeFile = getFileConverter(appConfig).convert()
                 copyFileToDirectory(exeFile, appConfig.destinationDirectory)
 
-                log.info("Success!")
+                log.info("Conversion successful!")
             }
         } catch (Exception exception) {
-            if (exception.message) log.error(exception.message)
+            log.error("Conversion failed!")
+            if (exception.message) log.error("Reason: ${exception.message}")
             if (appConfig?.showStackTrace) log.error("Stacktrace:", exception)
         }
     }

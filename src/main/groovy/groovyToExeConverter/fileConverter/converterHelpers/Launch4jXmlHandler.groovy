@@ -15,7 +15,7 @@ class Launch4jXmlHandler {
             outfile(exeFile.absolutePath)
             errTitle('Error')
             cmdLine()
-            chdir()
+            chdir('.')
             priority('normal')
             downloadUrl('http://java.com/download')
             supportUrl()
