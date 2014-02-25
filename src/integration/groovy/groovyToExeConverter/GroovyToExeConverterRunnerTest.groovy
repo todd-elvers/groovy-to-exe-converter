@@ -1,74 +1,64 @@
 package groovyToExeConverter
 
-import org.junit.Test
+import groovyToExeConverter.domain.AppConfigDefaults
+import groovyToExeConverter.exception.ConfigurationException
+import org.apache.commons.io.FileUtils
+import spock.lang.Specification
 
-//TODO: Move these to a /src/integration/groovy like directory
-//TODO: Update gradle file to recognize integration files
-//TODO: Figure out how to handle resources in these tests without duplicating the /launch4j/ folder
-//TODO: Write tests for most important classes w/ Spock
-class GroovyToExeConverterRunnerTest {
+import static org.apache.commons.io.FilenameUtils.removeExtension
 
-    private final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop")
-    private final g2exeTemp = new File(USER_DESKTOP, "g2exe_temp")
+/*
+ *  Use gradle task 'integrationTest' to execute these tests.
+ *
+ *  Reason:
+ *  To reduce resource duplication, these integration tests rely on some resources in /src/main/resources/.
+ *  The above gradle task first deploys all application resources before executing the integration tests.
+ */
+class GroovyToExeConverterRunnerTest extends Specification {
 
+    static final File DEFAULT_TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME.toString())
 
-    @Test
+    // Check to make sure we can resolve the system's temporary directory before running any tests
+    def setupSpec() {
+        if(!System.getenv("TEMP")) throw new ConfigurationException("Unable to resolve system's temporary directory.")
+    }
+
+    def cleanupSpec() { FileUtils.deleteQuietly(DEFAULT_TEMP_DIR) }
+
     void "can convert groovy script to an executable file"() {
-        def groovyScriptFile = new File(g2exeTemp, "Example.groovy")
-        String[] args = [
-                '-f', groovyScriptFile.absolutePath,
-                '--stacktrace'
-        ]
+        given:
+            File groovyScriptFile = getFileFromResourcesDir("SimpleTestScript.groovy")
+            println("GroovyScript: ${groovyScriptFile}")
+            File jarFile = new File(DEFAULT_TEMP_DIR, removeExtension(groovyScriptFile.name) + '.jar')
+            File exeFile = new File(DEFAULT_TEMP_DIR, removeExtension(groovyScriptFile.name) + '.exe')
+            String[] args = ['-f', groovyScriptFile]
 
-        File expectedExeFile = new File(g2exeTemp, "Example.exe")
-        expectedExeFile.delete()
+        when:
+            GroovyToExeConverterRunner.main(args)
 
-        GroovyToExeConverterRunner.main(args)
-
-        assert expectedExeFile.exists(): "Groovy -> Exe conversion failed."
+        then:
+            groovyScriptFile.exists()
+            jarFile.exists()
+            exeFile.exists()
     }
 
-    @Test
-    void "can convert groovy script to an executable file with heap size parameters"() {
-        String[] args = [
-                '-f', new File(g2exeTemp, 'Example.groovy').absolutePath,
-                '-i', new File(g2exeTemp, 'carfox_pilgrim.ico').absolutePath,
-                '-xms', 1024,
-                '-xmx', 2048
-        ]
-
-        File expectedExeFile = new File(g2exeTemp, "Example.exe")
-        expectedExeFile.delete()
-
-        GroovyToExeConverterRunner.main(args)
-
-        assert expectedExeFile.exists(): "Groovy -> Exe conversion failed."
-    }
-
-    @Test
     void "can convert jar file to an executable file"() {
-        def jarFile = new File(g2exeTemp, "Example2.jar")
-        String[] args = [
-                '--fileToConvert', jarFile.absolutePath,
-                '-xmx', 1200,
-                '--minJre', '1.6.0',
-                '--icon', 'C:/Users/Todd/Desktop/g2exe_temp_old/cfx_icon.ico'
-        ]
+        given:
+            File jarFile = getFileFromResourcesDir("SimpleTestScript.jar")
+            File exeFile = new File(DEFAULT_TEMP_DIR, removeExtension(jarFile.name) + '.exe')
+            String[] args = ['-f', jarFile]
 
-        File expectedExeFile = new File(g2exeTemp, "Example2.exe")
-        expectedExeFile.delete()
+        when:
+            GroovyToExeConverterRunner.main(args)
 
-        GroovyToExeConverterRunner.main(args)
-
-        assert expectedExeFile.exists(): "Jar -> Exe conversion failed."
+        then:
+            jarFile.exists()
+            exeFile.exists()
     }
 
-    @Test
-    void "show help"() {
-        String[] args = ['--help']
-
-        GroovyToExeConverterRunner.main(args)
-
-        assert true
+    private File getFileFromResourcesDir(String fileName){
+        File file = new File(getClass().getClassLoader().getResource(fileName).file)
+        if(!file) throw new FileNotFoundException("Unable to locate ${fileName} in the src/integration/resources directory.")
+        return file
     }
 }

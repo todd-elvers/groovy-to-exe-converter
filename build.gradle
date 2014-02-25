@@ -3,6 +3,9 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'application'
 
+apply from: 'integration-tests.gradle'  // Adds integration test support
+apply from: 'build-executable.gradle'   // Adds capability to build g2exe.exe
+
 repositories {
     mavenCentral()
 }
@@ -16,10 +19,13 @@ dependencies {
     compile 'com.google.guava:guava:15.0'
     compile 'log4j:log4j:1.2.17'
 
-    testCompile 'junit:junit:4.11'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+
+    // When running integration tests, use the resources from src/main/resources
+    integrationTestCompile files(sourceSets.main.output.resourcesDir)
 }
 
-apply from: 'integration-tests.gradle'  // Adds integration test support
-apply from: 'build-executable.gradle'   // Adds capability to build g2exe.exe
+
+
 
 
