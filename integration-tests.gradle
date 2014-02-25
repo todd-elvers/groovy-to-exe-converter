@@ -24,6 +24,9 @@ dependencies {
     integrationTestCompile sourceSets.test.output
     integrationTestCompile configurations.testCompile
     integrationTestRuntime configurations.testRuntime
+
+    // When running integration tests, use the resources from src/main/resources
+    integrationTestCompile files(sourceSets.main.output.resourcesDir)
 }
 
 // Task to run all integration tests

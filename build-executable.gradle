@@ -1,3 +1,5 @@
+apply plugin: 'application'
+
 // The mainClassName variable is required for task :buildJar
 mainClassName='groovyToExeConverter.GroovyToExeConverterRunner'
 
