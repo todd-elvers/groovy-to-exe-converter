@@ -37,7 +37,9 @@ class InputProcessor {
     AppConfig processIntoAppConfig(String[] args) {
         CommandLineInput input = cli.parse(args)
 
-        if (input.help) {
+        if (!input) {
+            return
+        } else if (input.help) {
             cli.usage()
             return
         } else if (input.version) {
