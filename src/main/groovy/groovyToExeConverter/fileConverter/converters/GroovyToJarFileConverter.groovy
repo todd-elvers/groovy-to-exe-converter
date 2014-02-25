@@ -4,6 +4,7 @@ import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConverter.FileConverter
 
 import static groovyToExeConverter.fileConverter.converterHelpers.GroovyScriptCompiler.compileGroovyScript
+import static org.apache.commons.io.FilenameUtils.removeExtension
 
 @Log4j
 class GroovyToJarFileConverter extends FileConverter {
@@ -36,7 +37,7 @@ class GroovyToJarFileConverter extends FileConverter {
 
     private File buildJar(){
         final GROOVY_HOME = new File(System.getenv('GROOVY_HOME'))
-        def scriptNameNoFileExt = appConfig.fileToConvert.name.substring(0, appConfig.fileToConvert.name.lastIndexOf('.'))
+        def scriptNameNoFileExt = removeExtension(appConfig.fileToConvert.name)
         def jarFile = resourceHandler.createFileInTempDir(appConfig.jarFileName)
 
         ant.jar(destfile: jarFile, compress: true, index: true) {
