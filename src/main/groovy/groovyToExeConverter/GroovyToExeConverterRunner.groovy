@@ -15,19 +15,18 @@ class GroovyToExeConverterRunner implements Runnable {
 
 
 
-
     private def inputProcessor = new InputProcessor()
     private def environmentValidator = new EnvironmentValidator()
-
     String[] input
 
     @Override
     void run() {
         def appConfig, exeFile
+
         try {
             environmentValidator.validate()
-
             appConfig = inputProcessor.processIntoAppConfig(input)
+
             if (appConfig) {
                 log.info("Converting...")
 
