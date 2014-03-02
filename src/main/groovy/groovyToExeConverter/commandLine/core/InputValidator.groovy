@@ -11,6 +11,8 @@ class InputValidator {
     private final DIGITS_ONLY_PATTERN = /^\d{1,}$/                  // Only digits, one or more
     private final JRE_VERSION_PATTERN = /^\d{1}.\d{1}.\d{1,2}$/     // Only digits and periods, in format x.x.x or x.x.xx
 
+    //TODO: Has this class reached critical mass? (Consider packages 'commandLine.transformer' and 'commandLine.validation')
+    //TODO: Try and ensure order doesn't matter here
     void validate(CommandLineInput input) {
         switch (input) {
             case fileToConvertIsMissing                 : throw new InputValidationException("The parameter 'fileToConvert' is missing or points to a file that doesn't exist. Use 'g2exe --help' to display available commands.")
@@ -22,8 +24,9 @@ class InputValidator {
             case minJreInInvalidFormat                  : throw new InputValidationException("The 'minJre' parameter only accepts strings of the format x.x.x or x.x.xx")
             case iconDoesNotExistOrIsNotFile            : throw new InputValidationException("The given 'icon' doesn't exist or isn't a file.")
             case iconInIncorrectFormat                  : throw new InputValidationException("Invalid file type for 'icon' - only .ico files are allowed.")
-            case initHeapSizeIsNotNumberOrIsZeroOrLess  : throw new InputValidationException("The given 'initHeapSize' is not a number, or is less than or equal to zero. Please provide a number greater than zero, or provide nothing to use the default value.")
-            case maxHeapSizeIsNotNumberOrIsZeroOrLess   : throw new InputValidationException("The given 'maxHeapSize' is not a number, or is less than or equal to zero. Please provide a number greater than zero, or provide nothing to use the default value.")
+            case initHeapSizeIsNotNumberOrIsZeroOrLess  : throw new InputValidationException("The value for 'initHeapSize' is not a number, or is less than or equal to zero. Please provide a number greater than zero.")
+            case maxHeapSizeIsNotNumberOrIsZeroOrLess   : throw new InputValidationException("The value for 'maxHeapSize' is not a number, or is less than or equal to zero. Please provide a number greater than zero.")
+            case maxHeapSizeLessThanInitHeapSize        : throw new InputValidationException("The value for 'maxHeapSize' cannot be less than the value for 'initHeapSize'.")
         }
     }
 
@@ -101,6 +104,13 @@ class InputValidator {
 
         int maximumHeapSize = input.maxHeapSize as int
         return maximumHeapSize <= 0
+    }
+
+    //temporal cuppling!
+    private def maxHeapSizeLessThanInitHeapSize = { CommandLineInput input ->
+        int initialHeapSize = (input.initHeapSize ?: AppConfigDefaults.INITIAL_HEAP_SIZE.defaultValue) as int
+        int maximumHeapSize = (input.maxHeapSize ?: AppConfigDefaults.MAXIMUM_HEAP_SIZE.defaultValue) as int
+        return maximumHeapSize < initialHeapSize
     }
 
     private def optionalArgNotSet = { return !it }

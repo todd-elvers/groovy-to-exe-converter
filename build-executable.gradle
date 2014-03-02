@@ -9,7 +9,7 @@ task buildExe(dependsOn: [':run', ':renameExeToG2exe'])  {
     run {
         final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
         final G2EXE_ICON = new File(sourceSets.main.resources.getSrcDirs().iterator().next(), '/g2exeIcon.ico')
-        args "--fileToConvert", "${buildDir}/libs/${project.name}-${version}.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON
+        args "--fileToConvert", "${buildDir}/libs/${project.name}-${version}.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON, "--stacktrace"
     }
 }
 

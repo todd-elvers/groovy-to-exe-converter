@@ -9,6 +9,9 @@ import static org.apache.commons.io.FileUtils.copyFileToDirectory
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
 
+    //TODO: Add ability to set header to 'gui' OR 'console'
+    //TODO: Add ability to set splash screen
+    //TODO: Add ability to inject 'normal look-and-feel' code into main method?
     static void main(String[] args) {
         new GroovyToExeConverterRunner(input: args).run()
     }
