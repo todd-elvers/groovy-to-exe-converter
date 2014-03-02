@@ -5,7 +5,7 @@ import groovy.util.logging.Log4j
 import groovyToExeConverter.commandLine.core.InputToAppConfigTransformer
 import groovyToExeConverter.commandLine.core.InputValidator
 import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.util.PropertiesReader
+import groovyToExeConverter.fileConverter.converterHelpers.PropertiesReader
 
 @Log4j
 class InputProcessor {

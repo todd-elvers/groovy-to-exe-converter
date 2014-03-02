@@ -1,7 +1,6 @@
 package groovyToExeConverter.exception
 
-class ConfigurationException extends Exception {
-    ConfigurationException(String message) {
-        super(message)
-    }
-}
+import groovy.transform.InheritConstructors
+
+@InheritConstructors
+class ConfigurationException extends Exception {}

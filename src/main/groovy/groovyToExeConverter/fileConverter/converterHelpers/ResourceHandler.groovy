@@ -6,9 +6,9 @@ import groovyToExeConverter.domain.Resources
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
+import static PropertiesReader.readAppProperty
+import static PropertiesReader.readPropertyFromFile
 import static groovyToExeConverter.domain.Resources.LAUNCH4JC_RESOURCES
-import static groovyToExeConverter.util.PropertiesReader.readAppProperty
-import static groovyToExeConverter.util.PropertiesReader.readPropertyFromFile
 
 @Log4j
 class ResourceHandler {
@@ -37,7 +37,7 @@ class ResourceHandler {
     }
 
     private void extractToTempDir(List resourcesToExtract) {
-        log.debug("Folder 'g2exe' not found in temporary directory - creating temp dir and copying resources there.")
+        log.debug("Temp directory not found - creating one and copying resources there.")
 
         resourcesToExtract.each { String resourceFileName ->
             log.debug("Copying resource '$resourceFileName' to temporary directory.")
@@ -57,7 +57,7 @@ class ResourceHandler {
     }
 
     private void deleteAllInTempDirExcept(List<String> fileNamesToIgnore) {
-        log.debug("Folder 'g2exe' found in temporary directory - cleaning temp directory.")
+        log.debug("Cleaning temp directory.")
 
         TEMP_DIR.eachFile(FileType.FILES) { File file ->
             fileNamesToIgnore.contains(file.name) ?: file.delete()

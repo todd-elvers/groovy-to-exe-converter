@@ -1,4 +1,4 @@
-package groovyToExeConverter.util
+package groovyToExeConverter.fileConverter.converterHelpers
 
 import org.apache.commons.io.FileUtils
 

@@ -4,7 +4,7 @@ import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConverter.FileConverter
 
 import static groovyToExeConverter.fileConverter.converterHelpers.GroovyScriptCompiler.compileGroovyScript
-import static org.apache.commons.io.FilenameUtils.removeExtension
+import static groovyToExeConverter.fileConverter.converterHelpers.GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod
 
 @Log4j
 class GroovyToJarFileConverter extends FileConverter {
@@ -37,18 +37,20 @@ class GroovyToJarFileConverter extends FileConverter {
 
     private File buildJar(){
         final GROOVY_HOME = new File(System.getenv('GROOVY_HOME'))
-        def scriptNameNoFileExt = removeExtension(appConfig.fileToConvert.name)
         def jarFile = resourceHandler.createFileInTempDir(appConfig.jarFileName)
+        def mainClassName = findNameOfClassWithMainMethod(appConfig.fileToConvert, appConfig.temporaryDirectory)
+
+        log.debug("Dynamically detected '$mainClassName' as main-class.")
 
         ant.jar(destfile: jarFile, compress: true, index: true) {
-            fileset(dir: jarFile.parent, includes: scriptNameNoFileExt + '*.class')
+            fileset(dir: jarFile.parent, includes: mainClassName + '*.class')
 
             //TODO: Expose this to the command line so user can add extra libraries
             zipgroupfileset(dir: GROOVY_HOME, includes: 'embeddable/groovy-all-*.jar')
             zipgroupfileset(dir: GROOVY_HOME, includes: 'lib/commons*.jar')
 
             manifest {
-                attribute(name: 'Main-Class', value: scriptNameNoFileExt)
+                attribute(name: 'Main-Class', value: mainClassName)
             }
         }
 

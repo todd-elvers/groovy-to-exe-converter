@@ -1,11 +1,6 @@
 package groovyToExeConverter.exception
 
-class CompilationException extends Exception{
-    CompilationException(String message) {
-        super(message)
-    }
+import groovy.transform.InheritConstructors
 
-    CompilationException(String message, Throwable cause){
-        super(message,cause)
-    }
-}
+@InheritConstructors
+class CompilationException extends Exception {}
