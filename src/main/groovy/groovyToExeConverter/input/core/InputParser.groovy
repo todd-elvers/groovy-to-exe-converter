@@ -1,29 +1,18 @@
-package groovyToExeConverter.commandLine
+package groovyToExeConverter.input.core
 
 import groovy.util.OptionAccessor as CommandLineInput
-import groovy.util.logging.Log4j
-import groovyToExeConverter.commandLine.core.InputToAppConfigTransformer
-import groovyToExeConverter.commandLine.core.InputValidator
-import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.fileConverter.converterHelpers.PropertiesReader
 
-@Log4j
-class InputProcessor {
-    private def inputValidator = new InputValidator()
-    private def inputToAppConfigTransformer = new InputToAppConfigTransformer()
+class InputParser {
+
     private def cli = new CliBuilder()
 
-    InputProcessor() {
-        setupCliOptions()
-    }
-
-    private void setupCliOptions() {
+    InputParser() {
         cli.usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
         cli.header = "Arguments:"
         cli.with {
             h(longOpt: 'help', 'Shows usage information')
             _(longOpt: 'version', 'Shows version information')
-            s(longOpt: 'stacktrace', 'Prints the full stacktrace of any exception caught')
+            _(longOpt: 'stacktrace', 'Prints the full stacktrace of any exception caught')
             f(longOpt: 'fileToConvert', args: 1, argName: 'file', 'Required. The path to the groovy script or jar file to convert to an exe. Supports absolute & relative file paths. (Try placing the path in quotes if you encounter issues)')
             d(longOpt: 'destDir', args: 1, argName: 'directory', 'Optional. Executable destination directory, defaults to parent directory of {fileToConvert}')
             t(longOpt: 'tempDir', args: 1, argName: 'directory', "Optional. Overrides the directory where temporary files are written to. Files will be written to folder 'g2exe' in the temporary directory. \n(Default = <The-System's-Temp>/g2exe)")
@@ -34,20 +23,11 @@ class InputProcessor {
         }
     }
 
-    AppConfig processIntoAppConfig(String[] args) {
-        CommandLineInput input = cli.parse(args)
+    CommandLineInput parse(String[] args){
+        cli.parse(args)
+    }
 
-        if (!input) {
-            return
-        } else if (input.help) {
-            cli.usage()
-            return
-        } else if (input.version) {
-            log.info("Version: ${PropertiesReader.readAppProperty("version")}")
-            return
-        }
-
-        inputValidator.validate(input)
-        inputToAppConfigTransformer.transform(input)
+    void printUsage(){
+        cli.usage()
     }
 }

@@ -1,6 +1,6 @@
 package groovyToExeConverter
 import groovy.util.logging.Log4j
-import groovyToExeConverter.commandLine.InputProcessor
+import groovyToExeConverter.input.InputProcessor
 import groovyToExeConverter.util.EnvironmentValidator
 
 import static groovyToExeConverter.fileConverter.FileConverterFactory.getFileConverter
@@ -9,9 +9,8 @@ import static org.apache.commons.io.FileUtils.copyFileToDirectory
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
 
-    //TODO: Add ability to set header to 'gui' OR 'console'
-    //TODO: Add ability to set splash screen
-    //TODO: Add ability to inject 'normal look-and-feel' code into main method?
+
+    //TODO: Add unit testing for important components
     static void main(String[] args) {
         new GroovyToExeConverterRunner(input: args).run()
     }
@@ -39,9 +38,9 @@ class GroovyToExeConverterRunner implements Runnable {
                 log.info("Conversion successful!")
             }
         } catch (Exception exception) {
-            log.error("Conversion failed!")
-            if (exception.message) log.error("Reason: ${exception.message}")
+            if (exception.message) log.error(exception.message)
             if (appConfig?.showStackTrace) log.error("Stacktrace:", exception)
+            if (appConfig) log.error("Conversion failed!")
         }
     }
 }

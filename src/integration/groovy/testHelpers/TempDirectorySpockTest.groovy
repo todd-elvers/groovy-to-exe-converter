@@ -2,8 +2,10 @@ package testHelpers
 import groovyToExeConverter.domain.AppConfigDefaults
 import groovyToExeConverter.exception.ConfigurationException
 import org.apache.commons.io.FileUtils
+import spock.lang.Ignore
 import spock.lang.Specification
 
+@Ignore("Test helper class.")
 class TempDirectorySpockTest extends Specification {
     static final File DEFAULT_TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME.toString())
 
