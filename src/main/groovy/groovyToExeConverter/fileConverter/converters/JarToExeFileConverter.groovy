@@ -13,12 +13,12 @@ class JarToExeFileConverter extends FileConverter {
         log.info("${appConfig.jarFileName.padRight(appConfig.fileToConvert.name.length())} --> ${appConfig.exeFileName}")
 
         def jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
-        def exeFile = resourceHandler.createFileInTempDir(appConfig.exeFileName)
         def xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
+        def exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName)
 
         new Launch4jXmlHandler().with {
-            generateXmlConfigContents(appConfig, jarFile, exeFile)
-            writeXmlConfigContentsTo(xmlFile)
+            generateLaunch4jXml(appConfig, jarFile, exeFile)
+            writeLaunch4jXmlToFile(xmlFile)
         }
 
         executeLaunch4jcWithXmlFile(xmlFile)
@@ -43,9 +43,9 @@ class JarToExeFileConverter extends FileConverter {
         }
     }
 
-    private void validateExeCreation(File exeFile) {
+    private static void validateExeCreation(File exeFile) {
         if (!exeFile.exists()) {
-            throw new CompilationException("Failed to convert ${appConfig.jarFileName} to ${appConfig.exeFileName}.")
+            throw new CompilationException("Launch4j command line operation was not successful.")
         }
     }
 

@@ -4,7 +4,6 @@ import groovyToExeConverter.input.InputProcessor
 import groovyToExeConverter.util.EnvironmentValidator
 
 import static groovyToExeConverter.fileConverter.FileConverterFactory.getFileConverter
-import static org.apache.commons.io.FileUtils.copyFileToDirectory
 
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
@@ -23,7 +22,7 @@ class GroovyToExeConverterRunner implements Runnable {
 
     @Override
     void run() {
-        def appConfig, exeFile
+        def appConfig
 
         try {
             environmentValidator.validate()
@@ -32,8 +31,7 @@ class GroovyToExeConverterRunner implements Runnable {
             if (appConfig) {
                 log.info("Converting...")
 
-                exeFile = getFileConverter(appConfig).convert()
-                copyFileToDirectory(exeFile, appConfig.destinationDirectory)
+                getFileConverter(appConfig).convert()
 
                 log.info("Conversion successful!")
             }

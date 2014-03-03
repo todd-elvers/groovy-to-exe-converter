@@ -18,10 +18,12 @@ class GroovyToExeConverterRunnerTest extends TempDirectorySpockTest {
     void "can convert groovy script to an executable file"() {
         given:
             File groovyScriptFile = getFileFromResourcesDir("TestScriptWithoutClasses.groovy")
-            println("GroovyScript: ${groovyScriptFile}")
             File jarFile = new File(DEFAULT_TEMP_DIR, removeExtension(groovyScriptFile.name) + '.jar')
             File exeFile = new File(DEFAULT_TEMP_DIR, removeExtension(groovyScriptFile.name) + '.exe')
-            String[] args = ['-f', groovyScriptFile]
+
+            File splashFile = new File("C:/users/todd/desktop/splash.bmp")
+
+            String[] args = ['-f', groovyScriptFile, '--destDir', DEFAULT_TEMP_DIR, '--gui', "-s", splashFile]
 
         when:
             GroovyToExeConverterRunner.main(args)
@@ -36,7 +38,7 @@ class GroovyToExeConverterRunnerTest extends TempDirectorySpockTest {
         given:
             File jarFile = getFileFromResourcesDir("TestScriptWithoutClasses.jar")
             File exeFile = new File(DEFAULT_TEMP_DIR, removeExtension(jarFile.name) + '.exe')
-            String[] args = ['-f', jarFile]
+            String[] args = ['-f', jarFile, '--destDir', DEFAULT_TEMP_DIR]
 
         when:
             GroovyToExeConverterRunner.main(args)

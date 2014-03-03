@@ -2,6 +2,8 @@ package groovyToExeConverter.input.core.parameterValidators
 
 import groovy.util.OptionAccessor as Input
 
+import static org.apache.commons.io.FilenameUtils.isExtension
+
 class FileToConvertValidator {
 
     static def fileToConvertIsMissing = { Input input ->
@@ -14,7 +16,7 @@ class FileToConvertValidator {
 
     static def fileToConvertIsIncorrectFileType = { Input input ->
         File fileToConvert = input.fileToConvert as File
-        return !fileToConvert.isFile() || (!fileToConvert.name.endsWith(".groovy") && !fileToConvert.name.endsWith(".jar"))
+        return !fileToConvert.isFile() || !isExtension(fileToConvert.name, ["groovy", "jar"])
     }
 
 }

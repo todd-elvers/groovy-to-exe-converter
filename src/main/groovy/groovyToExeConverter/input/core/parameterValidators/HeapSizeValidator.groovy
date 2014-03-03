@@ -7,7 +7,7 @@ class HeapSizeValidator {
 
     final ONE_OR_MORE_DIGITS_ONLY_PATTERN = /^\d{1,}$/
 
-    static def initHeapSizeIsNotNumberOrIsZeroOrLess = { Input input ->
+    static def initHeapSizeIsNotNumOrIsZeroOrLess = { Input input ->
         if (!input.initHeapSize) return false
         if (!String.valueOf(input.initHeapSize).matches(ONE_OR_MORE_DIGITS_ONLY_PATTERN)) return true
 
@@ -15,7 +15,7 @@ class HeapSizeValidator {
         initialHeapSize <= 0
     }
 
-    static def maxHeapSizeIsNotNumberOrIsZeroOrLess = { Input input ->
+    static def maxHeapSizeIsNotNumOrIsZeroOrLess = { Input input ->
         if (!input.maxHeapSize) return false
         if (!String.valueOf(input.maxHeapSize).matches(ONE_OR_MORE_DIGITS_ONLY_PATTERN)) return true
 

@@ -7,10 +7,10 @@ class Launch4jXmlHandler {
 
     private def launch4jXml
 
-    void generateXmlConfigContents(AppConfig appConfig, File jarFile, File exeFile) {
+    void generateLaunch4jXml(AppConfig appConfig, File jarFile, File exeFile) {
         launch4jXml = {
             dontWrapJar(false)
-            headerType('console')
+            headerType(appConfig.appType)
             jar(jarFile.absolutePath)
             outfile(exeFile.absolutePath)
             errTitle('Error')
@@ -28,10 +28,21 @@ class Launch4jXmlHandler {
                 initialHeapSize(appConfig.initialHeapSize)
                 maxHeapSize(appConfig.maximumHeapSize)
             }
+
+            if(shouldWriteSplashFileXML(appConfig)){
+              splash(){
+                  file(appConfig.splashFile.absolutePath)
+              }
+            }
+
         }
     }
 
-    void writeXmlConfigContentsTo(File xmlFile) {
+    private static boolean shouldWriteSplashFileXML(AppConfig appConfig){
+        appConfig.appType == 'gui' && appConfig.splashFile
+    }
+
+    void writeLaunch4jXmlToFile(File xmlFile) {
         def xmlBuilder = new MarkupBuilder(new FileWriter(xmlFile))
         xmlBuilder.expandEmptyElements = true
         xmlBuilder.launch4jConfig(launch4jXml)

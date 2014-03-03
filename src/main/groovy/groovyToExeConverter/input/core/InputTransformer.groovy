@@ -15,13 +15,15 @@ class InputTransformer {
 
         def appConfig = new AppConfig(
                 fileToConvert       : fileToConvert,
+                splashFile          : input.splash ? input.splash as File : null,
                 iconFile            : resolveIconFile(input),
                 destinationDirectory: resolveDestDir(input),
                 temporaryDirectory  : resolveTempDir(input),
-                minJreVersion       : (input.minJre         ?: MIN_JRE_VERSION.defaultValue) as String,
-                initialHeapSize     : (input.initHeapSize   ?: INITIAL_HEAP_SIZE.defaultValue) as int,
-                maximumHeapSize     : (input.maxHeapSize    ?: MAXIMUM_HEAP_SIZE.defaultValue) as int,
-                showStackTrace      : (input.stacktrace     ?: SHOW_STACKTRACE.defaultValue) as boolean,
+                appType             : (input.gui ? 'gui' : 'console') as String,
+                minJreVersion       : (input.minJre ?: MIN_JRE_VERSION.defaultValue) as String,
+                initialHeapSize     : (input.initHeapSize ?: INITIAL_HEAP_SIZE.defaultValue) as int,
+                maximumHeapSize     : (input.maxHeapSize ?: MAXIMUM_HEAP_SIZE.defaultValue) as int,
+                showStackTrace      : (input.stacktrace ?: SHOW_STACKTRACE.defaultValue) as boolean,
                 jarFileName         : removeExtension(fileToConvert.name) + '.jar',
                 exeFileName         : removeExtension(fileToConvert.name) + '.exe'
         )

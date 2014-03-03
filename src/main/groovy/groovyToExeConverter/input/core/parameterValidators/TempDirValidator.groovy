@@ -17,7 +17,7 @@ class TempDirValidator {
         return tempDirPath && tempDirPath.contains(" ")
     }
 
-    static def tempDirIsMissingAndCannotBeDetermined = { Input input ->
+    static def tempDirCannotBeDetermined = { Input input ->
         if (!input.tempDir) return false
 
         String sysTempPath = System.getenv("TEMP")

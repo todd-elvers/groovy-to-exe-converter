@@ -7,20 +7,14 @@ import groovyToExeConverter.fileConverter.FileConverter
 class GroovyToExeFileConverter extends FileConverter {
 
     File convert() {
-        def g2jarConverter = new GroovyToJarFileConverter(
-                appConfig       : this.appConfig,
-                resourceHandler : this.resourceHandler
-        )
-        def jarFile = g2jarConverter.convert()
+        new GroovyToJarFileConverter(
+                appConfig: appConfig,
+                resourceHandler: resourceHandler
+        ).convert()
 
-
-
-        def j2exeConverter = new JarToExeFileConverter(
-                appConfig       : this.appConfig,
-                resourceHandler : this.resourceHandler
-        )
-        def exeFile = j2exeConverter.convert()
-
-        return exeFile
+        new JarToExeFileConverter(
+                appConfig: appConfig,
+                resourceHandler: resourceHandler
+        ).convert()
     }
 }
