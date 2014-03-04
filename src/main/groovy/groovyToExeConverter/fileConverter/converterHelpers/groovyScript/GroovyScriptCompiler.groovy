@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConverter.converterHelpers
+package groovyToExeConverter.fileConverter.converterHelpers.groovyScript
 import groovy.util.logging.Log4j
 import groovyToExeConverter.exception.CompilationException
 import org.codehaus.groovy.tools.FileSystemCompiler
@@ -8,17 +8,18 @@ class GroovyScriptCompiler {
 
     static void compileGroovyScript(File scriptFile, File tempDir) {
         log.debug("Compiling '${scriptFile}'...")
-        try {
-            def args = generateArgsToCompileScriptAndPutClassFilesInDir(scriptFile, tempDir)
-            FileSystemCompiler.commandLineCompile(args)
+        def args = generateArgsToCompileScriptIntoClassFilesInTargetDir(scriptFile, tempDir)
 
-            log.debug("Compilation successful.")
+        try {
+            FileSystemCompiler.commandLineCompile(args)
         } catch (all) {
             throw new CompilationException("Compilation failed - unable to compile '${scriptFile.name}' into .class files.", all.cause)
         }
+
+        log.debug("Compilation successful.")
     }
 
-    private static String[] generateArgsToCompileScriptAndPutClassFilesInDir(File scriptFile, File tempDir) {
-        [scriptFile, "-d", tempDir] as String[]
+    private static String[] generateArgsToCompileScriptIntoClassFilesInTargetDir(File scriptFile, File targetDir) {
+        [scriptFile, "-d", targetDir] as String[]
     }
 }

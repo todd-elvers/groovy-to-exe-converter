@@ -3,27 +3,27 @@ import groovy.util.logging.Log4j
 import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConverter.FileConverter
 
-import static groovyToExeConverter.fileConverter.converterHelpers.GroovyScriptCompiler.compileGroovyScript
-import static groovyToExeConverter.fileConverter.converterHelpers.GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod
+import static groovyToExeConverter.fileConverter.converterHelpers.groovyScript.GroovyScriptCompiler.compileGroovyScript
+import static groovyToExeConverter.fileConverter.converterHelpers.groovyScript.GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod
 
 @Log4j
 class GroovyToJarFileConverter extends FileConverter {
 
-    private def ant = new AntBuilder()
+    final ANT = new AntBuilder()
 
     @Override
     File convert() {
         log.info("${appConfig.fileToConvert.name} --> ${appConfig.jarFileName}")
 
         def groovyScript = resourceHandler.copyFileToTempDir(appConfig.fileToConvert)
-        compileGroovyScript(groovyScript, resourceHandler.TEMP_DIR)
+        compileGroovyScript(groovyScript, appConfig.temporaryDirectory)
         buildJarThenReturnHandle()
     }
 
     private File buildJarThenReturnHandle() {
         log.debug("Building '${appConfig.jarFileName}'...")
-        def jarFile
 
+        def jarFile
         try {
             tellAntNotToOutputAnything()
             jarFile = buildJar()
@@ -35,6 +35,10 @@ class GroovyToJarFileConverter extends FileConverter {
         return jarFile
     }
 
+    private tellAntNotToOutputAnything(){
+        ANT.getProject().getBuildListeners()[0].setMessageOutputLevel(0)
+    }
+
     private File buildJar(){
         final GROOVY_HOME = new File(System.getenv('GROOVY_HOME'))
         def jarFile = resourceHandler.createFileInTempDir(appConfig.jarFileName)
@@ -42,7 +46,7 @@ class GroovyToJarFileConverter extends FileConverter {
 
         log.debug("Dynamically detected '$mainClassName' as main-class.")
 
-        ant.jar(destfile: jarFile, compress: true, index: true) {
+        ANT.jar(destfile: jarFile, compress: true, index: true) {
             fileset(dir: jarFile.parent, includes: mainClassName + '*.class')
 
             //TODO: Expose this to the command line so user can add extra libraries
@@ -55,10 +59,6 @@ class GroovyToJarFileConverter extends FileConverter {
         }
 
         return jarFile
-    }
-
-    private tellAntNotToOutputAnything(){
-        ant.getProject().getBuildListeners()[0].setMessageOutputLevel(0)
     }
 
 }

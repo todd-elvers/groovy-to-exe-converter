@@ -1,6 +1,6 @@
 package groovyToExeConverter.domain
 
-public enum Resources {
+public enum ResourceFileNames {
     G2EXE_RESOURCES(["gradle.properties", "g2exeIcon.ico"]),
     LAUNCH4JC_RESOURCES([
             'launch4j/launch4jc.exe',
@@ -30,7 +30,7 @@ public enum Resources {
 
     final List<String> fileNames
 
-    Resources(List<String> fileNames){
+    ResourceFileNames(List<String> fileNames){
         this.fileNames = fileNames
     }
 

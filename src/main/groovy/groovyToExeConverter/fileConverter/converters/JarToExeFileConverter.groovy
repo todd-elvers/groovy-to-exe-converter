@@ -11,7 +11,6 @@ class JarToExeFileConverter extends FileConverter {
     @Override
     File convert() {
         log.info("${appConfig.jarFileName.padRight(appConfig.fileToConvert.name.length())} --> ${appConfig.exeFileName}")
-
         def jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
         def xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
         def exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName)

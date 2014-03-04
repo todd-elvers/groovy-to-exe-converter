@@ -4,12 +4,12 @@ import groovy.util.OptionAccessor as Input
 
 class InputParser {
 
-    private def cli = new CliBuilder()
+    final CLI = new CliBuilder()
 
     InputParser() {
-        cli.usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
-        cli.header = "Arguments:"
-        cli.with {
+        CLI.usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
+        CLI.header = "Arguments:"
+        CLI.with {
             h(longOpt: 'help', 'Shows usage information')
             _(longOpt: 'version', 'Shows version information')
             _(longOpt: 'stacktrace', 'Prints the full stacktrace of any exception caught')
@@ -27,10 +27,10 @@ class InputParser {
     }
 
     Input parse(String[] args){
-        cli.parse(args)
+        CLI.parse(args)
     }
 
     void printUsage(){
-        cli.usage()
+        CLI.usage()
     }
 }

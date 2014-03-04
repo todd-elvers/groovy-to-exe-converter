@@ -6,15 +6,15 @@ import spock.lang.Ignore
 import spock.lang.Specification
 
 @Ignore("Test helper class.")
-class TempDirectorySpockTest extends Specification {
-    static final File DEFAULT_TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME.toString())
+class TempDirectorySpockIntegrationTest extends Specification {
+    static final File TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME.toString())
 
     def setupSpec() { ensureTemporaryDirectoryIsAccessible() }
-    def cleanupSpec() { FileUtils.deleteQuietly(DEFAULT_TEMP_DIR) }
+    def cleanupSpec() { FileUtils.deleteQuietly(TEMP_DIR) }
 
     private static void ensureTemporaryDirectoryIsAccessible(){
         if(!System.getenv("TEMP")) throw new ConfigurationException("Unable to resolve system's temporary directory.")
-        DEFAULT_TEMP_DIR.mkdir()
+        TEMP_DIR.mkdir()
     }
 
     File getFileFromResourcesDir(String fileName) {

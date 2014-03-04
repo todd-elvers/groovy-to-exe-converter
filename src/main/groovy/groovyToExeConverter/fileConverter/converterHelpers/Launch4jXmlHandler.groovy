@@ -1,7 +1,8 @@
 package groovyToExeConverter.fileConverter.converterHelpers
-
 import groovy.xml.MarkupBuilder
 import groovyToExeConverter.domain.AppConfig
+
+import static groovyToExeConverter.domain.AppConfigDefaults.GUI_APP_TYPE
 
 class Launch4jXmlHandler {
 
@@ -39,7 +40,7 @@ class Launch4jXmlHandler {
     }
 
     private static boolean shouldWriteSplashFileXML(AppConfig appConfig){
-        appConfig.appType == 'gui' && appConfig.splashFile
+        appConfig.appType == GUI_APP_TYPE.toString() && appConfig.splashFile
     }
 
     void writeLaunch4jXmlToFile(File xmlFile) {

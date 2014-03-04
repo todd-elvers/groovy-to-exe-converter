@@ -7,6 +7,8 @@ enum AppConfigDefaults {
     MAXIMUM_HEAP_SIZE(512),
     SHOW_STACKTRACE(false),
     TEMP_DIR_PATH(new File(System.getenv("TEMP")).absolutePath),
+    CONSOLE_APP_TYPE('console'),
+    GUI_APP_TYPE('gui')
 
     final defaultValue
 
@@ -15,6 +17,6 @@ enum AppConfigDefaults {
     }
 
     String toString() {
-        defaultValue.toString()
+        defaultValue as String
     }
 }

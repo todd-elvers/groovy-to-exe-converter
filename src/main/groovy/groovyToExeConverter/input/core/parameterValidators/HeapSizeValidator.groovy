@@ -5,7 +5,7 @@ import groovyToExeConverter.domain.AppConfigDefaults
 
 class HeapSizeValidator {
 
-    final ONE_OR_MORE_DIGITS_ONLY_PATTERN = /^\d{1,}$/
+    static final ONE_OR_MORE_DIGITS_ONLY_PATTERN = /^\d{1,}$/
 
     static def initHeapSizeIsNotNumOrIsZeroOrLess = { Input input ->
         if (!input.initHeapSize) return false

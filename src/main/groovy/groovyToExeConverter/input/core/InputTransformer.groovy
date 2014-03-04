@@ -1,8 +1,8 @@
 package groovyToExeConverter.input.core
-import groovy.util.OptionAccessor as CommandLineInput
+import groovy.util.OptionAccessor as Input
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.domain.Resources
+import groovyToExeConverter.domain.ResourceFileNames
 
 import static groovyToExeConverter.domain.AppConfigDefaults.*
 import static org.apache.commons.io.FilenameUtils.removeExtension
@@ -10,16 +10,15 @@ import static org.apache.commons.io.FilenameUtils.removeExtension
 @Log4j
 class InputTransformer {
 
-    AppConfig transformIntoAppConfig(CommandLineInput input) {
+    AppConfig transformIntoAppConfig(Input input) {
         File fileToConvert = input.fileToConvert as File
-
         def appConfig = new AppConfig(
                 fileToConvert       : fileToConvert,
-                splashFile          : input.splash ? input.splash as File : null,
                 iconFile            : resolveIconFile(input),
                 destinationDirectory: resolveDestDir(input),
                 temporaryDirectory  : resolveTempDir(input),
-                appType             : (input.gui ? 'gui' : 'console') as String,
+                splashFile          : input.splash ? input.splash as File : null,
+                appType             : (input.gui ? GUI_APP_TYPE.defaultValue : CONSOLE_APP_TYPE.defaultValue) as String,
                 minJreVersion       : (input.minJre ?: MIN_JRE_VERSION.defaultValue) as String,
                 initialHeapSize     : (input.initHeapSize ?: INITIAL_HEAP_SIZE.defaultValue) as int,
                 maximumHeapSize     : (input.maxHeapSize ?: MAXIMUM_HEAP_SIZE.defaultValue) as int,
@@ -32,19 +31,19 @@ class InputTransformer {
         return appConfig
     }
 
-    private def resolveTempDir = { CommandLineInput input ->
-        def tempDirPath = (input.tempDir ?: TEMP_DIR_PATH.defaultValue) as String
+    private def resolveTempDir = { Input input ->
+        def tempDirPath = (input.tempDir ?: TEMP_DIR_PATH) as String
         new File(tempDirPath, G2EXE_TEMP_DIR_NAME as String)
     }
 
-    private def resolveDestDir = { CommandLineInput input ->
+    private def resolveDestDir = { Input input ->
         File fileToConvert = input.fileToConvert as File
         (input.destDir ?: fileToConvert.absoluteFile.parent) as File
     }
 
-    private def resolveIconFile = { CommandLineInput input ->
+    private def resolveIconFile = { Input input ->
         File tempDir = resolveTempDir(input)
-        def defaultIconFileName = Resources.G2EXE_RESOURCES.fileNames.find { String resource -> resource.endsWith("ico") } as String
+        def defaultIconFileName = ResourceFileNames.G2EXE_RESOURCES.fileNames.find { String resource -> resource.endsWith("ico") } as String
         input.icon ? new File(input.icon as String) : new File(tempDir, defaultIconFileName)
     }
 }

@@ -14,7 +14,7 @@ class PropertiesReader {
     }
 
     private static InputStream resolveAppPropFileInputStream(){
-        def propFileInputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME)
+        def propFileInputStream = Thread.currentThread().contextClassLoader.getResourceAsStream(PROPERTIES_FILE_NAME)
         if(!propFileInputStream){
             propFileInputStream = FileUtils.openInputStream(PROPERTIES_FILE_NAME as File)
         }

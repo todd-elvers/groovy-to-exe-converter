@@ -24,5 +24,4 @@ class TempDirValidator {
         return !sysTempPath
     }
 
-
 }
