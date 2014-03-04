@@ -10,8 +10,6 @@ import static groovyToExeConverter.fileConverter.FileConverterFactory.makeFileCo
 class GroovyToExeConverterRunner implements Runnable {
 
 
-    //TODO: Add unit testing for important components
-    //TODO: Update readme
     static void main(String[] args) {
         new GroovyToExeConverterRunner(input: args).run()
     }
