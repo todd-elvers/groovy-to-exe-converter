@@ -49,7 +49,6 @@ class GroovyToJarFileConverter extends FileConverter {
         ANT.jar(destfile: jarFile, compress: true, index: true) {
             fileset(dir: jarFile.parent, includes: mainClassName + '*.class')
 
-            //TODO: Expose this to the command line so user can add extra libraries
             zipgroupfileset(dir: GROOVY_HOME, includes: 'embeddable/groovy-all-*.jar')
             zipgroupfileset(dir: GROOVY_HOME, includes: 'lib/commons*.jar')
 
