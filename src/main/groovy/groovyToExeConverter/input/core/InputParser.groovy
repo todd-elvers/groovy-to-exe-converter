@@ -8,7 +8,7 @@ class InputParser {
 
     InputParser() {
         CLI.usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
-        CLI.header = "Arguments:"
+        CLI.header = "arguments:"
         CLI.with {
             h(longOpt: 'help', 'Shows usage information')
             _(longOpt: 'version', 'Shows version information')
@@ -24,7 +24,7 @@ class InputParser {
             _(longOpt: 'gui', "Optional. This flag instructs g2exe to generate an exe that operates as a native gui application.  This flag is incompatible with --console.\n(Default = this flag is not present)")
             s(longOpt: 'splash', args: 1, argName: 'image.bmp', "Optional. Embeds a .bmp image in the exe that is displayed as a splash screen when launched. This flag is only respected when --gui is also present.\n(Default = none)")
         }
-        CLI.footer = "Source: http://github.com/todd-elvers/g2exe"
+        CLI.footer = "\n[source code @ http://github.com/todd-elvers/g2exe]"
     }
 
     Input parse(String[] args){
