@@ -1,8 +1,10 @@
 package groovyToExeConverter.input.core.parameterValidators
 import groovy.util.OptionAccessor as Input
+import groovy.util.logging.Log4j
 
 import static org.apache.commons.io.FilenameUtils.isExtension
 
+@Log4j
 class SplashFileValidator {
 
     static def splashDoesNotExistOrIsNotFile = { Input input ->

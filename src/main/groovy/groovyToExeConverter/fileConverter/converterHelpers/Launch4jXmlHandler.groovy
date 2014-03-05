@@ -14,7 +14,7 @@ class Launch4jXmlHandler {
             headerType(appConfig.appType)
             jar(jarFile.absolutePath)
             outfile(exeFile.absolutePath)
-            errTitle('Error')
+            errTitle(exeFile.name)
             cmdLine()
             chdir('.')
             priority('normal')
@@ -29,13 +29,15 @@ class Launch4jXmlHandler {
                 initialHeapSize(appConfig.initialHeapSize)
                 maxHeapSize(appConfig.maximumHeapSize)
             }
-
+            messages(){
+                startupErr("An error occurred while starting ${exeFile.name}.\n\nIf you specified '--splash' on the command line, make sure " +
+                        "you passed in a .bmp file that has 24-bit color.  Any color depth besides 24-bit will cause an error.")
+            }
             if(shouldWriteSplashFileXML(appConfig)){
               splash(){
                   file(appConfig.splashFile.absolutePath)
               }
             }
-
         }
     }
 

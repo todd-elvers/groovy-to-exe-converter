@@ -22,7 +22,7 @@ class InputParser {
             xmx(longOpt: 'maxHeapSize', args: 1, argName: 'size', "Optional. The JVM's maximum heap size in MB.\n(Default = 512)")
             _(longOpt: 'console', "Optional. This flag instructs g2exe to generate an exe that operates as a native command line program. This flag is incompatible with --gui.\n(Default = this flag is present)")
             _(longOpt: 'gui', "Optional. This flag instructs g2exe to generate an exe that operates as a native gui application.  This flag is incompatible with --console.\n(Default = this flag is not present)")
-            s(longOpt: 'splash', args: 1, argName: 'image.bmp', "Optional. Embeds a .bmp image in the exe that is displayed as a splash screen when launched. This flag is only respected when --gui is also present.\n(Default = none)")
+            s(longOpt: 'splash', args: 1, argName: 'image.bmp', "Optional. Embeds a 24-bit .bmp image in the exe and displays it as a splash screen when executed. This flag is only respected when --gui is also present. Only 24-bit color is supported.\n(Default = none)")
         }
         CLI.footer = "\n[source code @ http://github.com/todd-elvers/g2exe]"
     }
