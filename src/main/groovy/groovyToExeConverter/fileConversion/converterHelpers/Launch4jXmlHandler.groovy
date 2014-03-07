@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConverter.converterHelpers
+package groovyToExeConverter.fileConversion.converterHelpers
 import groovy.xml.MarkupBuilder
 import groovyToExeConverter.domain.AppConfig
 
@@ -8,7 +8,7 @@ class Launch4jXmlHandler {
 
     private def launch4jXml
 
-    void generateLaunch4jXml(AppConfig appConfig, File jarFile, File exeFile) {
+    void generateLaunch4jXml(AppConfig appConfig, File jarFile, File exeFile, File imgFile) {
         launch4jXml = {
             dontWrapJar(false)
             headerType(appConfig.appType)
@@ -30,12 +30,11 @@ class Launch4jXmlHandler {
                 maxHeapSize(appConfig.maximumHeapSize)
             }
             messages(){
-                startupErr("An error occurred while starting ${exeFile.name}.\n\nIf you specified '--splash' on the command line, make sure " +
-                        "you passed in a .bmp file that has 24-bit color.  Any color depth besides 24-bit will cause an error.")
+                startupErr("An error occurred while starting ${exeFile.name}.")
             }
             if(shouldWriteSplashFileXML(appConfig)){
               splash(){
-                  file(appConfig.splashFile.absolutePath)
+                  file(imgFile.absolutePath)
               }
             }
         }

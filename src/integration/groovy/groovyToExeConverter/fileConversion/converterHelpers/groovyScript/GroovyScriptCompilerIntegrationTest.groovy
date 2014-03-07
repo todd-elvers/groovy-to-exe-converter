@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConverter.converterHelpers.groovyScript
+package groovyToExeConverter.fileConversion.converterHelpers.groovyScript
 
 import org.apache.commons.io.FilenameUtils
 import testHelpers.TempDirectorySpockIntegrationTest

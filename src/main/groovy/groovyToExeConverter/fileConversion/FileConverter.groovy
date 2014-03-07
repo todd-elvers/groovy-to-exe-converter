@@ -1,8 +1,8 @@
-package groovyToExeConverter.fileConverter
+package groovyToExeConverter.fileConversion
 
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.fileConverter.converterHelpers.resource.ResourceHandler
+import groovyToExeConverter.fileConversion.converterHelpers.resource.ResourceHandler
 
 @Log4j
 abstract class FileConverter {

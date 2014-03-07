@@ -1,10 +1,10 @@
-package groovyToExeConverter.fileConverter.converters
+package groovyToExeConverter.fileConversion.converters
 import groovy.util.logging.Log4j
 import groovyToExeConverter.exception.CompilationException
-import groovyToExeConverter.fileConverter.FileConverter
+import groovyToExeConverter.fileConversion.FileConverter
 
-import static groovyToExeConverter.fileConverter.converterHelpers.groovyScript.GroovyScriptCompiler.compileGroovyScript
-import static groovyToExeConverter.fileConverter.converterHelpers.groovyScript.GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod
+import static groovyToExeConverter.fileConversion.converterHelpers.groovyScript.GroovyScriptCompiler.compileGroovyScript
+import static groovyToExeConverter.fileConversion.converterHelpers.groovyScript.GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod
 
 @Log4j
 class GroovyToJarFileConverter extends FileConverter {

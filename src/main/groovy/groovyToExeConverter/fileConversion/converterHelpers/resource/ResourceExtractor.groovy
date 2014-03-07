@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConverter.converterHelpers.resource
+package groovyToExeConverter.fileConversion.converterHelpers.resource
 
 import groovy.io.FileType
 import groovy.util.logging.Log4j
@@ -7,8 +7,8 @@ import groovyToExeConverter.exception.ResourceExtractionException
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
-import static groovyToExeConverter.fileConverter.converterHelpers.PropertiesReader.readAppProperty
-import static groovyToExeConverter.fileConverter.converterHelpers.PropertiesReader.readPropertyFromFile
+import static groovyToExeConverter.fileConversion.converterHelpers.PropertiesReader.readAppProperty
+import static groovyToExeConverter.fileConversion.converterHelpers.PropertiesReader.readPropertyFromFile
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile
 
 @Log4j

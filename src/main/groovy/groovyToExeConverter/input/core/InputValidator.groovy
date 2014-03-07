@@ -33,7 +33,7 @@ class InputValidator {
             case maxHeapSizeLessThanInitHeapSize     : throw new InputValidationException("The value for 'maxHeapSize' cannot be less than the value for 'initHeapSize'.")
             case consoleAndGuiFlagsBothSet           : throw new InputValidationException("Both --console and --gui cannot be set at the same time.")
             case splashDoesNotExistOrIsNotFile       : throw new InputValidationException("The 'splash' parameter points to a file that doesn't exist or is a directory.")
-            case splashInIncorrectFormat             : throw new InputValidationException("The 'splash' parameter points to a file with an invalid file type - only .bmp files are supported.")
+            case splashInIncorrectFormat             : throw new InputValidationException("The 'splash' parameter points to a file with an invalid file type - only bmp, jpg, wbmp, jpeg, png, or gif files are supported.")
         }
     }
 

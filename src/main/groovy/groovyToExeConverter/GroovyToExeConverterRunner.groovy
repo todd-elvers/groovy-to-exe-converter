@@ -4,7 +4,7 @@ import groovyToExeConverter.domain.AppConfig
 import groovyToExeConverter.input.InputProcessor
 import groovyToExeConverter.util.EnvironmentValidator
 
-import static groovyToExeConverter.fileConverter.FileConverterFactory.makeFileConverter
+import static groovyToExeConverter.fileConversion.FileConverterFactory.makeFileConverter
 
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {

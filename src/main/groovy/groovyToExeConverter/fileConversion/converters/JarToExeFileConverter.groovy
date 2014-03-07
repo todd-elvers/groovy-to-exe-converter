@@ -1,9 +1,14 @@
-package groovyToExeConverter.fileConverter.converters
+package groovyToExeConverter.fileConversion.converters
 
 import groovy.util.logging.Log4j
+import groovyToExeConverter.domain.AppConfigDefaults
 import groovyToExeConverter.exception.CompilationException
-import groovyToExeConverter.fileConverter.FileConverter
-import groovyToExeConverter.fileConverter.converterHelpers.Launch4jXmlHandler
+import groovyToExeConverter.fileConversion.FileConverter
+import groovyToExeConverter.fileConversion.converterHelpers.BitmapImageWriter
+import groovyToExeConverter.fileConversion.converterHelpers.Launch4jXmlHandler
+import org.apache.commons.io.FilenameUtils
+
+import static org.apache.commons.io.FilenameUtils.removeExtension
 
 @Log4j
 class JarToExeFileConverter extends FileConverter {
@@ -11,12 +16,19 @@ class JarToExeFileConverter extends FileConverter {
     @Override
     File convert() {
         log.info("${appConfig.jarFileName.padRight(appConfig.fileToConvert.name.length())} --> ${appConfig.exeFileName}")
-        def jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
+
         def xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
+        def jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
         def exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName)
 
+        def bmpFile
+        if(shouldRewriteSplashFileAsBitmap()){
+            bmpFile = resourceHandler.createFileInTempDir(removeExtension(appConfig.splashFile.name) + '.bmp')
+            BitmapImageWriter.writeImageAsBitmap(appConfig.splashFile, bmpFile)
+        }
+
         new Launch4jXmlHandler().with {
-            generateLaunch4jXml(appConfig, jarFile, exeFile)
+            generateLaunch4jXml(appConfig, jarFile, exeFile, bmpFile)
             writeLaunch4jXmlToFile(xmlFile)
         }
 
@@ -24,6 +36,10 @@ class JarToExeFileConverter extends FileConverter {
         validateExeCreation(exeFile)
 
         return exeFile
+    }
+
+    private boolean shouldRewriteSplashFileAsBitmap(){
+        appConfig.appType == AppConfigDefaults.GUI_APP_TYPE.defaultValue && appConfig.splashFile
     }
 
     private void executeLaunch4jcWithXmlFile(File launch4jcXmlFile) {

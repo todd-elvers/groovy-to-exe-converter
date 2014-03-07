@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConverter.converterHelpers.resource
+package groovyToExeConverter.fileConversion.converterHelpers.resource
 
 import groovy.util.logging.Log4j
 import org.apache.commons.io.FileUtils

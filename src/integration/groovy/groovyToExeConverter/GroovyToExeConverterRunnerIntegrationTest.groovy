@@ -22,9 +22,7 @@ class GroovyToExeConverterRunnerIntegrationTest extends TempDirectorySpockIntegr
             File jarFile = new File(TEMP_DIR, removeExtension(groovyScriptFile.name) + '.jar')
             File exeFile = new File(TEMP_DIR, removeExtension(groovyScriptFile.name) + '.exe')
 
-            File splashFile = new File("C:/users/todd/desktop/splash.bmp")
-
-            String[] args = ['-f', groovyScriptFile, '--destDir', TEMP_DIR, '--gui', "-s", splashFile]
+            String[] args = ['-f', groovyScriptFile, '--destDir', TEMP_DIR, '--gui']
 
         when:
             GroovyToExeConverterRunner.main(args)
