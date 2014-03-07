@@ -51,7 +51,7 @@ g2exe supports setting:
 
 For more information on the available parameters, or their default values, run:
 
-```g2exe --help```.
+```g2exe --help```
 
 #####Application Type
 - If the flag `--console` is provided to g2exe, the executable created will operate like a native Windows command line program: opening a command prompt window if one isn't open and printing output to the console.
