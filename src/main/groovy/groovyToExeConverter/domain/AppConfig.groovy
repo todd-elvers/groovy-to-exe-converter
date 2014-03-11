@@ -1,5 +1,8 @@
 package groovyToExeConverter.domain
 
+import groovy.transform.Immutable
+
+@Immutable(knownImmutableClasses = [File])
 class AppConfig {
     File fileToConvert
     File destinationDirectory

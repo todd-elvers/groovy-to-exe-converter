@@ -1,9 +1,9 @@
-package groovyToExeConverter.fileConversion.converterHelpers.resource
+package groovyToExeConverter.fileConversion
+
 import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.fileConversion.FileConverter
-import groovyToExeConverter.fileConversion.FileConverterFactory
-import groovyToExeConverter.fileConversion.converters.GroovyToExeFileConverter
-import groovyToExeConverter.fileConversion.converters.JarToExeFileConverter
+import groovyToExeConverter.fileConversion.JarToExe.JarToExeFileConverter
+import groovyToExeConverter.fileConversion.common.resource.ResourceHandlerFactory
+import groovyToExeConverter.fileConversion.groovyToExe.GroovyToExeFileConverter
 import spock.lang.Specification
 
 class FileConverterFactoryUnitTest extends Specification {

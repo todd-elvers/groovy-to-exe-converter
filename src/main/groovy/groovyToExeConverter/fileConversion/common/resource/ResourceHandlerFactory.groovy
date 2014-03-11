@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConversion.converterHelpers.resource
+package groovyToExeConverter.fileConversion.common.resource
 
 import groovyToExeConverter.domain.AppConfig
 

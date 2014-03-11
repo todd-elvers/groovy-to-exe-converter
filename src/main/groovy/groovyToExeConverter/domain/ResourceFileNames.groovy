@@ -1,6 +1,9 @@
 package groovyToExeConverter.domain
 
-public enum ResourceFileNames {
+import groovy.transform.TupleConstructor
+
+@TupleConstructor
+enum ResourceFileNames {
     G2EXE_RESOURCES(["gradle.properties", "g2exeIcon.ico"]),
     LAUNCH4JC_RESOURCES([
             'launch4j/launch4jc.exe',
@@ -30,11 +33,7 @@ public enum ResourceFileNames {
 
     final List<String> fileNames
 
-    ResourceFileNames(List<String> fileNames){
-        this.fileNames = fileNames
-    }
-
-    public static List<String> asFlattenedList() {
+    static List<String> asFlattenedList() {
         return values().fileNames.flatten()
     }
 }

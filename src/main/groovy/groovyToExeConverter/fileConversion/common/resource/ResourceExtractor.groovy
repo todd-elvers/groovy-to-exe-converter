@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConversion.converterHelpers.resource
+package groovyToExeConverter.fileConversion.common.resource
 
 import groovy.io.FileType
 import groovy.util.logging.Log4j
@@ -7,8 +7,8 @@ import groovyToExeConverter.exception.ResourceExtractionException
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
-import static groovyToExeConverter.fileConversion.converterHelpers.PropertiesReader.readAppProperty
-import static groovyToExeConverter.fileConversion.converterHelpers.PropertiesReader.readPropertyFromFile
+import static groovyToExeConverter.util.PropertiesReader.readAppProperty
+import static groovyToExeConverter.util.PropertiesReader.readPropertyFromFile
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile
 
 @Log4j
@@ -35,8 +35,8 @@ class ResourceExtractor {
 
     private boolean versionMismatch() {
         try {
-            def tempDirPropFile = new File(TEMP_DIR, "gradle.properties")
-            def prevG2exeVersion = readPropertyFromFile("version", tempDirPropFile)
+            def prevG2exePropFile = new File(TEMP_DIR, "gradle.properties")
+            def prevG2exeVersion = readPropertyFromFile("version", prevG2exePropFile)
             def currentG2exeVersion = readAppProperty("version")
 
             return prevG2exeVersion != currentG2exeVersion
@@ -45,7 +45,8 @@ class ResourceExtractor {
     }
 
     private void extractResourcesToTempDir() {
-        log.debug("Temp directory not found - creating one and extracting resources there.")
+        log.debug("Temporary directory NOT found.")
+        log.debug("Creating temporary directory @ '${TEMP_DIR}'")
 
         RESOURCE_FILE_NAMES.each { String resourceFileName ->
             log.debug("Extracting resource '$resourceFileName' to temporary directory.")
@@ -70,7 +71,8 @@ class ResourceExtractor {
     }
 
     private void deleteAllInTempDirExceptResources() {
-        log.debug("Cleaning temp directory.")
+        log.debug("Temporary directory found.")
+        log.debug("Removing all files from temporary directory that aren't g2exe resources.")
 
         TEMP_DIR.eachFile(FileType.FILES) { File file ->
             RESOURCE_FILE_NAMES.contains(file.name) ?: file.delete()

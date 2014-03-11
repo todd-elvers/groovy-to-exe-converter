@@ -1,9 +1,9 @@
 package groovyToExeConverter.fileConversion
 
 import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.fileConversion.converterHelpers.resource.ResourceHandlerFactory
-import groovyToExeConverter.fileConversion.converters.GroovyToExeFileConverter
-import groovyToExeConverter.fileConversion.converters.JarToExeFileConverter
+import groovyToExeConverter.fileConversion.JarToExe.JarToExeFileConverter
+import groovyToExeConverter.fileConversion.common.resource.ResourceHandlerFactory
+import groovyToExeConverter.fileConversion.groovyToExe.GroovyToExeFileConverter
 
 import static org.apache.commons.io.FilenameUtils.isExtension
 

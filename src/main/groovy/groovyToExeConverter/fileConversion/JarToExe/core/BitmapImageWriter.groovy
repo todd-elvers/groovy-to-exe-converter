@@ -1,13 +1,10 @@
-package groovyToExeConverter.fileConversion.converterHelpers
-
-import org.apache.commons.io.FilenameUtils
+package groovyToExeConverter.fileConversion.JarToExe.core
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 
 import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
-import static org.apache.commons.io.FilenameUtils.removeExtension
 
 class BitmapImageWriter {
 

@@ -27,7 +27,7 @@ class GroovyToExeConverterRunnerUnitTest extends Specification {
 
         then:
             1 * runner.environmentValidator.validate()
-            1 * runner.inputProcessor.processIntoAppConfig(runner.input) >> new AppConfig()
+            1 * runner.inputProcessor.processIntoAppConfig(runner.input) >> new AppConfig(null)
             1 * FileConverterFactory.makeFileConverter(_ as AppConfig) >> fileConverter
             1 * fileConverter.convert()
     }

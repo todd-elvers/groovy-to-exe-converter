@@ -18,11 +18,11 @@ class GroovyToExeConverterRunnerIntegrationTest extends TempDirectorySpockIntegr
 
     void "can convert groovy script to an executable file"() {
         given:
-            File groovyScriptFile = getFileFromResourcesDir("TestScriptWithoutClasses.groovy")
+            File groovyScriptFile = getFileFromResourcesDir("TestScriptWithClasses.groovy")
             File jarFile = new File(TEMP_DIR, removeExtension(groovyScriptFile.name) + '.jar')
             File exeFile = new File(TEMP_DIR, removeExtension(groovyScriptFile.name) + '.exe')
 
-            String[] args = ['-f', groovyScriptFile, '--destDir', TEMP_DIR, '--gui']
+            String[] args = ['-f', groovyScriptFile, '--destDir', TEMP_DIR, '--gui', '--minJre', '1.4.2', '--stacktrace']
 
         when:
             GroovyToExeConverterRunner.main(args)
@@ -32,7 +32,6 @@ class GroovyToExeConverterRunnerIntegrationTest extends TempDirectorySpockIntegr
             jarFile.exists()
             exeFile.exists()
     }
-
 
     void "can convert jar file to an executable file"() {
         given:

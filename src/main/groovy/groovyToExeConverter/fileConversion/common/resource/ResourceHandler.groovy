@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConversion.converterHelpers.resource
+package groovyToExeConverter.fileConversion.common.resource
 
 import groovy.util.logging.Log4j
 import org.apache.commons.io.FileUtils
@@ -22,7 +22,7 @@ class ResourceHandler {
         return file
     }
 
-    File resolveLaunch4jcExecutableHandle() {
+    File resolveLaunch4jcExeHandle() {
         String launch4jcExeResourceFileName = LAUNCH4JC_RESOURCES.fileNames.find { 'launch4jc.exe' }
         return findFileInTempDir(launch4jcExeResourceFileName)
     }

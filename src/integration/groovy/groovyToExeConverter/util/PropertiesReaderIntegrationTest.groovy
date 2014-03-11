@@ -1,8 +1,8 @@
-package groovyToExeConverter.fileConversion.converterHelpers
+package groovyToExeConverter.util
 
 import testHelpers.TempDirectorySpockIntegrationTest
 
-import static groovyToExeConverter.fileConversion.converterHelpers.PropertiesReader.readPropertyFromFile
+import static groovyToExeConverter.util.PropertiesReader.readPropertyFromFile
 
 class PropertiesReaderIntegrationTest extends TempDirectorySpockIntegrationTest {
 

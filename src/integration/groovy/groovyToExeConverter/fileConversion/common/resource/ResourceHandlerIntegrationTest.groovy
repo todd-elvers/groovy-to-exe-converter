@@ -1,4 +1,4 @@
-package groovyToExeConverter.fileConversion.converterHelpers.resource
+package groovyToExeConverter.fileConversion.common.resource
 
 import testHelpers.TempDirectorySpockIntegrationTest
 
@@ -49,7 +49,7 @@ class ResourceHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
             File expectedLaunch4jcFile = new File(launch4jDir, "launch4jc.exe")
             expectedLaunch4jcFile.createNewFile()
         when:
-            File actualLaunch4jcFile = resourceHandler.resolveLaunch4jcExecutableHandle()
+            File actualLaunch4jcFile = resourceHandler.resolveLaunch4jcExeHandle()
         then:
             actualLaunch4jcFile == expectedLaunch4jcFile
     }
@@ -57,7 +57,7 @@ class ResourceHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
     def "when launch4jc.exe doesn't exist in temp dir, resolveLaunch4jcExecutableHandle() throws FileNotFoundException"() {
         when:
             deleteDirectory(new File(TEMP_DIR, "launch4j"))
-            resourceHandler.resolveLaunch4jcExecutableHandle()
+            resourceHandler.resolveLaunch4jcExeHandle()
         then:
             thrown(FileNotFoundException)
     }

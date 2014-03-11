@@ -1,12 +1,11 @@
-package groovyToExeConverter.fileConversion.converters
-
+package groovyToExeConverter.fileConversion.JarToExe
 import groovy.util.logging.Log4j
 import groovyToExeConverter.domain.AppConfigDefaults
 import groovyToExeConverter.exception.CompilationException
 import groovyToExeConverter.fileConversion.FileConverter
-import groovyToExeConverter.fileConversion.converterHelpers.BitmapImageWriter
-import groovyToExeConverter.fileConversion.converterHelpers.Launch4jXmlHandler
-import org.apache.commons.io.FilenameUtils
+import groovyToExeConverter.fileConversion.JarToExe.core.BitmapImageWriter
+import groovyToExeConverter.fileConversion.JarToExe.core.Launch4jCommandRunner
+import groovyToExeConverter.fileConversion.JarToExe.core.Launch4jXmlHandler
 
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
@@ -27,14 +26,18 @@ class JarToExeFileConverter extends FileConverter {
             BitmapImageWriter.writeImageAsBitmap(appConfig.splashFile, bmpFile)
         }
 
+
         new Launch4jXmlHandler().with {
             generateLaunch4jXml(appConfig, jarFile, exeFile, bmpFile)
             writeLaunch4jXmlToFile(xmlFile)
         }
+        new Launch4jCommandRunner().with {
+            buildCommand(resourceHandler.resolveLaunch4jcExeHandle(), xmlFile)
+            runCommand()
+        }
 
-        executeLaunch4jcWithXmlFile(xmlFile)
+
         validateExeCreation(exeFile)
-
         return exeFile
     }
 
@@ -42,25 +45,9 @@ class JarToExeFileConverter extends FileConverter {
         appConfig.appType == AppConfigDefaults.GUI_APP_TYPE.defaultValue && appConfig.splashFile
     }
 
-    private void executeLaunch4jcWithXmlFile(File launch4jcXmlFile) {
-        def launch4jcExeFile = resourceHandler.resolveLaunch4jcExecutableHandle()
-        def launch4jcCommand = "\"${launch4jcExeFile}\" \"${launch4jcXmlFile}\""
-
-        Process command = launch4jcCommand.execute()
-        pipeCommandOutputToConsole(command)
-    }
-
-    private static void pipeCommandOutputToConsole(Process command){
-        List commandOutputLines = command.text?.split("\r\n")
-        boolean commandFailed = !commandOutputLines?.any { it.contains("Successfully") }
-        commandOutputLines.each { String line ->
-            if (commandFailed) log.info(line.replace('launch4j: ', ''))
-        }
-    }
-
     private static void validateExeCreation(File exeFile) {
         if (!exeFile.exists()) {
-            throw new CompilationException("Launch4j command line operation was not successful.")
+            throw new CompilationException("Failed during JAR --> EXE :: Launch4j command line operation was not successful.")
         }
     }
 

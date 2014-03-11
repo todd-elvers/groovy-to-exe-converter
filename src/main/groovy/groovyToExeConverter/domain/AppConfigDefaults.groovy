@@ -1,5 +1,8 @@
 package groovyToExeConverter.domain
 
+import groovy.transform.TupleConstructor
+
+@TupleConstructor
 enum AppConfigDefaults {
     G2EXE_TEMP_DIR_NAME("g2exe"),
     MIN_JRE_VERSION("1.5.0"),
@@ -10,11 +13,7 @@ enum AppConfigDefaults {
     CONSOLE_APP_TYPE('console'),
     GUI_APP_TYPE('gui')
 
-    final defaultValue
-
-    AppConfigDefaults(defaultValue) {
-        this.defaultValue = defaultValue
-    }
+    final def defaultValue
 
     String toString() {
         defaultValue as String
