@@ -9,7 +9,7 @@ import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 class BitmapImageWriter {
 
     /**
-     * This takes in an image of type .bmp, .jpg, .wbmp, .jpeg, .png, or .gif and rewrites it
+     * This takes in an image of type .bmp, .jpg, .wbmp, .jpeg, or .gif and rewrites it
      * to a given bitmap file as a 24-bit bitmap image.  Launch4j only accepts 24-bit bitmaps as splash files,
      * so this method helps workaround that limitation by allowing more image formats and just converting
      * them to 24-bit bitmaps only the fly.

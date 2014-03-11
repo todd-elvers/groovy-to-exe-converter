@@ -18,7 +18,7 @@ class SplashFileValidator {
         if(!input.splash) return false
 
         File splashFile = input.splash as File
-        return !isExtension(splashFile.name, ['bmp', 'jpg', 'wbmp', 'jpeg', 'png', 'gif'])
+        return !isExtension(splashFile.name, ['bmp', 'jpg', 'wbmp', 'jpeg', 'gif'])
     }
 
 }
