@@ -20,7 +20,7 @@ Build g2exe yourself:
 
 If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop.  You can override this behavior by manipulating the arguments passed into `buildExe` in build-executable.gradle.
  
-Alternatively, you could download the latest g2exe.exe file from: [latest g2exe build](https://github.com/todd-elvers/g2exe/releases/download/1.0.0/g2exe.exe).
+Alternatively, you could download the latest g2exe.exe file from: [latest g2exe build](https://github.com/todd-elvers/g2exe/releases/download/1.1.1/g2exe.exe).
 
 
 ##Usage
