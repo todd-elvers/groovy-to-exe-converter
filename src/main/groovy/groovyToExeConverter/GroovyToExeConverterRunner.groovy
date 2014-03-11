@@ -10,6 +10,9 @@ import static groovyToExeConverter.fileConversion.FileConverterFactory.makeFileC
 class GroovyToExeConverterRunner implements Runnable {
 
 
+    //TODO: Manually test with all images types
+    //TODO: Manually test all input parameters
+    //TODO: Add comments to ambiguous code
     static void main(String[] args) {
         new GroovyToExeConverterRunner(input: args).run()
     }

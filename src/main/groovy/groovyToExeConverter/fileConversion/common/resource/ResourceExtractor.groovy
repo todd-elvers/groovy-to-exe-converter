@@ -64,8 +64,11 @@ class ResourceExtractor {
         }
     }
 
+    /**
+     * Try and resolve the give resource by reading it in from /main/resources/.
+     * If that fails, try and just open the file locally.  Otherwise, return null.
+     */
     private static InputStream resolveResourceInputStream(String resourceFileName) {
-        // First try and read the resource from /main/resources/, if that fails try opening the file locally
         def resourceInputStream = Thread.currentThread().contextClassLoader.getResourceAsStream(resourceFileName)
         resourceInputStream ?: FileUtils.openInputStream(resourceFileName as File)
     }
