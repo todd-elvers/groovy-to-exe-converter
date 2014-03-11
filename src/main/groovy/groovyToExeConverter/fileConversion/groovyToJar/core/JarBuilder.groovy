@@ -17,7 +17,7 @@ class JarBuilder {
             tellAntNotToOutputAnything()
             buildJar()
         } catch (all) {
-            throw new CompilationException("Failed during GROOVY --> JAR :: Ant was unable to build a .jar file from the given input.", all.cause)
+            throw new CompilationException("Ant was unable to build a .jar file from the given input.", all.cause)
         }
 
         log.debug("Build successful.")

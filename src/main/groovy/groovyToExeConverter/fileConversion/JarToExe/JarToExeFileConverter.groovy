@@ -47,7 +47,7 @@ class JarToExeFileConverter extends FileConverter {
 
     private static void validateExeCreation(File exeFile) {
         if (!exeFile.exists()) {
-            throw new CompilationException("Failed during JAR --> EXE :: Launch4j command line operation was not successful.")
+            throw new CompilationException("Launch4j command line operation was not successful.")
         }
     }
 
