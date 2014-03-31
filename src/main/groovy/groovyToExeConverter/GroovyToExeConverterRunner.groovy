@@ -17,8 +17,8 @@ class GroovyToExeConverterRunner implements Runnable {
 
 
 
-    def inputProcessor = new InputProcessor()
-    def environmentValidator = new EnvironmentValidator()
+    final inputProcessor = new InputProcessor()
+    final environmentValidator = new EnvironmentValidator()
     String[] input
 
     @Override

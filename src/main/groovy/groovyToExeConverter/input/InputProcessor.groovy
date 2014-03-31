@@ -11,9 +11,9 @@ import groovyToExeConverter.util.PropertiesReader
 @Log4j
 class InputProcessor {
 
-    private def inputParser = new InputParser()
-    private def inputValidator = new InputValidator()
-    private def inputTransformer = new InputTransformer()
+    final inputParser = new InputParser()
+    final inputValidator = new InputValidator()
+    final inputTransformer = new InputTransformer()
 
     AppConfig processIntoAppConfig(String[] args) {
         Input input = inputParser.parse(args)
