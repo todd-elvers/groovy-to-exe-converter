@@ -1,6 +1,6 @@
 package groovyToExeConverter.util
 
-import groovyToExeConverter.exception.ConfigurationException
+import groovyToExeConverter.model.exception.ConfigurationException
 
 class EnvironmentValidator {
 

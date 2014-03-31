@@ -1,10 +1,9 @@
 package groovyToExeConverter
 import groovy.util.logging.Log4j
-import groovyToExeConverter.domain.AppConfig
+import groovyToExeConverter.core.FileConverterFactory
 import groovyToExeConverter.input.InputProcessor
+import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.util.EnvironmentValidator
-
-import static groovyToExeConverter.fileConversion.FileConverterFactory.makeFileConverter
 
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
@@ -29,9 +28,7 @@ class GroovyToExeConverterRunner implements Runnable {
 
             if (appConfig) {
                 log.info("Converting...")
-
-                makeFileConverter(appConfig).convert()
-
+                FileConverterFactory.makeFileConverter(appConfig).convert()
                 log.info("Conversion successful!")
             }
         } catch (Exception exception) {

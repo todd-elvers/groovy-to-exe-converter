@@ -2,10 +2,10 @@ package groovyToExeConverter.input
 
 import groovy.util.OptionAccessor as Input
 import groovy.util.logging.Log4j
-import groovyToExeConverter.domain.AppConfig
 import groovyToExeConverter.input.core.InputParser
 import groovyToExeConverter.input.core.InputTransformer
 import groovyToExeConverter.input.core.InputValidator
+import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.util.PropertiesReader
 
 @Log4j

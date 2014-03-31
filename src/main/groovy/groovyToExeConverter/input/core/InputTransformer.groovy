@@ -2,10 +2,10 @@ package groovyToExeConverter.input.core
 
 import groovy.util.OptionAccessor as Input
 import groovy.util.logging.Log4j
-import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.domain.ResourceFileNames
+import groovyToExeConverter.model.AppConfig
+import groovyToExeConverter.model.ResourceFileNames
 
-import static groovyToExeConverter.domain.AppConfigDefaults.*
+import static groovyToExeConverter.model.AppConfigDefaults.*
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
 @Log4j
@@ -19,11 +19,11 @@ class InputTransformer {
                 temporaryDirectory  : resolveTempDir(input),
                 destinationDirectory: resolveDestDir(input),
                 splashFile          : input.splash ? input.splash as File : null,
-                appType             : input.gui ? GUI_APP_TYPE.defaultValue : CONSOLE_APP_TYPE.defaultValue,
-                minJreVersion       : (input.minJre ?: MIN_JRE_VERSION.defaultValue) as String,
-                initialHeapSize     : (input.initHeapSize ?: INITIAL_HEAP_SIZE.defaultValue) as int,
-                maximumHeapSize     : (input.maxHeapSize ?: MAXIMUM_HEAP_SIZE.defaultValue) as int,
-                showStackTrace      : (input.stacktrace ?: SHOW_STACKTRACE.defaultValue) as boolean,
+                appType             : (input.gui ? GUI_APP_TYPE : CONSOLE_APP_TYPE) as String,
+                minJreVersion       : (input.minJre ?: MIN_JRE_VERSION) as String,
+                initialHeapSize     : (input.initHeapSize ?: INITIAL_HEAP_SIZE) as Integer,
+                maximumHeapSize     : (input.maxHeapSize ?: MAXIMUM_HEAP_SIZE) as Integer,
+                showStackTrace      : (input.stacktrace ?: SHOW_STACKTRACE) as boolean,
                 jarFileName         : removeExtension(fileToConvert.name) + '.jar',
                 exeFileName         : removeExtension(fileToConvert.name) + '.exe'
         )

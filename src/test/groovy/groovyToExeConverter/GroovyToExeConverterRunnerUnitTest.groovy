@@ -1,9 +1,9 @@
 package groovyToExeConverter
 
-import groovyToExeConverter.domain.AppConfig
-import groovyToExeConverter.fileConversion.FileConverter
-import groovyToExeConverter.fileConversion.FileConverterFactory
+import groovyToExeConverter.core.FileConverter
+import groovyToExeConverter.core.FileConverterFactory
 import groovyToExeConverter.input.InputProcessor
+import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.util.EnvironmentValidator
 import spock.lang.Specification
 

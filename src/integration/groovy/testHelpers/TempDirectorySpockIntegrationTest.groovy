@@ -1,13 +1,13 @@
 package testHelpers
-import groovyToExeConverter.domain.AppConfigDefaults
-import groovyToExeConverter.exception.ConfigurationException
+import groovyToExeConverter.model.AppConfigDefaults
+import groovyToExeConverter.model.exception.ConfigurationException
 import org.apache.commons.io.FileUtils
 import spock.lang.Ignore
 import spock.lang.Specification
 
 @Ignore("Test helper class.")
 class TempDirectorySpockIntegrationTest extends Specification {
-    public static final File TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME.toString())
+    public static final File TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME as String)
 
     def setupSpec() { ensureTemporaryDirectoryIsAccessible() }
     def cleanupSpec() { FileUtils.deleteQuietly(TEMP_DIR) }

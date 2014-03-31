@@ -1,7 +1,7 @@
 package groovyToExeConverter.input.core.parameterValidators
 
 import groovy.util.OptionAccessor as Input
-import groovyToExeConverter.domain.AppConfigDefaults
+import groovyToExeConverter.model.AppConfigDefaults
 
 class TempDirValidator {
 

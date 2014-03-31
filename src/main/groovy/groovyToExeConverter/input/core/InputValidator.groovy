@@ -1,7 +1,7 @@
 package groovyToExeConverter.input.core
 
 import groovy.util.OptionAccessor as Input
-import groovyToExeConverter.exception.InputValidationException
+import groovyToExeConverter.model.exception.InputValidationException
 
 import static groovyToExeConverter.input.core.parameterValidators.AppTypeValidator.getConsoleAndGuiFlagsBothSet
 import static groovyToExeConverter.input.core.parameterValidators.DestDirValidator.getDestDirDoesNotExistOrIsNotDir
