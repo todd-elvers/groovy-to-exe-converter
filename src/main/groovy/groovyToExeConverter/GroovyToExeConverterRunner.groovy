@@ -8,6 +8,9 @@ import groovyToExeConverter.util.EnvironmentValidator
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
 
+    //TODO: More integration testing
+    //TODO: Final refactoring
+    //TODO: Determine which software license to use
     static void main(String[] args) {
         new GroovyToExeConverterRunner(input: args).run()
     }
@@ -32,6 +35,7 @@ class GroovyToExeConverterRunner implements Runnable {
                 log.info("Conversion successful!")
             }
         } catch (Exception exception) {
+            //TODO: Possibly push this off to some other class
             handleException(exception, appConfig)
         }
     }
