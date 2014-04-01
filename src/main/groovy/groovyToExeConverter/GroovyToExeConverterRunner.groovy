@@ -2,14 +2,15 @@ package groovyToExeConverter
 import groovy.util.logging.Log4j
 import groovyToExeConverter.core.FileConverterFactory
 import groovyToExeConverter.input.InputProcessor
-import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.util.EnvironmentValidator
+import groovyToExeConverter.util.ExceptionHandler
 
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
 
     //TODO: More integration testing
     //TODO: Final refactoring
+    //TODO: Update/complete the readme
     //TODO: Determine which software license to use
     static void main(String[] args) {
         new GroovyToExeConverterRunner(input: args).run()
@@ -34,15 +35,8 @@ class GroovyToExeConverterRunner implements Runnable {
                 FileConverterFactory.makeFileConverter(appConfig).convert()
                 log.info("Conversion successful!")
             }
-        } catch (Exception exception) {
-            //TODO: Possibly push this off to some other class
-            handleException(exception, appConfig)
+        } catch (Exception ex) {
+            ExceptionHandler.handleException(ex, appConfig, input)
         }
-    }
-
-    private static void handleException(Exception exception, AppConfig appConfig){
-        if (exception.message) log.error(exception.message)
-        if (appConfig?.showStackTrace) log.error("Stacktrace:", exception)
-        if (appConfig) log.error("Conversion failed!")
     }
 }
