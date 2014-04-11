@@ -1,4 +1,4 @@
-package groovyToExeConverter.core.jarToExee.core
+package groovyToExeConverter.core.jarToExe.core
 import groovy.xml.MarkupBuilder
 import groovyToExeConverter.model.AppConfig
 

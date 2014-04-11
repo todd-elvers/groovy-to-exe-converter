@@ -1,4 +1,4 @@
-package groovyToExeConverter.core.jarToExee.core
+package groovyToExeConverter.core.jarToExe.core
 
 import groovyToExeConverter.model.exception.BitmapImageWriterException
 
