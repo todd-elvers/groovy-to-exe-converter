@@ -1,11 +1,11 @@
-package groovyToExeConverter.core.jarToExe
+package groovyToExeConverter.core.jarToExee
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import groovyToExeConverter.core.FileConverter
-import groovyToExeConverter.core.jarToExe.core.BitmapImageWriter
-import groovyToExeConverter.core.jarToExe.core.Launch4jCommandRunner
-import groovyToExeConverter.core.jarToExe.core.Launch4jXmlHandler
+import groovyToExeConverter.core.jarToExee.core.BitmapImageWriter
+import groovyToExeConverter.core.jarToExee.core.Launch4jCommandRunner
+import groovyToExeConverter.core.jarToExee.core.Launch4jXmlHandler
 import groovyToExeConverter.model.AppConfigDefaults
 
 import static org.apache.commons.io.FilenameUtils.removeExtension

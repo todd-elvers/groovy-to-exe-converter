@@ -2,7 +2,7 @@ package groovyToExeConverter.core
 
 import groovyToExeConverter.core.common.resource.ResourceHandlerFactory
 import groovyToExeConverter.core.groovyToExe.GroovyToExeFileConverter
-import groovyToExeConverter.core.jarToExe.JarToExeFileConverter
+import groovyToExeConverter.core.jarToExee.JarToExeFileConverter
 import groovyToExeConverter.model.AppConfig
 
 import static org.apache.commons.io.FilenameUtils.isExtension
