@@ -3,13 +3,14 @@ apply plugin: 'application'
 // The mainClassName variable is required for task :buildJar
 mainClassName='groovyToExeConverter.GroovyToExeConverterRunner'
 
-task buildExe(dependsOn: [':run', ':renameExeToG2exe'])  {
+task buildExe(dependsOn: [':run'])  {
     description "Generates g2exe.exe on the current user's desktop"
     run.dependsOn ':buildJar'
     run {
         final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
-        final G2EXE_ICON = new File(sourceSets.main.resources.getSrcDirs().iterator().next(), '/g2exeIcon.ico')
-        args "--fileToConvert", "${buildDir}/libs/${project.name}-${version}.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON, "--stacktrace"
+        final RESOURCES_DIR = sourceSets.main.resources.getSrcDirs().iterator().next()
+        final G2EXE_ICON = new File(RESOURCES_DIR, 'g2exeIcon.ico')
+        args "--fileToConvert", "${buildDir}/libs/g2exe.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON, "--stacktrace"
     }
 }
 
@@ -19,23 +20,9 @@ task buildJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+    archiveName 'g2exe.jar'
 
     manifest {
         attributes 'Main-Class': mainClassName
     }
 }
-
-task renameExeToG2exe(){
-    doLast{
-        final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
-        def exeFile = new File(USER_DESKTOP, "${project.name}-${version}.exe")
-        def newExeFile = new File(USER_DESKTOP, 'g2exe.exe')
-
-        // Ensure newExeFile doesn't already exist, or the following rename will fail
-        newExeFile.delete()
-
-        if(!exeFile.renameTo(newExeFile)) throw new IOException("Failed to rename '$exeFile' to '$newExeFile'")
-    }
-}
-
-renameExeToG2exe.mustRunAfter run

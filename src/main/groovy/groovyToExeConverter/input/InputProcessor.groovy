@@ -5,6 +5,7 @@ import groovy.util.logging.Log4j
 import groovyToExeConverter.input.core.InputParser
 import groovyToExeConverter.input.core.InputTransformer
 import groovyToExeConverter.input.core.InputValidator
+import groovyToExeConverter.input.core.Log4jHandler
 import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.util.PropertiesReader
 
@@ -21,12 +22,14 @@ class InputProcessor {
         if (!input) {
             return null
         } else if (input.help) {
-            inputParser.printUsage()
+            inputParser.usage()
             return null
         } else if (input.version) {
             log.info("Version: ${PropertiesReader.readAppProperty("version")}")
             return null
         }
+
+        if (input.debug) Log4jHandler.setAppenderToDebugAppender()
 
         inputValidator.validate(input)
         inputTransformer.transformIntoAppConfig(input)

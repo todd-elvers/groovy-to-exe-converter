@@ -1,8 +1,7 @@
 package groovyToExeConverter.core.jarToExe.core
+
 import groovy.xml.MarkupBuilder
 import groovyToExeConverter.model.AppConfig
-
-import static groovyToExeConverter.model.AppConfigDefaults.GUI_APP_TYPE
 
 class Launch4jXmlHandler {
 
@@ -22,6 +21,8 @@ class Launch4jXmlHandler {
             manifest()
             icon(appConfig.iconFile.absolutePath)
             jre() {
+                // At the very least the minimum JRE version must be specified
+                // in order for Launch4j to perform a registry scan
                 minVersion(appConfig.minJreVersion)
                 maxVersion()
                 jdkPreference('preferJre')
@@ -31,16 +32,12 @@ class Launch4jXmlHandler {
             messages(){
                 startupErr("An error occurred while starting ${exeFile.name}.")
             }
-            if(shouldWriteSplashFileXML(appConfig)){
-              splash(){
-                  file(imgFile.absolutePath)
-              }
+            if(appConfig.containsSplashFile() && appConfig.appTypeIsGUI()){
+                splash(){
+                    file(imgFile.absolutePath)
+                }
             }
         }
-    }
-
-    private static boolean shouldWriteSplashFileXML(AppConfig appConfig){
-        appConfig.appType == GUI_APP_TYPE as String && appConfig.splashFile
     }
 
     void writeXmlTo(File xmlFile) {

@@ -21,8 +21,8 @@ class InputTransformer {
                 splashFile          : input.splash ? input.splash as File : null,
                 appType             : (input.gui ? GUI_APP_TYPE : CONSOLE_APP_TYPE) as String,
                 minJreVersion       : (input.minJre ?: MIN_JRE_VERSION) as String,
-                initialHeapSize     : (input.initHeapSize ?: INITIAL_HEAP_SIZE) as Integer,
-                maximumHeapSize     : (input.maxHeapSize ?: MAXIMUM_HEAP_SIZE) as Integer,
+                initialHeapSize     : (input.initHeapSize ?: INITIAL_HEAP_SIZE) as int,
+                maximumHeapSize     : (input.maxHeapSize ?: MAXIMUM_HEAP_SIZE) as int,
                 showStackTrace      : (input.stacktrace ?: SHOW_STACKTRACE) as boolean,
                 jarFileName         : removeExtension(fileToConvert.name) + '.jar',
                 exeFileName         : removeExtension(fileToConvert.name) + '.exe'

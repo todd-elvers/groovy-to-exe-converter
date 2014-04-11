@@ -19,7 +19,7 @@ class InputValidator {
 
     void validate(Input input) {
         switch (input) {
-            case fileToConvertIsMissing              : throw new InputValidationException("The parameter 'fileToConvert' is missing or points to a file that doesn't exist. Use 'g2exe --help' to display available commands.")
+            case fileToConvertIsMissing              : throw new InputValidationException("The parameter 'fileToConvert' is missing or points to a file that doesn't exist.\nUse 'g2exe --help' to display available commands.")
             case fileToConvertIsIncorrectFileType    : throw new InputValidationException("Invalid file type for 'fileToConvert' - only .groovy and .jar files are allowed.")
             case destDirDoesNotExistOrIsNotDir       : throw new InputValidationException("The given 'destDir' doesn't exist or isn't a directory.")
             case tempDirDoesNotExistOrIsNotDir       : throw new InputValidationException("The given 'tempDir' doesn't exist or isn't a directory.")

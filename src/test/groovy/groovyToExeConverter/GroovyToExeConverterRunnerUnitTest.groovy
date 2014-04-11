@@ -4,40 +4,42 @@ import groovyToExeConverter.core.FileConverter
 import groovyToExeConverter.core.FileConverterFactory
 import groovyToExeConverter.input.InputProcessor
 import groovyToExeConverter.model.AppConfig
-import groovyToExeConverter.util.EnvironmentValidator
+import groovyToExeConverter.util.EnvironmentHandler
 import spock.lang.Specification
 
 class GroovyToExeConverterRunnerUnitTest extends Specification {
 
-    def fileConverter = Mock(FileConverter)
+    def fileConverter = GroovyMock(FileConverter)
 
     GroovyToExeConverterRunner runner = [
             input: null,
-            inputProcessor: Mock(InputProcessor),
-            environmentValidator: Mock(EnvironmentValidator)
+            inputProcessor: GroovyMock(InputProcessor),
+            environmentHandler: GroovyMock(EnvironmentHandler)
     ]
 
     def setup() {
         GroovyMock(FileConverterFactory, global: true)
     }
 
-    def "valid input + run() = validates environment, validates input, makes fileConverter, and calls convert()"() {
+    def "valid input + run() = validates groovy home, adds shutdown hook, validates input, makes fileConverter and calls convert()"() {
         when:
             runner.run()
 
         then:
-            1 * runner.environmentValidator.validate()
+            1 * runner.environmentHandler.validateGroovyHome()
+            1 * runner.environmentHandler.addShutdownHookToKillG2exeProcess()
             1 * runner.inputProcessor.processIntoAppConfig(runner.input) >> new AppConfig(null)
             1 * FileConverterFactory.makeFileConverter(_ as AppConfig) >> fileConverter
             1 * fileConverter.convert()
     }
 
-    def "invalid input + run() = validates environment, validates input, then stops"() {
+    def "invalid input + run() = validates groovy home, adds shutdown hook, validates input, then stops"() {
         when:
             runner.run()
 
         then:
-            1 * runner.environmentValidator.validate()
+            1 * runner.environmentHandler.validateGroovyHome()
+            1 * runner.environmentHandler.addShutdownHookToKillG2exeProcess()
             1 * runner.inputProcessor.processIntoAppConfig(runner.input) >> null
             0 * FileConverterFactory.makeFileConverter(_ as AppConfig) >> fileConverter
             0 * fileConverter.convert()

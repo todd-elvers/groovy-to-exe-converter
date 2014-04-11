@@ -1,10 +1,9 @@
 package groovyToExeConverter.input.core
 
-import groovy.util.OptionAccessor as Input
-
 class InputParser {
 
-    final CLI = new CliBuilder()
+    @Delegate
+    CliBuilder CLI = new CliBuilder()
 
     InputParser() {
         CLI.usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
@@ -23,15 +22,8 @@ class InputParser {
             _(longOpt: 'console', "Optional. This flag instructs g2exe to generate an exe that operates as a native command line program. This flag is incompatible with --gui.\n(Default = this flag is present)")
             _(longOpt: 'gui', "Optional. This flag instructs g2exe to generate an exe that operates as a native gui application.  This flag is incompatible with --console.\n(Default = this flag is not present)")
             s(longOpt: 'splash', args: 1, argName: 'image', "Optional. Accepts a .bmp, .jpg, .wbmp, .jpeg, .png, or .gif image and converts it to a 24-bit .bmp image which is used as a splash screen when the executable is launched. This flag is only respected when --gui is also present.\n(Default = none)")
+            _(longOpt: 'debug', "Optional.  This flag instructs g2exe to set the logging level to 'debug'.")
         }
         CLI.footer = "\n[source code @ http://github.com/todd-elvers/g2exe]"
-    }
-
-    Input parse(String[] args){
-        CLI.parse(args)
-    }
-
-    void printUsage(){
-        CLI.usage()
     }
 }

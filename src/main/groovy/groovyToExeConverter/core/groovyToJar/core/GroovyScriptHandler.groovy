@@ -10,6 +10,7 @@ class GroovyScriptHandler {
 
     static CompilationUnit compileScriptToClassFilesInSameDirAndLoadIntoMemory(File groovyScriptFile) {
         def loadedGroovyScript = new CompilationUnit()
+
         loadedGroovyScript.addSource(groovyScriptFile)
         loadedGroovyScript.setConfiguration(new CompilerConfiguration(targetDirectory: groovyScriptFile.parentFile))
         loadedGroovyScript.compile()
@@ -20,7 +21,9 @@ class GroovyScriptHandler {
     static String findNameOfClassWithMainMethod(CompilationUnit compiledGroovyScript) {
         List mainClassNames = collectClassNamesWithMainMethods(compiledGroovyScript)
         validateMainMethodScanResults(mainClassNames)
+
         log.debug("Dynamically detected '${mainClassNames[0]}' as main-class.")
+
         return mainClassNames[0]
     }
 

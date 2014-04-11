@@ -6,7 +6,6 @@ import groovyToExeConverter.core.FileConverter
 import groovyToExeConverter.core.jarToExe.core.BitmapImageWriter
 import groovyToExeConverter.core.jarToExe.core.Launch4jCommandRunner
 import groovyToExeConverter.core.jarToExe.core.Launch4jXmlHandler
-import groovyToExeConverter.model.AppConfigDefaults
 
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
@@ -37,16 +36,12 @@ class JarToExeFileConverter extends FileConverter {
     }
 
     private File resolveSplashFileHandle() {
-        if (shouldRewriteSplashFileAsBitmap()) {
+        if (appConfig.containsSplashFile() && appConfig.appTypeIsGUI()) {
             File bmpFile = resourceHandler.createFileInTempDir(removeExtension(appConfig.splashFile.name) + '.bmp')
             BitmapImageWriter.writeImageAsBitmap(appConfig.splashFile, bmpFile)
             return bmpFile
         }
         return null
-    }
-
-    private boolean shouldRewriteSplashFileAsBitmap(){
-        appConfig.appType == AppConfigDefaults.GUI_APP_TYPE.defaultValue && appConfig.splashFile
     }
 
 }

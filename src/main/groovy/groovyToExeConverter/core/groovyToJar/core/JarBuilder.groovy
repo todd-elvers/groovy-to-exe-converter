@@ -14,7 +14,7 @@ class JarBuilder {
         log.debug("Building '${destFile}'...")
 
         try {
-            tellAntNotToOutputAnything()
+            disableAntLoggingToConsole()
             buildJar()
         } catch (all) {
             throw new CompilationException("Ant was unable to build a .jar file from the given input.", all.cause)
@@ -24,7 +24,7 @@ class JarBuilder {
         return destFile
     }
 
-    private tellAntNotToOutputAnything() {
+    private disableAntLoggingToConsole() {
         ANT.getProject().getBuildListeners()[0].setMessageOutputLevel(0)
     }
 

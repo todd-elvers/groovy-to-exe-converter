@@ -4,6 +4,14 @@ import org.apache.commons.io.FileUtils
 import org.codehaus.groovy.control.CompilationUnit
 import testHelpers.TempDirectorySpockIntegrationTest
 
+/**
+ *  Use gradle task 'integrationTest' to execute these tests.
+ *
+ *  Reason:
+ *  To reduce resource duplication, these integration tests rely on some resources in /src/main/resources/.
+ *  The above gradle task first deploys all necessary resources before executing the integration tests, eliminating
+ *  the chance of an exception due to missing resources.
+ */
 class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
     File scriptFileWithClassesInTempDir,
          scriptFileWithoutClassesInTempDir

@@ -4,12 +4,10 @@ import groovy.io.FileType
 import groovy.util.logging.Log4j
 import groovyToExeConverter.model.ResourceFileNames
 import groovyToExeConverter.model.exception.ResourceExtractionException
+import groovyToExeConverter.util.PropertiesReader
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
-import static groovyToExeConverter.util.PropertiesReader.readAppProperty
-import static groovyToExeConverter.util.PropertiesReader.readPropertyFromFile
-import static org.apache.commons.io.FileUtils.copyInputStreamToFile
 
 @Log4j
 class ResourceExtractor {
@@ -35,9 +33,9 @@ class ResourceExtractor {
 
     private boolean versionMismatch() {
         try {
-            def prevG2exePropFile = new File(TEMP_DIR, "gradle.properties")
-            def prevG2exeVersion = readPropertyFromFile("version", prevG2exePropFile)
-            def currentG2exeVersion = readAppProperty("version")
+            def prevG2exePropFile = new File(TEMP_DIR, "gradle.properties"),
+                prevG2exeVersion = PropertiesReader.readPropertyFromFile("version", prevG2exePropFile),
+                currentG2exeVersion = PropertiesReader.readAppProperty("version")
 
             return prevG2exeVersion != currentG2exeVersion
         } catch (ignored) {}
@@ -45,7 +43,7 @@ class ResourceExtractor {
     }
 
     private void extractResourcesToTempDir() {
-        log.debug("Temporary directory NOT found.")
+        log.debug("Temporary directory is either missing, incomplete, or from an earlier version.")
         log.debug("Creating temporary directory @ '${TEMP_DIR}'")
 
         RESOURCE_FILE_NAMES.each { String resourceFileName ->
@@ -55,7 +53,7 @@ class ResourceExtractor {
             try {
                 tempFile = new File(TEMP_DIR, resourceFileName)
                 inputStream = resolveResourceInputStream(resourceFileName)
-                copyInputStreamToFile(inputStream, tempFile)
+                FileUtils.copyInputStreamToFile(inputStream, tempFile)
             } catch (all) {
                 throw new ResourceExtractionException("Unable to extract '${resourceFileName}' to '${tempFile}'.", all.cause)
             } finally {

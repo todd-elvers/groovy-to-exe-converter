@@ -19,4 +19,7 @@ class AppConfig {
     String appType
 
     boolean showStackTrace
+
+    boolean containsSplashFile() { return splashFile }
+    boolean appTypeIsGUI(){ return appType == AppConfigDefaults.GUI_APP_TYPE as String }
 }
