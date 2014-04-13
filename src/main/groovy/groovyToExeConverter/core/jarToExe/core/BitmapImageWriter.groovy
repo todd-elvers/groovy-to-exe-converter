@@ -14,7 +14,7 @@ class BitmapImageWriter {
      * This takes in an image of type .bmp, .jpg, .jpeg, or .gif and rewrites it to a given bitmap
      * file as a 24-bit bitmap image.  Launch4j only accepts 24-bit bitmaps as splash files, so this
      * method helps workaround that limitation by allowing more image formats and just converting
-     * them to 24-bit bitmaps only the fly.
+     * them to 24-bit bitmaps on the fly.
      *
      * @param imageFile the image to be converted to a 24-bit bitmap
      * @param imageFileAsBitmap the destination bitmap image
@@ -29,7 +29,6 @@ class BitmapImageWriter {
                 drawImage(image, 0, 0, image.width, image.height, null)
                 dispose()
             }
-            ImageIO.write(bufferedImage, 'bmp', imageFileAsBitmap)
 
             boolean successfulImageRewrite = ImageIO.write(bufferedImage, 'bmp', imageFileAsBitmap)
             if(!successfulImageRewrite){

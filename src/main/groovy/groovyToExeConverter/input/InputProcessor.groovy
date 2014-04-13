@@ -12,27 +12,35 @@ import groovyToExeConverter.util.PropertiesReader
 @Log4j
 class InputProcessor {
 
-    final inputParser = new InputParser()
-    final inputValidator = new InputValidator()
-    final inputTransformer = new InputTransformer()
+    final inputParser = new InputParser(),
+          inputValidator = new InputValidator(),
+          inputTransformer = new InputTransformer()
 
     AppConfig processIntoAppConfig(String[] args) {
         Input input = inputParser.parse(args)
 
-        if (!input) {
-            return null
-        } else if (input.help) {
-            inputParser.usage()
-            return null
-        } else if (input.version) {
-            log.info("Version: ${PropertiesReader.readAppProperty("version")}")
+        if (!input || isOneOffCommand(input)) {
             return null
         }
 
-        if (input.debug) Log4jHandler.setAppenderToDebugAppender()
+        if (input.debug) {
+            Log4jHandler.setAppenderToDebugAppender()
+        }
 
         inputValidator.validate(input)
         inputTransformer.transformIntoAppConfig(input)
+    }
+
+    private boolean isOneOffCommand(Input input) {
+        if (input.help) {
+            inputParser.usage()
+            return true
+        } else if (input.version) {
+            log.info("Version: ${PropertiesReader.readAppProperty("version")}")
+            return true
+        }
+
+        return false
     }
 
 }

@@ -1,6 +1,7 @@
 apply plugin: 'application'
 
-// The mainClassName variable is required for task :buildJar
+// Required for the :buildJar task (defined below)
+// Required for the :run task (from the 'application' plugin)
 mainClassName='groovyToExeConverter.GroovyToExeConverterRunner'
 
 task buildExe(dependsOn: [':run'])  {
@@ -10,6 +11,7 @@ task buildExe(dependsOn: [':run'])  {
         final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
         final RESOURCES_DIR = sourceSets.main.resources.getSrcDirs().iterator().next()
         final G2EXE_ICON = new File(RESOURCES_DIR, 'g2exeIcon.ico')
+
         args "--fileToConvert", "${buildDir}/libs/g2exe.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON, "--stacktrace"
     }
 }

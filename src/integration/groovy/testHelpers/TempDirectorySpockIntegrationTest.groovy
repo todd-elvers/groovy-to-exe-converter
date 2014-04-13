@@ -1,6 +1,5 @@
 package testHelpers
 import groovyToExeConverter.model.AppConfigDefaults
-import groovyToExeConverter.model.exception.ConfigurationException
 import org.apache.commons.io.FileUtils
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -13,7 +12,7 @@ class TempDirectorySpockIntegrationTest extends Specification {
     def cleanupSpec() { FileUtils.deleteQuietly(TEMP_DIR) }
 
     private static void ensureTemporaryDirectoryIsAccessible(){
-        if(!System.getenv("TEMP")) throw new ConfigurationException("Unable to resolve system's temporary directory.")
+        if(!System.getenv("TEMP")) throw new IOException("Unable to resolve system's temporary directory.")
         TEMP_DIR.mkdir()
     }
 
