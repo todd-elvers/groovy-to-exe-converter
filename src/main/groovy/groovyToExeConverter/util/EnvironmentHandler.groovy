@@ -1,15 +1,25 @@
 package groovyToExeConverter.util
 
+import groovyToExeConverter.model.exception.ConfigurationException
+
 class EnvironmentHandler {
 
     void validateGroovyHome() {
-        File GROOVY_HOME = System.getenv('GROOVY_HOME') ? new File(System.getenv('GROOVY_HOME')) : null
-        !GROOVY_HOME || !GROOVY_HOME.canRead() || !GROOVY_HOME.listFiles()*.name.contains("bin")
+        File groovyHome = System.getenv('GROOVY_HOME') ? new File(System.getenv('GROOVY_HOME')) : null
+        if(groovyHomeMissingOrInvalid(groovyHome)){
+            throw new ConfigurationException("Environment variable GROOVY_HOME is either missing or invalid.")
+        }
     }
 
-    void addShutdownHookToKillG2exeProcess(){
+    private static boolean groovyHomeMissingOrInvalid(File groovyHome){
+        !groovyHome || !groovyHome.canRead() || !groovyHome.listFiles()*.name.contains("bin")
+    }
+
+    void addShutdownHookToKillG2exeProcess() {
         addShutdownHook {
-            "taskkill /f /im g2exe.exe".execute()
+            try {
+                "taskkill /f /im g2exe.exe".execute()
+            } catch (ignored) { }
         }
     }
 }

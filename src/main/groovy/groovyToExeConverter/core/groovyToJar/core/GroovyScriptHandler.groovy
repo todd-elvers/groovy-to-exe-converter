@@ -8,7 +8,7 @@ import org.codehaus.groovy.control.CompilerConfiguration
 @Log4j
 class GroovyScriptHandler {
 
-    static CompilationUnit compileScriptToClassFilesInSameDirAndLoadIntoMemory(File groovyScriptFile) {
+    static CompilationUnit loadScriptIntoMemoryAndCompile(File groovyScriptFile) {
         def loadedGroovyScript = new CompilationUnit()
 
         loadedGroovyScript.addSource(groovyScriptFile)
@@ -20,7 +20,7 @@ class GroovyScriptHandler {
 
     static String findNameOfClassWithMainMethod(CompilationUnit compiledGroovyScript) {
         List mainClassNames = collectClassNamesWithMainMethods(compiledGroovyScript)
-        validateMainMethodScanResults(mainClassNames)
+        validateMainMethodCollectionResults(mainClassNames)
 
         log.debug("Dynamically detected '${mainClassNames[0]}' as main-class.")
 
@@ -41,7 +41,7 @@ class GroovyScriptHandler {
         return classesWithMainMethods
     }
 
-    private static void validateMainMethodScanResults(List mainClassNames) {
+    private static void validateMainMethodCollectionResults(List mainClassNames) {
         if (!mainClassNames) {
             throw new MainClassResolutionException("No main methods were found when scanning through the classes of the given Groovy Script.")
         } else if (mainClassNames.size() > 1) {

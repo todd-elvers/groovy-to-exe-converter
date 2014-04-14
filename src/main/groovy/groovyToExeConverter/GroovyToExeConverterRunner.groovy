@@ -10,20 +10,15 @@ import groovyToExeConverter.util.ExceptionHandler
 @Log4j
 class GroovyToExeConverterRunner implements Runnable {
 
-    //TODO: More integration testing
-    //TODO: Final refactoring
-    //TODO: Update/complete the readme
-    //TODO: Update with latest launch4j from: http://sourceforge.net/projects/launch4j/
-    //TODO: Ensure I can reference Launch4j by explicitly messaging 'grzegok'
     static void main(String[] args) {
-        new GroovyToExeConverterRunner(input: args).run()
+        new GroovyToExeConverterRunner(args: args).run()
     }
 
 
     def inputProcessor = new InputProcessor(),
         environmentHandler = new EnvironmentHandler()
 
-    String[] input
+    String[] args
 
     @Override
     void run() {
@@ -33,7 +28,7 @@ class GroovyToExeConverterRunner implements Runnable {
             environmentHandler.validateGroovyHome()
             environmentHandler.addShutdownHookToKillG2exeProcess()
 
-            appConfig = inputProcessor.processIntoAppConfig(input)
+            appConfig = inputProcessor.processIntoAppConfig(args)
 
             if (appConfig) {
                 log.info("Converting...")
@@ -41,7 +36,7 @@ class GroovyToExeConverterRunner implements Runnable {
                 log.info("Conversion successful!")
             }
         } catch (Exception ex) {
-            ExceptionHandler.handleException(ex, appConfig, input)
+            ExceptionHandler.handleException(ex, appConfig, args)
         }
     }
 }

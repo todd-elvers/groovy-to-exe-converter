@@ -7,7 +7,7 @@ class PropertiesReader {
 
     static String readAppProperty(String propName) {
         try {
-            return readPropertyFromInputStream(propName, resolveAppPropFileInputStream())
+            return loadPropertiesFromInputStream(resolveAppPropFileInputStream())[propName]
         } catch (ignored) {
             throw new RuntimeException("Unable to read '${propName}' from g2exe's properties file.")
         }
@@ -23,15 +23,19 @@ class PropertiesReader {
 
     static String readPropertyFromFile(String propName, File propFile) {
         try {
-            return readPropertyFromInputStream(propName, FileUtils.openInputStream(propFile))
+            return loadPropertiesFromInputStream(FileUtils.openInputStream(propFile))[propName]
         } catch (ignored) {
             throw new RuntimeException("Unable to read from properties file.")
         }
     }
 
-    private static String readPropertyFromInputStream(String propName, InputStream inputStream) {
-        def properties = new Properties()
-        properties.load(inputStream)
-        return properties[propName]
+    private static Properties loadPropertiesFromInputStream(InputStream inputStream) {
+        try {
+            def properties = new Properties()
+            properties.load(inputStream)
+            return properties
+        } finally {
+            inputStream.close()
+        }
     }
 }

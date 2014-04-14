@@ -12,6 +12,8 @@ import static org.apache.commons.io.FilenameUtils.removeExtension
 class InputTransformer {
 
     AppConfig transformIntoAppConfig(Input input) {
+        log.debug("Transforming user input into AppConfig...")
+
         File fileToConvert = input.fileToConvert as File
         def appConfig = new AppConfig(
                 fileToConvert       : fileToConvert,
@@ -28,7 +30,7 @@ class InputTransformer {
                 exeFileName         : removeExtension(fileToConvert.name) + '.exe'
         )
 
-        log.debug("Transformation result: ${appConfig.dump()}")
+        log.debug("$appConfig")
         return appConfig
     }
 

@@ -4,14 +4,6 @@ import org.apache.commons.io.FileUtils
 import org.codehaus.groovy.control.CompilationUnit
 import testHelpers.TempDirectorySpockIntegrationTest
 
-/**
- *  Use gradle task 'integrationTest' to execute these tests.
- *
- *  Reason:
- *  To reduce resource duplication, these integration tests rely on some resources in /src/main/resources/.
- *  The above gradle task first deploys all necessary resources before executing the integration tests, eliminating
- *  the chance of an exception due to missing resources.
- */
 class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
     File scriptFileWithClassesInTempDir,
          scriptFileWithoutClassesInTempDir
@@ -33,7 +25,7 @@ class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTe
             expectedClassFileNames.each { new File(TEMP_DIR, it).delete() }
 
         when:
-            CompilationUnit compiledScript = GroovyScriptHandler.compileScriptToClassFilesInSameDirAndLoadIntoMemory(scriptFileWithClassesInTempDir)
+            CompilationUnit compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithClassesInTempDir)
 
         then:
             compiledScript != null
@@ -46,7 +38,7 @@ class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTe
             expectedClassFileNames.each { new File(TEMP_DIR, it).delete() }
 
         when:
-            CompilationUnit compiledScript = GroovyScriptHandler.compileScriptToClassFilesInSameDirAndLoadIntoMemory(scriptFileWithoutClassesInTempDir)
+            CompilationUnit compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithoutClassesInTempDir)
 
         then:
             compiledScript != null
@@ -56,7 +48,7 @@ class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTe
 
     def "given a compiled script with multiple classes: findNameOfClassWithMainMethod() returns name of class containing main method"() {
         given:
-            def compiledScript = GroovyScriptHandler.compileScriptToClassFilesInSameDirAndLoadIntoMemory(scriptFileWithClassesInTempDir)
+            def compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithClassesInTempDir)
         expect:
             GroovyScriptHandler.findNameOfClassWithMainMethod(compiledScript) == "B"
     }
@@ -64,7 +56,7 @@ class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTe
 
     def "given a compiled script with no classes: findNameOfClassWithMainMethod() return name of script"() {
         given:
-            def compiledScript = GroovyScriptHandler.compileScriptToClassFilesInSameDirAndLoadIntoMemory(scriptFileWithoutClassesInTempDir)
+            def compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithoutClassesInTempDir)
         expect:
             GroovyScriptHandler.findNameOfClassWithMainMethod(compiledScript) == "TestScriptWithoutClasses"
     }

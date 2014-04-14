@@ -22,4 +22,15 @@ class AppConfig {
 
     boolean containsSplashFile() { return splashFile }
     boolean appTypeIsGUI(){ return appType == AppConfigDefaults.GUI_APP_TYPE as String }
+
+    String toString(){
+        def stringBuilder = new StringBuilder('AppConfig = {\n')
+        this.properties.each { key, value ->
+            if(key != 'class') {
+                stringBuilder << "\t$key: $value\n"
+            }
+        }
+        stringBuilder << "}"
+        return stringBuilder.toString()
+    }
 }

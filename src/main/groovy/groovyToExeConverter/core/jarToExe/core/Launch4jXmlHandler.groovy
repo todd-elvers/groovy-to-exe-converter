@@ -41,9 +41,12 @@ class Launch4jXmlHandler {
     }
 
     void writeXmlTo(File xmlFile) {
-        def xmlBuilder = new MarkupBuilder(new FileWriter(xmlFile))
+        def fileWriter = new FileWriter(xmlFile),
+            xmlBuilder = new MarkupBuilder(fileWriter)
+
         xmlBuilder.expandEmptyElements = true
         xmlBuilder.launch4jConfig(launch4jXml)
+        fileWriter.close()
     }
 
 }

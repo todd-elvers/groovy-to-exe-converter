@@ -1,6 +1,7 @@
 package groovyToExeConverter.input.core
 
 import groovy.util.OptionAccessor as Input
+import groovy.util.logging.Log4j
 import groovyToExeConverter.model.exception.InputValidationException
 
 import static groovyToExeConverter.input.core.parameterValidators.AppTypeValidator.getConsoleAndGuiFlagsBothSet
@@ -15,12 +16,25 @@ import static groovyToExeConverter.input.core.parameterValidators.SplashFileVali
 import static groovyToExeConverter.input.core.parameterValidators.SplashFileValidator.getSplashInIncorrectFormat
 import static groovyToExeConverter.input.core.parameterValidators.TempDirValidator.*
 
+@Log4j
 class InputValidator {
 
     void validate(Input input) {
-        switch (input) {
+        log.debug("Validating user input...")
+        validateRequiredParameters(input)
+        validateOptionalParameters(input)
+        log.debug("Input valid.")
+    }
+
+    private static void validateRequiredParameters(Input input){
+        switch(input){
             case fileToConvertIsMissing              : throw new InputValidationException("The parameter 'fileToConvert' is missing or points to a file that doesn't exist.\nUse 'g2exe --help' to display available commands.")
             case fileToConvertIsIncorrectFileType    : throw new InputValidationException("Invalid file type for 'fileToConvert' - only .groovy and .jar files are allowed.")
+        }
+    }
+
+    private static void validateOptionalParameters(Input input){
+        switch (input) {
             case destDirDoesNotExistOrIsNotDir       : throw new InputValidationException("The given 'destDir' doesn't exist or isn't a directory.")
             case tempDirDoesNotExistOrIsNotDir       : throw new InputValidationException("The given 'tempDir' doesn't exist or isn't a directory.")
             case tempDirPathContainsSpaces           : throw new InputValidationException("The given 'tempDir' contains spaces in its file path which causes issues with a tool this application uses.  Please explicitly set the temporary directory path to a directory not containing spaces.")

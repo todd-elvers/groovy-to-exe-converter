@@ -12,7 +12,7 @@ class GroovyToExeConverterRunnerUnitTest extends Specification {
     def fileConverter = GroovyMock(FileConverter)
 
     GroovyToExeConverterRunner runner = [
-            input: null,
+            args: null,
             inputProcessor: GroovyMock(InputProcessor),
             environmentHandler: GroovyMock(EnvironmentHandler)
     ]
@@ -28,7 +28,7 @@ class GroovyToExeConverterRunnerUnitTest extends Specification {
         then:
             1 * runner.environmentHandler.validateGroovyHome()
             1 * runner.environmentHandler.addShutdownHookToKillG2exeProcess()
-            1 * runner.inputProcessor.processIntoAppConfig(runner.input) >> new AppConfig(null)
+            1 * runner.inputProcessor.processIntoAppConfig(runner.args) >> new AppConfig(null)
             1 * FileConverterFactory.makeFileConverter(_ as AppConfig) >> fileConverter
             1 * fileConverter.convert()
     }
@@ -40,7 +40,7 @@ class GroovyToExeConverterRunnerUnitTest extends Specification {
         then:
             1 * runner.environmentHandler.validateGroovyHome()
             1 * runner.environmentHandler.addShutdownHookToKillG2exeProcess()
-            1 * runner.inputProcessor.processIntoAppConfig(runner.input) >> null
+            1 * runner.inputProcessor.processIntoAppConfig(runner.args) >> null
             0 * FileConverterFactory.makeFileConverter(_ as AppConfig) >> fileConverter
             0 * fileConverter.convert()
     }

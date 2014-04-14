@@ -21,14 +21,12 @@ class InputProcessor {
 
         if (!input || isOneOffCommand(input)) {
             return null
-        }
-
-        if (input.debug) {
+        } else if (input.debug) {
             Log4jHandler.setAppenderToDebugAppender()
         }
 
         inputValidator.validate(input)
-        inputTransformer.transformIntoAppConfig(input)
+        return inputTransformer.transformIntoAppConfig(input)
     }
 
     private boolean isOneOffCommand(Input input) {

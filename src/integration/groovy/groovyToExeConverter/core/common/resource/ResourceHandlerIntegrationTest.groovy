@@ -5,14 +5,6 @@ import testHelpers.TempDirectorySpockIntegrationTest
 import static org.apache.commons.io.FileUtils.deleteDirectory
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
 
-/**
- *  Use gradle task 'integrationTest' to execute these tests.
- *
- *  Reason:
- *  To reduce resource duplication, these integration tests rely on some resources in /src/main/resources/.
- *  The above gradle task first deploys all necessary resources before executing the integration tests, eliminating
- *  the chance of an exception due to missing resources.
- */
 class ResourceHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
 
     ResourceHandler resourceHandler
