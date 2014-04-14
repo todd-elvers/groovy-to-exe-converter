@@ -18,7 +18,7 @@ task buildExe(dependsOn: [':run'])  {
 
 task buildJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
     description 'Copies all classes, resources, and jar dependencies into one executable jar'
-    from('gradle.properties')
+    from('gradle.properties', 'LICENSE.txt', '/licenses')
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }
