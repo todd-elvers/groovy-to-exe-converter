@@ -19,26 +19,29 @@ class InputProcessor {
     AppConfig processIntoAppConfig(String[] args) {
         Input input = inputParser.parse(args)
 
-        if (!input || isOneOffCommand(input)) {
+        if (!input) {
+            return null
+        } else if (isOneOffCommand(input)) {
+            performOneOffCommand(input)
             return null
         } else if (input.debug) {
             Log4jHandler.setAppenderToDebugAppender()
         }
 
         inputValidator.validate(input)
-        return inputTransformer.transformIntoAppConfig(input)
+        inputTransformer.transformIntoAppConfig(input)
     }
 
-    private boolean isOneOffCommand(Input input) {
+    private static boolean isOneOffCommand(Input input) {
+        input.help || input.version
+    }
+
+    private void performOneOffCommand(Input input) {
         if (input.help) {
             inputParser.usage()
-            return true
         } else if (input.version) {
             log.info("Version: ${PropertiesReader.readAppProperty("version")}")
-            return true
         }
-
-        return false
     }
 
 }
