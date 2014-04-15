@@ -39,7 +39,7 @@ class InputValidator {
             case tempDirDoesNotExistOrIsNotDir       : throw new InputValidationException("The given 'tempDir' doesn't exist or isn't a directory.")
             case tempDirPathContainsSpaces           : throw new InputValidationException("The given 'tempDir' contains spaces in its file path which causes issues with a tool this application uses.  Please explicitly set the temporary directory path to a directory not containing spaces.")
             case tempDirCannotBeDetermined           : throw new InputValidationException("The 'tempDir' parameter wasn't set and could not be determined from the system. Please explicitly set the temporary directory path.")
-            case minJreInInvalidFormat               : throw new InputValidationException("The 'minJre' parameter only accepts strings of the format x.x.x[_xx]")
+            case minJreInInvalidFormat               : throw new InputValidationException("The 'minJre' parameter only accepts strings of the format x.x.x[_xx].")
             case iconDoesNotExistOrIsNotFile         : throw new InputValidationException("The 'icon' parameter points to a file that doesn't exist or is a directory.")
             case iconInIncorrectFormat               : throw new InputValidationException("The 'icon' parameter points to a file with an invalid file type - only .ico files are supported.")
             case initHeapSizeIsNotNumOrIsZeroOrLess  : throw new InputValidationException("The value for 'initHeapSize' is not a number, or is less than or equal to zero. Please provide a number greater than zero.")
