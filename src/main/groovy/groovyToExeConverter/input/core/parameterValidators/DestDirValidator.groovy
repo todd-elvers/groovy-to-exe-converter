@@ -1,10 +1,8 @@
 package groovyToExeConverter.input.core.parameterValidators
 
-import groovy.util.OptionAccessor as Input
-
 class DestDirValidator {
 
-    static def destDirDoesNotExistOrIsNotDir = { Input input ->
+    static def destDirDoesNotExistOrIsNotDir = { input ->
         if (!input.destDir) return false
 
         File destinationDirectory = input.destDir as File

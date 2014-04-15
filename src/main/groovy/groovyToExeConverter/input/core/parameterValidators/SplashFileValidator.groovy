@@ -1,5 +1,5 @@
 package groovyToExeConverter.input.core.parameterValidators
-import groovy.util.OptionAccessor as Input
+
 import groovy.util.logging.Log4j
 
 import static org.apache.commons.io.FilenameUtils.isExtension
@@ -7,18 +7,20 @@ import static org.apache.commons.io.FilenameUtils.isExtension
 @Log4j
 class SplashFileValidator {
 
-    static def splashDoesNotExistOrIsNotFile = { Input input ->
+    static final SUPPORTED_IMAGE_FORMATS = ['bmp', 'jpg', 'jpeg', 'gif']
+
+    static def splashDoesNotExistOrIsNotFile = { input ->
         if (!input.splash) return false
 
         File splashFile = input.splash as File
         return !splashFile.exists() || !splashFile.isFile()
     }
 
-    static def splashInIncorrectFormat = { Input input ->
-        if(!input.splash) return false
+    static def splashInIncorrectFormat = { input ->
+        if (!input.splash) return false
 
         File splashFile = input.splash as File
-        return !isExtension(splashFile.name, ['bmp', 'jpg', 'jpeg', 'gif'])
+        return !isExtension(splashFile.name, SUPPORTED_IMAGE_FORMATS)
     }
 
 }
