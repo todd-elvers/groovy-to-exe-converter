@@ -1,6 +1,5 @@
 package groovyToExeConverter.input.core
 
-import groovy.util.OptionAccessor as Input
 import groovy.util.logging.Log4j
 import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.model.ResourceFileNames
@@ -11,7 +10,8 @@ import static org.apache.commons.io.FilenameUtils.removeExtension
 @Log4j
 class InputTransformer {
 
-    AppConfig transformIntoAppConfig(Input input) {
+    //TODO: Maybe refactor 'AppConfig' to 'Settings' ?
+    AppConfig transformIntoAppConfig(OptionAccessor input) {
         log.debug("Transforming user input into AppConfig...")
 
         File fileToConvert = input.fileToConvert as File
@@ -34,18 +34,18 @@ class InputTransformer {
         return appConfig
     }
 
-    private def resolveIconFile = { Input input ->
+    private Closure<File> resolveIconFile = { OptionAccessor input ->
         File tempDir = resolveTempDir(input)
         def defaultIconFileName = ResourceFileNames.G2EXE_RESOURCES.fileNames.find { String resource -> resource.endsWith("ico") } as String
         input.icon ? new File(input.icon as String) : new File(tempDir, defaultIconFileName)
     }
 
-    private def resolveTempDir = { Input input ->
+    private Closure<File> resolveTempDir = { OptionAccessor input ->
         def tempDirPath = (input.tempDir ?: TEMP_DIR_PATH) as String
         new File(tempDirPath, G2EXE_TEMP_DIR_NAME as String)
     }
 
-    private def resolveDestDir = { Input input ->
+    private Closure<File> resolveDestDir = { OptionAccessor input ->
         File fileToConvert = input.fileToConvert as File
         (input.destDir ?: fileToConvert.absoluteFile.parent) as File
     }

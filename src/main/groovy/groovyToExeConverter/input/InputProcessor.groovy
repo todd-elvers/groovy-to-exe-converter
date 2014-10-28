@@ -1,11 +1,10 @@
 package groovyToExeConverter.input
-
 import groovy.util.OptionAccessor as Input
 import groovy.util.logging.Log4j
 import groovyToExeConverter.input.core.InputParser
 import groovyToExeConverter.input.core.InputTransformer
-import groovyToExeConverter.input.core.InputValidator
 import groovyToExeConverter.input.core.Log4jHandler
+import groovyToExeConverter.input.core.validation.InputValidator
 import groovyToExeConverter.model.AppConfig
 import groovyToExeConverter.util.PropertiesReader
 
@@ -19,10 +18,7 @@ class InputProcessor {
     AppConfig processIntoAppConfig(String[] args) {
         Input input = inputParser.parse(args)
 
-        if (!input) {
-            return null
-        } else if (isOneOffCommand(input)) {
-            performOneOffCommand(input)
+        if (!input || isOneOffCommand(input)) {
             return null
         } else if (input.debug) {
             Log4jHandler.setAppenderToDebugAppender()
@@ -32,15 +28,13 @@ class InputProcessor {
         inputTransformer.transformIntoAppConfig(input)
     }
 
-    private static boolean isOneOffCommand(Input input) {
-        input.help || input.version
-    }
-
-    private void performOneOffCommand(Input input) {
+    private boolean isOneOffCommand(Input input) {
         if (input.help) {
             inputParser.usage()
+            return true
         } else if (input.version) {
             log.info("Version: ${PropertiesReader.readAppProperty("version")}")
+            return true
         }
     }
 

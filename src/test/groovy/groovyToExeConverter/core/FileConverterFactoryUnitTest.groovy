@@ -35,5 +35,4 @@ class FileConverterFactoryUnitTest extends Specification {
             fileConverter instanceof FileConverter
             fileConverter instanceof JarToExeFileConverter
     }
-
 }

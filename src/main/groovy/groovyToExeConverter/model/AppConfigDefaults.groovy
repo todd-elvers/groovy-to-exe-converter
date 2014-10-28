@@ -18,7 +18,7 @@ enum AppConfigDefaults {
     def asType(Class clazz) {
         switch(clazz){
             case String : return defaultValue as String
-            case int: return defaultValue as int
+            case int    : return defaultValue as int
             case boolean: return defaultValue as boolean
         }
     }
