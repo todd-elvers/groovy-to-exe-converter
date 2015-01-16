@@ -1,4 +1,4 @@
-#g2exe
+#groovy-to-exe-converter (g2exe)
 
 This application accepts **.groovy** scripts or **.jar** files and generates Windows executable files.  This application was written in Groovy and wraps [Launch4j](http://launch4j.sourceforge.net/), turning it into an easy-to-use command line application.
 
