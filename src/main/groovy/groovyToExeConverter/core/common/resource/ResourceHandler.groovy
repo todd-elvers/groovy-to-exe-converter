@@ -23,7 +23,7 @@ class ResourceHandler {
     }
 
     File resolveLaunch4jcExeHandle() {
-        String launch4jcExeResourceFileName = LAUNCH4JC_RESOURCES.fileNames.find { 'launch4jc.exe' }
+        String launch4jcExeResourceFileName = LAUNCH4JC_RESOURCES.fileNames.find { it == 'launch4j/launch4jc.exe' }
         return findFileInTempDir(launch4jcExeResourceFileName)
     }
 

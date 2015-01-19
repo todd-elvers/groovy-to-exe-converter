@@ -7,14 +7,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
 
 class ResourceHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
 
-    ResourceHandler resourceHandler
-
-    def setup() {
-        // Prevent extracting all resources to temp dir
-        ResourceExtractor.metaClass.extractResourcesIfNecessary = {}
-
-        resourceHandler = [TEMP_DIR] as ResourceHandler
-    }
+    ResourceHandler resourceHandler = new ResourceHandler(TEMP_DIR)
 
     def "when the given file exists in temp dir, findFileInTempDir() finds it"() {
         given:
