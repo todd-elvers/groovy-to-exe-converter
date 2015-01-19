@@ -1,0 +1,65 @@
+
+// Tell Gradle to generate byte code compatible w/ Java 1.5
+sourceCompatibility = JavaVersion.VERSION_1_5
+targetCompatibility = JavaVersion.VERSION_1_5
+
+// Validate the 'java5Home' property
+File java5HomeDir = new File(java5Home as String)
+if (!java5HomeDir.exists()) {
+    throw new IllegalStateException("ERROR: Java 5 home [${java5Home ?: '""'}] does not exist.")
+} else if(!java5HomeDir.list().contains("bin") || !java5HomeDir.list().contains("jre")){
+    throw new IllegalStateException("ERROR: Property 'java5Home' was not configured correctly.  Please point this to the root directory of a Java 5 JDK.")
+}
+
+// Set '-bootclasspath' to JRE 1.5 for cross-compiling for all tasks that compile Java or Groovy
+// Cross-compiling reference: http://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html#crosscomp-options
+project.tasks.withType(JavaCompile) { options.bootClasspath = project.fileTree("${java5Home}/jre/lib/").getAsPath() }
+project.tasks.withType(GroovyCompile) { options.bootClasspath = project.fileTree("${java5Home}/jre/lib/").getAsPath() }
+
+// Override JAVA_HOME and PATH environment variables with Java 1.5 settings
+project.tasks.withType(Exec) {
+    environment << [ "JAVA_HOME": java5Home, "PATH": "$java5Home/bin:${System.getenv("PATH")}"]
+}
+
+/**
+ * Iterates through all 'compile' dependencies & ensures they are compatible with Java 5
+ */
+task checkDependenciesForJava5Compatibility(type: DefaultTask) {
+    doFirst {
+        println "NOTE: Java 5 Home set to '$java5Home'"
+    }
+
+    doLast {
+        project.configurations.compile.each { dep ->
+            def failureReason
+
+            project.zipTree(dep).matching { include("**/*.class") }.visit { fileDetails ->
+                if (!fileDetails.isDirectory()) {
+                    fileDetails.file.withDataInputStream { DataInputStream stream ->
+                        int magic1 = stream.readUnsignedShort()
+                        int magic2 = stream.readUnsignedShort()
+                        stream.skipBytes(2) // minor version
+                        int majorVersion = stream.readUnsignedShort()
+                        int javaVersion = majorVersion - 44
+
+                        if (Long.toHexString(magic1) + Long.toHexString(magic2) != "cafebabe") {
+                            println "Warning: bad magic number for ${fileDetails.name} in ${dep.name}"
+                        }
+                        if (javaVersion > 5) {
+                            // Throwing exception directly from here will show a 'cannot open ZIP' message.
+                            failureReason = "Dependency has class with Java version $javaVersion, max allowed is 5: ${fileDetails.name} in ${dep.name}"
+                        }
+                        fileDetails.stopVisiting();
+                    }
+                }
+            }
+
+            if (failureReason) {
+                throw new GradleException(failureReason)
+            }
+        }
+    }
+}
+
+// Make sure 'check' task also checks dependencies for Java 5 compatibility
+check.dependsOn 'checkDependenciesForJava5Compatibility'

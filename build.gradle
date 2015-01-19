@@ -10,7 +10,7 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.2.1'
     compile 'org.apache.ant:ant:1.7.1'
     compile 'org.apache.commons:commons-lang3:3.1'
-    compile 'commons-io:commons-io:2.4'
+    compile 'commons-io:commons-io:2.2'
     compile 'commons-cli:commons-cli:1.2'
     compile 'log4j:log4j:1.2.17'
 
@@ -23,9 +23,6 @@ dependencies {
     }
 }
 
-// Since '1.5.0' is the default minJre, ensure g2exe is compatible with it
-sourceCompatibility = 1.5
-
 configurations.all {
     resolutionStrategy {
         failOnVersionConflict()
@@ -33,5 +30,6 @@ configurations.all {
     }
 }
 
-apply from: 'integration-tests.gradle'  // Adds integration test support
-apply from: 'build-executable.gradle'   // Adds capability to build g2exe.exe
+apply from: 'add-integration-tests.gradle'      // Adds integration test support
+apply from: 'add-build-executable.gradle'       // Adds capability to build g2exe.exe
+apply from: 'add-java-5-compatibility.gradle'   // Adds Java 5 dependency checking

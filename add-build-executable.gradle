@@ -1,9 +1,5 @@
 apply plugin: 'application'
 
-// Required for the :buildJar task (defined below)
-// Required for the :run task (from the 'application' plugin)
-mainClassName='groovyToExeConverter.GroovyToExeConverterRunner'
-
 task buildExe(dependsOn: [':run'])  {
     description "Generates g2exe.exe on the current user's desktop"
     run.dependsOn ':buildJar'
