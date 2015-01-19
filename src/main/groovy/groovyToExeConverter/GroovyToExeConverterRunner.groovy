@@ -11,6 +11,7 @@ import groovyToExeConverter.util.ExceptionHandler
 class GroovyToExeConverterRunner implements Runnable {
 
     static void main(String[] args) {
+        args = ["-f","C:\\Users\\Todd\\Coding\\Projects\\groovy-to-exe-converter\\src\\integration\\resources\\TestScriptWithClasses.groovy", "-d", "C:\\Users\\Todd\\Desktop"]
         new GroovyToExeConverterRunner(args: args).run()
     }
 

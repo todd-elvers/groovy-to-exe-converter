@@ -6,7 +6,6 @@ import groovyToExeConverter.model.exception.InputValidationException
 trait AppTypeValidator implements ParameterValidator {
 
     void validate(OptionAccessor commandLineInput) {
-        println("App type validator")
         switch(commandLineInput){
             case consoleAndGuiFlagsBothSet: throw new InputValidationException("Both --console and --gui cannot be set at the same time.")
         }

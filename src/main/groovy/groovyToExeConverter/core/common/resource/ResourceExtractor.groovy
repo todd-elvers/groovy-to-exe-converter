@@ -62,6 +62,8 @@ class ResourceExtractor {
         }
     }
 
+
+    //TODO: Something fishy is going on here in Intellij 14 - cannot find 'gradle.properties' due to different directory being returned from Thread.currentThread().contextClassLoader...
     /**
      * Try and resolve the give resource by reading it in from /main/resources/.
      * If that fails, try and just open the file locally.  Otherwise, return null.
