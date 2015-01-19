@@ -16,7 +16,7 @@ Although g2exe only exposes a subset of Launch4j's features, it also adds suppor
 ####Groovy scripts
 
 1. The script is loaded into memory by g2exe
-2. The script's classes are reflectively scanned to determine the appropriate main-method
+2. The script's classes are loaded as an AST (abstract syntax tree) and scanned to determine the appropriate main-method
 3. The script is compiled into a .jar file
 4. The appropriate Launch4j XML is generated
 5. Launch4j is called with the generated XML
