@@ -31,6 +31,11 @@ class Launch4jXmlHandler {
             }
             messages(){
                 startupErr("An error occurred while starting ${exeFile.name}.")
+                jreVersionErr("""\
+                    An error occurred while trying to locate a valid Java Runtime Environment.
+                    After pressing OK, you will be directed to the Java download page.
+
+                    This application expects the following Java version (or greater): """.stripIndent())
             }
             if(appConfig.containsSplashFile() && appConfig.appTypeIsGUI()){
                 splash(){
