@@ -3,14 +3,6 @@
 sourceCompatibility = JavaVersion.VERSION_1_5
 targetCompatibility = JavaVersion.VERSION_1_5
 
-// Validate the 'java5Home' property
-File java5HomeDir = new File(java5Home as String)
-if (!java5HomeDir.exists()) {
-    throw new IllegalStateException("ERROR: Java 5 home [${java5Home ?: '""'}] does not exist.")
-} else if(!java5HomeDir.list().contains("bin") || !java5HomeDir.list().contains("jre")){
-    throw new IllegalStateException("ERROR: Property 'java5Home' was not configured correctly.  Please point this to the root directory of a Java 5 JDK.")
-}
-
 // Set '-bootclasspath' to JRE 1.5 for cross-compiling for all tasks that compile Java or Groovy
 // Cross-compiling reference: http://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html#crosscomp-options
 project.tasks.withType(JavaCompile) { options.bootClasspath = project.fileTree("${java5Home}/jre/lib/").getAsPath() }
@@ -26,6 +18,15 @@ project.tasks.withType(Exec) {
  */
 task checkDependenciesForJava5Compatibility(type: DefaultTask) {
     doFirst {
+	
+        // Validate the 'java5Home' property
+        File java5HomeDir = new File(java5Home as String)
+        if (!java5HomeDir.exists()) {
+            throw new IllegalStateException("ERROR: Java 5 home [${java5Home ?: '""'}] does not exist.")
+        } else if(!java5HomeDir.list().contains("bin") || !java5HomeDir.list().contains("jre")){
+            throw new IllegalStateException("ERROR: Property 'java5Home' was not configured correctly.  Please point this to the root directory of a Java 5 JDK.")
+        }
+
         println "NOTE: Java 5 Home set to '$java5Home'"
     }
 
@@ -47,7 +48,8 @@ task checkDependenciesForJava5Compatibility(type: DefaultTask) {
                         }
                         if (javaVersion > 5) {
                             // Throwing exception directly from here will show a 'cannot open ZIP' message.
-                            failureReason = "Dependency has class with Java version $javaVersion, max allowed is 5: ${fileDetails.name} in ${dep.name}"
+                            String className = fileDetails.name.substring(0, fileDetails.name.indexOf('.'))
+                            failureReason = "Dependency '${dep.name}' has a class compiled with Java $javaVersion, max allowed is 5. (class = $className)"
                         }
                         fileDetails.stopVisiting();
                     }
