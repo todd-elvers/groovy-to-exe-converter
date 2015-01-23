@@ -12,8 +12,8 @@ class GroovyToExeConverterRunnerUnitTest extends Specification {
     def fileConverter = GroovyMock(FileConverter)
 
     GroovyToExeConverterRunner runner = [
-            args: null,
-            inputProcessor: GroovyMock(InputProcessor),
+            args              : null,
+            inputProcessor    : GroovyMock(InputProcessor),
             environmentHandler: GroovyMock(EnvironmentHandler)
     ]
 
