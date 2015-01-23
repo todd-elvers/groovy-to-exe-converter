@@ -1,6 +1,7 @@
 package groovyToExeConverter
 
 import groovy.util.logging.Log4j
+import groovyToExeConverter.core.FileConverter
 import groovyToExeConverter.core.FileConverterFactory
 import groovyToExeConverter.input.InputProcessor
 import groovyToExeConverter.model.AppConfig
@@ -15,10 +16,9 @@ class GroovyToExeConverterRunner implements Runnable {
     }
 
 
-    def inputProcessor = new InputProcessor(),
-        environmentHandler = new EnvironmentHandler()
-
-    String[] args
+    EnvironmentHandler environmentHandler = []
+    InputProcessor inputProcessor = []
+    String[] args = []
 
     @Override
     void run() {
@@ -32,7 +32,8 @@ class GroovyToExeConverterRunner implements Runnable {
 
             if (appConfig) {
                 log.info("Converting...")
-                FileConverterFactory.makeFileConverter(appConfig).convert()
+                FileConverter fileConverter = FileConverterFactory.makeFileConverter(appConfig)
+                fileConverter.convert()
                 log.info("Conversion successful!")
             }
         } catch (Exception ex) {

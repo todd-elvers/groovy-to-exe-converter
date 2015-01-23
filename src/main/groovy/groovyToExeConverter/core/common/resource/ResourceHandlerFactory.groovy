@@ -5,9 +5,10 @@ import groovyToExeConverter.model.AppConfig
 class ResourceHandlerFactory {
 
     static ResourceHandler makeJarFileResourceHandler(AppConfig appConfig) {
-        def resourceHandler = new ResourceHandler(appConfig.temporaryDirectory)
-        resourceHandler.copyFileToTempDir(appConfig.fileToConvert)
-        return resourceHandler
+        new ResourceHandler(appConfig.temporaryDirectory).with {
+            copyFileToTempDir(appConfig.fileToConvert)
+            return it
+        }
     }
 
     static ResourceHandler makeGroovyScriptResourceHandler(AppConfig appConfig) {

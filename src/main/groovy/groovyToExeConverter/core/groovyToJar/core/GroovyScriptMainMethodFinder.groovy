@@ -6,20 +6,11 @@ import org.codehaus.groovy.control.CompilationUnit
 import org.codehaus.groovy.control.CompilerConfiguration
 
 @Log4j
-class GroovyScriptHandler {
+class GroovyScriptMainMethodFinder {
 
-    static CompilationUnit loadScriptIntoMemoryAndCompile(File groovyScriptFile) {
-        def loadedGroovyScript = new CompilationUnit()
-
-        loadedGroovyScript.addSource(groovyScriptFile)
-        loadedGroovyScript.setConfiguration(new CompilerConfiguration(targetDirectory: groovyScriptFile.parentFile))
-        loadedGroovyScript.compile()
-
-        return loadedGroovyScript
-    }
-
-    static String findNameOfClassWithMainMethod(CompilationUnit compiledGroovyScript) {
-        List mainClassNames = collectClassNamesWithMainMethods(compiledGroovyScript)
+    static String findNameOfClassWithMainMethod(File groovyScript) {
+        CompilationUnit compiledGroovyScript = compileGroovyScript(groovyScript)
+        List<String> mainClassNames = collectClassNamesWithMainMethods(compiledGroovyScript)
         validateMainMethodCollectionResults(mainClassNames)
 
         log.debug("Dynamically detected '${mainClassNames[0]}' as main-class.")
@@ -27,11 +18,23 @@ class GroovyScriptHandler {
         return mainClassNames[0]
     }
 
-    private static List collectClassNamesWithMainMethods(CompilationUnit compiledGroovyScript) {
+    protected static CompilationUnit compileGroovyScript(File groovyScript) {
+        File directoryToPlaceClassFiles = groovyScript.parentFile
+
+        new CompilationUnit().with {
+            addSource(groovyScript)
+            setConfiguration(new CompilerConfiguration(targetDirectory: directoryToPlaceClassFiles))
+            compile()
+
+            return it
+        }
+    }
+
+    private static List<String> collectClassNamesWithMainMethods(CompilationUnit compiledGroovyScript) {
         List classesWithMainMethods = []
         List<ClassNode> classes = compiledGroovyScript.getAST().classes
-        for (clazz in classes) {
-            for (method in compiledGroovyScript.getClassNode(clazz.name).methods) {
+        classes.each { clazz ->
+            compiledGroovyScript.getClassNode(clazz.name).methods.each { method ->
                 if (method.name == "main") {
                     classesWithMainMethods << clazz.name
                 }

@@ -3,7 +3,7 @@ package groovyToExeConverter.core.groovyToJar
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import groovyToExeConverter.core.FileConverter
-import groovyToExeConverter.core.groovyToJar.core.GroovyScriptHandler
+import groovyToExeConverter.core.groovyToJar.core.GroovyScriptMainMethodFinder
 import groovyToExeConverter.core.groovyToJar.core.JarBuilder
 
 @Log4j
@@ -14,12 +14,13 @@ class GroovyToJarFileConverter extends FileConverter {
     File convert() {
         log.info("${appConfig.fileToConvert.name} --> ${appConfig.jarFileName}")
 
-        final script = resourceHandler.copyFileToTempDir(appConfig.fileToConvert)
-        final loadedScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(script)
-        final mainClassName = GroovyScriptHandler.findNameOfClassWithMainMethod(loadedScript)
-        final jarFile = resourceHandler.createFileInTempDir(appConfig.jarFileName)
+        File script = resourceHandler.copyFileToTempDir(appConfig.fileToConvert)
+        File jarFile = resourceHandler.createFileInTempDir(appConfig.jarFileName)
 
-        new JarBuilder(mainClass: mainClassName, destFile: jarFile).build()
+        new JarBuilder(
+                mainClass: GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod(script),
+                destFile : jarFile
+        ).build()
     }
 
 }

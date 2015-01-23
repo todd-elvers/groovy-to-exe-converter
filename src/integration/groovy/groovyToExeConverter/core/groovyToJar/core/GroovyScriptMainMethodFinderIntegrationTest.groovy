@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils
 import org.codehaus.groovy.control.CompilationUnit
 import testHelpers.TempDirectorySpockIntegrationTest
 
-class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTest {
+class GroovyScriptMainMethodFinderIntegrationTest extends TempDirectorySpockIntegrationTest {
     File scriptFileWithClassesInTempDir,
          scriptFileWithoutClassesInTempDir
 
@@ -25,20 +25,20 @@ class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTe
             expectedClassFileNames.each { new File(TEMP_DIR, it).delete() }
 
         when:
-            CompilationUnit compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithClassesInTempDir)
+            CompilationUnit compiledScript = GroovyScriptMainMethodFinder.compileGroovyScript(scriptFileWithClassesInTempDir)
 
         then:
             compiledScript != null
             expectedClassFileNames.every { new File(TEMP_DIR, it).exists() }
     }
 
-    def "given a script file without classes: compileScriptToClassFilesInSameDirAndLoadIntoMemory() compiles it to .class files in the same directory and returns CompilationUnit"() {
+    def "given a script file without classes: loadScriptIntoMemoryAndCompile() compiles it to .class files in the same directory and returns CompilationUnit"() {
         given:
             List<String> expectedClassFileNames = ["TestScriptWithoutClasses.class"]
             expectedClassFileNames.each { new File(TEMP_DIR, it).delete() }
 
         when:
-            CompilationUnit compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithoutClassesInTempDir)
+            CompilationUnit compiledScript = GroovyScriptMainMethodFinder.compileGroovyScript(scriptFileWithoutClassesInTempDir)
 
         then:
             compiledScript != null
@@ -47,17 +47,13 @@ class GroovyScriptHandlerIntegrationTest extends TempDirectorySpockIntegrationTe
 
 
     def "given a compiled script with multiple classes: findNameOfClassWithMainMethod() returns name of class containing main method"() {
-        given:
-            def compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithClassesInTempDir)
         expect:
-            GroovyScriptHandler.findNameOfClassWithMainMethod(compiledScript) == "B"
+            GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod(scriptFileWithClassesInTempDir) == "B"
     }
 
 
     def "given a compiled script with no classes: findNameOfClassWithMainMethod() return name of script"() {
-        given:
-            def compiledScript = GroovyScriptHandler.loadScriptIntoMemoryAndCompile(scriptFileWithoutClassesInTempDir)
         expect:
-            GroovyScriptHandler.findNameOfClassWithMainMethod(compiledScript) == "TestScriptWithoutClasses"
+            GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod(scriptFileWithoutClassesInTempDir) == "TestScriptWithoutClasses"
     }
 }

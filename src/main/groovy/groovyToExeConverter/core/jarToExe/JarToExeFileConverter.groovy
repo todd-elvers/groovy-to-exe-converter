@@ -17,10 +17,10 @@ class JarToExeFileConverter extends FileConverter {
     File convert() {
         log.info("${appConfig.jarFileName.padRight(appConfig.fileToConvert.name.length())} --> ${appConfig.exeFileName}")
 
-        def xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml'),
-            jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName),
-            exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName),
-            bmpFile = resolveSplashFileHandle()
+        File xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml'),
+             jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName),
+             exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName),
+             bmpFile = resolveSplashFileHandle()
 
         new Launch4jXmlHandler().with {
             generateXmlFrom(appConfig, jarFile, exeFile, bmpFile)
