@@ -29,7 +29,7 @@ Although g2exe only exposes a subset of Launch4j's features, it also adds suppor
 1.  The appropriate Launch4j XML is generated
 2.  Launch4j is called with the generated XML
 
-__TIP:__ If your application is a gradle application, you can use the gradle task 'buildJar' in [build-executable.gradle](https://github.com/todd-elvers/g2exe/blob/master/build-executable.gradle) to generate an all-in-one jar for your application (be sure to omit the line containing `from('gradle.properties', 'LICENSE.txt', '/licenses')`).
+__TIP:__ If your application is a gradle application, you can use the gradle task 'buildJar' in [build-executable.gradle](https://github.com/todd-elvers/groovy-to-exe-converter/blob/master/add-build-executable.gradle) to generate an all-in-one jar for your application (be sure to omit the line containing `from('gradle.properties', 'LICENSE.txt', '/licenses')`).
 
 
 ####Java installation scanning
