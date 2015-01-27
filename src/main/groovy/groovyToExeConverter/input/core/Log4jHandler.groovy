@@ -1,15 +1,18 @@
 package groovyToExeConverter.input.core
 
+import groovy.util.logging.Log4j
 import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
 
+@Log4j
 class Log4jHandler {
 
     static void setAppenderToDebugAppender(){
         removeAllLoggers()
         addDebugLogger()
+        log.debug("Debug logger enabled.")
     }
 
     static void removeAllLoggers(){
