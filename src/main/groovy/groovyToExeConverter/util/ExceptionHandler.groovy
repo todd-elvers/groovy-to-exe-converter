@@ -20,11 +20,11 @@ class ExceptionHandler {
         }
     }
 
-    private static void shouldDisplayStacktrace(AppConfig appConfig, String[] appArgs) {
+    private static boolean shouldDisplayStacktrace(AppConfig appConfig, String[] appArgs) {
         appConfig?.showStackTrace || "--stacktrace" in appArgs*.toLowerCase()
     }
 
-    private static void exceptionOccurredDuringConversion(AppConfig appConfig) {
-        appConfig
+    private static boolean exceptionOccurredDuringConversion(AppConfig appConfig) {
+        appConfig != null
     }
 }
