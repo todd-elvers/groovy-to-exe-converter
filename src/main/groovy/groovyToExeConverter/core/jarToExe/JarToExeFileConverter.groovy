@@ -28,7 +28,8 @@ class JarToExeFileConverter extends FileConverter {
         }
 
         new Launch4jCommandRunner().with {
-            buildCommand(resourceHandler.resolveLaunch4jcExeHandle(), xmlFile)
+            File launch4jcExe = resourceHandler.findFileInLaunch4jDir("launch4jc.exe")
+            buildCommand(launch4jcExe, xmlFile)
             runCommand()
         }
 
