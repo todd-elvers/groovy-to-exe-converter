@@ -15,24 +15,27 @@ class JarToExeFileConverter extends FileConverter {
 
     @Override
     File convert() {
-        log.info("${appConfig.jarFileName.padRight(appConfig.fileToConvert.name.length())} --> ${appConfig.exeFileName}")
+        File xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
+        File exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName)
 
-        File xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml'),
-             jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName),
-             exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName),
-             bmpFile = resolveSplashFileHandle()
-
+        log.info("Writing Launch4j XML to disk.")
         new Launch4jXmlHandler().with {
+            File jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
+            File bmpFile = resolveSplashFileHandle()
+
             generateXmlFrom(appConfig, jarFile, exeFile, bmpFile)
             writeXmlTo(xmlFile)
         }
 
+        log.info("Running Launch4j from the command line.")
         new Launch4jCommandRunner().with {
             File launch4jcExe = resourceHandler.findFileInLaunch4jDir("launch4jc.exe")
+
             buildCommand(launch4jcExe, xmlFile)
             runCommand()
         }
 
+        log.info("Executable file created: $exeFile")
         return exeFile
     }
 

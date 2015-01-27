@@ -5,7 +5,7 @@ import groovyToExeConverter.model.exception.CompilationException
 @Log4j
 class JarBuilder {
     private final GROOVY_HOME = new File(System.getenv('GROOVY_HOME'))
-    private final ANT = new AntBuilder()
+    private final AntBuilder ANT = new AntBuilder()
 
     File destFile
     String mainClass

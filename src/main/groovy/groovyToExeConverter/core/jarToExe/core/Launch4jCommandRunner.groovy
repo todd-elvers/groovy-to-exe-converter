@@ -4,7 +4,7 @@ import groovy.util.logging.Log4j
 
 @Log4j
 class Launch4jCommandRunner {
-    String commandToExecute
+    private String commandToExecute
 
     void buildCommand(File launch4jcFile, File launch4jcXmlFile){
         commandToExecute = "\"${launch4jcFile}\" \"${launch4jcXmlFile}\""

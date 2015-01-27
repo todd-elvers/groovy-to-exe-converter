@@ -12,13 +12,15 @@ class GroovyToJarFileConverter extends FileConverter {
 
     @Override
     File convert() {
-        log.info("${appConfig.fileToConvert.name} --> ${appConfig.jarFileName}")
-
         File script = resourceHandler.copyFileToTempDir(appConfig.fileToConvert)
         File jarFile = resourceHandler.createFileInTempDir(appConfig.jarFileName)
 
+        log.info("Compiling groovy script.")
+        String mainClassName = GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod(script)
+
+        log.info("Bundling compiled script & groovy libraries into JAR.")
         new JarBuilder(
-                mainClass: GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod(script),
+                mainClass: mainClassName,
                 destFile : jarFile
         ).build()
     }

@@ -1,5 +1,4 @@
 package groovyToExeConverter
-
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import groovyToExeConverter.core.FileConverter
@@ -31,7 +30,7 @@ class GroovyToExeConverterRunner {
             appConfig = inputProcessor.processIntoAppConfig(args)
 
             if (appConfig) {
-                log.info("Converting...")
+                log.info("Converting $appConfig.fileToConvert.name into $appConfig.exeFileName...")
                 FileConverter fileConverter = FileConverterFactory.makeFileConverter(appConfig)
                 fileConverter.convert()
                 log.info("Conversion successful!")

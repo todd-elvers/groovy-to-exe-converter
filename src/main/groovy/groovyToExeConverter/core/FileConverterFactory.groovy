@@ -12,16 +12,14 @@ class FileConverterFactory {
     static FileConverter makeFileConverter(AppConfig appConfig) {
         switch (appConfig.fileToConvert) {
             case isJarFile:
-                def resourceHandler = ResourceHandlerFactory.makeJarFileResourceHandler(appConfig)
                 return new JarToExeFileConverter([
                         appConfig      : appConfig,
-                        resourceHandler: resourceHandler
+                        resourceHandler: ResourceHandlerFactory.makeJarFileResourceHandler(appConfig)
                 ])
             case isGroovyFile:
-                def resourceHandler = ResourceHandlerFactory.makeGroovyScriptResourceHandler(appConfig)
                 return new GroovyToExeFileConverter([
                         appConfig      : appConfig,
-                        resourceHandler: resourceHandler
+                        resourceHandler: ResourceHandlerFactory.makeGroovyScriptResourceHandler(appConfig)
                 ])
         }
     }
