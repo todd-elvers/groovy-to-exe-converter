@@ -16,7 +16,7 @@ task buildExe(dependsOn: [':run'])  {
     }
 }
 
-task buildJar(type: Jar, dependsOn:[':compileGroovy', ':processResources']) {
+task buildJar(type: Jar, dependsOn:[':compileGroovy', ':processResources', ':checkDependenciesForJava5Compatibility']) {
     description 'Copies all classes, resources, and jar dependencies into one executable jar'
     from('gradle.properties', 'LICENSE.txt', '/licenses')
     from files(sourceSets.main.output.classesDir)

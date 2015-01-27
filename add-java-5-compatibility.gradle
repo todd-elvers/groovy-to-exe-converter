@@ -13,6 +13,8 @@ project.tasks.withType(Exec) {
     environment << [ "JAVA_HOME": java5Home, "PATH": "$java5Home/bin:${System.getenv("PATH")}"]
 }
 
+println "NOTE: Java 5 Home set to '$java5Home'"
+
 /**
  * Iterates through all 'compile' dependencies & ensures they are compatible with Java 5
  */
@@ -27,7 +29,6 @@ task checkDependenciesForJava5Compatibility(type: DefaultTask) {
             throw new IllegalStateException("ERROR: Property 'java5Home' was not configured correctly.  Please point this to the root directory of a Java 5 JDK.")
         }
 
-        println "NOTE: Java 5 Home set to '$java5Home'"
     }
 
     doLast {
