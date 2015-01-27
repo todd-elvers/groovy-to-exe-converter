@@ -72,6 +72,9 @@ For more information on the available parameters, or their default values, run:
 - If the flag `--console` is provided to g2exe, the executable created will operate like a native Windows command line program: opening a command prompt window if one isn't open and printing output to the console.
 - If the flag `--gui` is provided to g2exe, the executable created will operate like a native Windows GUI program: not opening a command prompt window, and not printing output to the console (this flag also allows the use of a splash screen via `--splash <image-file>`)
 
+#####Known Issues
+This application cannot handle scripts which use `@Grab`. 
+
 ##Launch4j
 All credit for the [Launch4j source code](https://sourceforge.net/projects/launch4j) goes to [Grzegorz Kowal](http://sourceforge.net/u/grzegok/profile/).
 
