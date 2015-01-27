@@ -45,7 +45,7 @@ Alternatively, you could build g2exe yourself:
 1. Clone the repository
 2. Navigate to the repository's directory and execute: ```gradlew buildExe```
 
-If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop.  You can override this behavior by manipulating the arguments passed into `buildExe` in [build-executable.gradle](https://github.com/todd-elvers/g2exe/blob/master/build-executable.gradle).
+If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop.  You can override this behavior by manipulating the arguments passed into `buildExe` in [build-executable.gradle](https://github.com/todd-elvers/groovy-to-exe-converter/blob/master/add-build-executable.gradle).
 
 <br/>
 
