@@ -1,5 +1,6 @@
 package groovyToExeConverter
 
+import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import groovyToExeConverter.core.FileConverter
 import groovyToExeConverter.core.FileConverterFactory
@@ -9,19 +10,18 @@ import groovyToExeConverter.util.EnvironmentHandler
 import groovyToExeConverter.util.ExceptionHandler
 
 @Log4j
-class GroovyToExeConverterRunner implements Runnable {
+@CompileStatic
+class GroovyToExeConverterRunner {
 
     static void main(String[] args) {
-        new GroovyToExeConverterRunner(args: args).run()
+        new GroovyToExeConverterRunner().run(args)
     }
 
 
-    EnvironmentHandler environmentHandler = []
-    InputProcessor inputProcessor = []
-    String[] args = []
+    EnvironmentHandler environmentHandler = new EnvironmentHandler()
+    InputProcessor inputProcessor = new InputProcessor()
 
-    @Override
-    void run() {
+    void run(String[] args) {
         AppConfig appConfig
 
         try {
