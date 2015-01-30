@@ -1,11 +1,15 @@
 package groovyToExeConverter.core.groovyToJar.core
+
+import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import groovyToExeConverter.model.exception.MainClassResolutionException
 import org.codehaus.groovy.ast.ClassNode
+import org.codehaus.groovy.ast.MethodNode
 import org.codehaus.groovy.control.CompilationUnit
 import org.codehaus.groovy.control.CompilerConfiguration
 
 @Log4j
+@CompileStatic
 class GroovyScriptMainMethodFinder {
 
     static String findNameOfClassWithMainMethod(File groovyScript) {
@@ -21,21 +25,19 @@ class GroovyScriptMainMethodFinder {
     protected static CompilationUnit compileGroovyScript(File groovyScript) {
         File directoryToPlaceClassFiles = groovyScript.parentFile
 
-        new CompilationUnit().with {
-            addSource(groovyScript)
-            setConfiguration(new CompilerConfiguration(targetDirectory: directoryToPlaceClassFiles))
-            compile()
-
-            return it
-        }
+        log.info("Compiling groovy script.")
+        CompilationUnit compilationUnit = new CompilationUnit(new CompilerConfiguration(targetDirectory: directoryToPlaceClassFiles))
+        compilationUnit.addSource(groovyScript)
+        compilationUnit.compile()
+        return compilationUnit
     }
 
     private static List<String> collectClassNamesWithMainMethods(CompilationUnit compiledGroovyScript) {
         List classesWithMainMethods = []
         List<ClassNode> classes = compiledGroovyScript.getAST().classes
-        classes.each { clazz ->
-            compiledGroovyScript.getClassNode(clazz.name).methods.each { method ->
-                if (method.name == "main") {
+        classes.each { ClassNode clazz ->
+            clazz.methods.each { MethodNode method ->
+                if (method.name == "main" && method.isPublic() && method.isStatic() && method.isVoidMethod()) {
                     classesWithMainMethods << clazz.name
                 }
             }
@@ -44,7 +46,7 @@ class GroovyScriptMainMethodFinder {
         return classesWithMainMethods
     }
 
-    private static void validateMainMethodCollectionResults(List mainClassNames) {
+    private static void validateMainMethodCollectionResults(List<String> mainClassNames) {
         if (!mainClassNames) {
             throw new MainClassResolutionException("No main methods were found when scanning through the classes of the given Groovy Script.")
         } else if (mainClassNames.size() > 1) {

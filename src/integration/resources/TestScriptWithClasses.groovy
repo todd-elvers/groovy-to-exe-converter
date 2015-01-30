@@ -2,6 +2,7 @@ public class A {
     def someClosure = {}
     def someMethod() {}
     def notMainMethod() {}
+    private String main() {}
 }
 
 class B {
@@ -15,4 +16,5 @@ class B {
 abstract class C {
     def doStuff() {}
     def notMainMethod() {}
+    public static String main(args) {}
 }
