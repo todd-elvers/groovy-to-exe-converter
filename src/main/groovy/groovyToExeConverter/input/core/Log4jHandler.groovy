@@ -1,5 +1,6 @@
 package groovyToExeConverter.input.core
 
+import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
@@ -7,6 +8,7 @@ import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
 
 @Log4j
+@CompileStatic
 class Log4jHandler {
 
     static void setAppenderToDebugAppender(){
@@ -16,7 +18,7 @@ class Log4jHandler {
     }
 
     static void removeAllLoggers(){
-        Logger.getRootLogger().getLoggerRepository().resetConfiguration()
+        Logger.rootLogger.loggerRepository.resetConfiguration()
     }
 
     static void addDebugLogger(){
@@ -25,7 +27,7 @@ class Log4jHandler {
         consoleAppender.setThreshold(Level.DEBUG)
         consoleAppender.activateOptions()
 
-        Logger.getRootLogger().addAppender(consoleAppender)
+        Logger.rootLogger.addAppender(consoleAppender)
     }
 
 
