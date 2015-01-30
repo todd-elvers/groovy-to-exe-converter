@@ -7,11 +7,11 @@ class JarBuilder {
     private final GROOVY_HOME = new File(System.getenv('GROOVY_HOME'))
     private final AntBuilder ANT = new AntBuilder()
 
-    File destFile
+    File destinationFile
     String mainClass
 
     File build() {
-        log.debug("Building '${destFile}'...")
+        log.debug("Building '${destinationFile}'...")
 
         try {
             disableAntLoggingToConsole()
@@ -21,7 +21,7 @@ class JarBuilder {
         }
 
         log.debug("Build successful.")
-        return destFile
+        return destinationFile
     }
 
     private disableAntLoggingToConsole() {
@@ -29,8 +29,9 @@ class JarBuilder {
     }
 
     private File buildJar() {
-        ANT.jar(destfile: destFile, compress: true, index: true) {
-            fileset(dir: destFile.parent, includes: mainClass + '*.class')
+        log.info("Bundling compiled script & groovy libraries into JAR.")
+        ANT.jar(destfile: destinationFile, compress: true, index: true) {
+            fileset(dir: destinationFile.parent, includes: mainClass + '*.class')
 
             zipgroupfileset(dir: GROOVY_HOME, includes: 'embeddable/groovy-all-*.jar')
             zipgroupfileset(dir: GROOVY_HOME, includes: 'lib/commons*.jar')
@@ -40,7 +41,7 @@ class JarBuilder {
             }
         }
 
-        return destFile
+        return destinationFile
     }
 
 }

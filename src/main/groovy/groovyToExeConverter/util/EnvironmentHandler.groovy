@@ -1,7 +1,9 @@
 package groovyToExeConverter.util
 
+import groovy.transform.CompileStatic
 import groovyToExeConverter.model.exception.ConfigurationException
 
+@CompileStatic
 class EnvironmentHandler {
 
     void validateGroovyHome() {

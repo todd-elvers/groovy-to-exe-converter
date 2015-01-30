@@ -18,19 +18,15 @@ class JarToExeFileConverter extends FileConverter {
         File xmlFile = resourceHandler.createFileInTempDir('launch4jc_config.xml')
         File exeFile = new File(appConfig.destinationDirectory, appConfig.exeFileName)
 
-        log.info("Writing Launch4j XML to disk.")
         new Launch4jXmlHandler().with {
             File jarFile = resourceHandler.findFileInTempDir(appConfig.jarFileName)
             File bmpFile = resolveSplashFileHandle()
-
             generateXmlFrom(appConfig, jarFile, exeFile, bmpFile)
             writeXmlTo(xmlFile)
         }
 
-        log.info("Running Launch4j from the command line.")
         new Launch4jCommandRunner().with {
             File launch4jcExe = resourceHandler.findFileInLaunch4jDir("launch4jc.exe")
-
             buildCommand(launch4jcExe, xmlFile)
             runCommand()
         }
@@ -42,8 +38,7 @@ class JarToExeFileConverter extends FileConverter {
     private File resolveSplashFileHandle() {
         if (appConfig.containsSplashFile() && appConfig.appTypeIsGUI()) {
             File bmpFile = resourceHandler.createFileInTempDir(removeExtension(appConfig.splashFile.name) + '.bmp')
-            BitmapImageWriter.writeImageAsBitmap(appConfig.splashFile, bmpFile)
-            return bmpFile
+            return BitmapImageWriter.writeImageAsBitmap(appConfig.splashFile, bmpFile)
         }
         return null
     }

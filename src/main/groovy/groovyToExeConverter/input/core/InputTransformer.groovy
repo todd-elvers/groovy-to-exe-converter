@@ -11,7 +11,7 @@ import static org.apache.commons.io.FilenameUtils.removeExtension
 class InputTransformer {
 
     AppConfig transformIntoAppConfig(OptionAccessor input) {
-        log.debug("Transforming user input into AppConfig...")
+        log.debug("Transforming user input into AppConfig.")
 
         File fileToConvert = new File(input.fileToConvert as String)
         def appConfig = new AppConfig(

@@ -1,7 +1,9 @@
 package groovyToExeConverter.model
 
+import groovy.transform.CompileStatic
 import groovy.transform.Immutable
 
+@CompileStatic
 @Immutable(knownImmutableClasses = [File])
 class AppConfig {
     File fileToConvert

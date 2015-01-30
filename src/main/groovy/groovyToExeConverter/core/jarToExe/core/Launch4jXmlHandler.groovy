@@ -1,13 +1,16 @@
 package groovyToExeConverter.core.jarToExe.core
 
+import groovy.util.logging.Log4j
 import groovy.xml.MarkupBuilder
 import groovyToExeConverter.model.AppConfig
 
+@Log4j
 class Launch4jXmlHandler {
 
     private def launch4jXml
 
     void generateXmlFrom(AppConfig appConfig, File jarFile, File exeFile, File imgFile) {
+        log.info("Generating Launch4j XML.")
         launch4jXml = {
             dontWrapJar(false)
             headerType(appConfig.appType)
@@ -46,12 +49,13 @@ class Launch4jXmlHandler {
     }
 
     void writeXmlTo(File xmlFile) {
-        def fileWriter = new FileWriter(xmlFile),
-            xmlBuilder = new MarkupBuilder(fileWriter)
+        log.info("Writing Launch4j XML to file.")
+        xmlFile.withWriter { fileWriter ->
+            MarkupBuilder xmlBuilder = new MarkupBuilder(fileWriter)
 
-        xmlBuilder.expandEmptyElements = true
-        xmlBuilder.launch4jConfig(launch4jXml)
-        fileWriter.close()
+            xmlBuilder.expandEmptyElements = true
+            xmlBuilder.launch4jConfig(launch4jXml)
+        }
     }
 
 }

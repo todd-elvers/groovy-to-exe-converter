@@ -1,10 +1,8 @@
 package groovyToExeConverter.input
 
-import groovy.util.logging.Log4j
 import groovyToExeConverter.input.core.*
 import groovyToExeConverter.model.AppConfig
 
-@Log4j
 class InputProcessor {
 
     InputParser inputParser = new InputParser()
@@ -32,7 +30,6 @@ class InputProcessor {
         }
 
         inputValidator.validate(input)
-
         return inputTransformer.transformIntoAppConfig(input)
     }
 

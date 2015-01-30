@@ -1,11 +1,13 @@
 package groovyToExeConverter.core.common.resource
 
+import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import org.apache.commons.io.FileUtils
 
 import static groovyToExeConverter.model.ResourceFileNames.LAUNCH4JC_RESOURCES
 
 @Log4j
+@CompileStatic
 class ResourceHandler {
     final ResourceExtractor resourceExtractor
 

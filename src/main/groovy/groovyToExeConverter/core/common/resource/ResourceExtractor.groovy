@@ -1,6 +1,7 @@
 package groovyToExeConverter.core.common.resource
 
 import groovy.io.FileType
+import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import groovyToExeConverter.model.ResourceFileNames
 import groovyToExeConverter.model.exception.ResourceExtractionException
@@ -10,6 +11,7 @@ import org.apache.commons.io.IOUtils
 
 
 @Log4j
+@CompileStatic
 class ResourceExtractor {
 
     final List<String> RESOURCE_FILE_NAMES = ResourceFileNames.asFlattenedList()
@@ -28,7 +30,9 @@ class ResourceExtractor {
     }
 
     private boolean anyResourcesAreMissingFromTempDir() {
-        RESOURCE_FILE_NAMES.any { !new File(TEMP_DIR, it).exists() }
+        RESOURCE_FILE_NAMES.any { String filename ->
+            !new File(TEMP_DIR, filename).exists()
+        }
     }
 
     private boolean versionMismatch() {

@@ -1,5 +1,6 @@
 package groovyToExeConverter.core.jarToExe.core
 
+import groovy.transform.CompileStatic
 import groovyToExeConverter.model.exception.BitmapImageWriterException
 
 import javax.imageio.ImageIO
@@ -8,6 +9,7 @@ import java.awt.image.BufferedImage
 import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 
+@CompileStatic
 class BitmapImageWriter {
 
     /**
@@ -21,17 +23,17 @@ class BitmapImageWriter {
      * @return the image as a 24-bit bitmap
      */
     static File writeImageAsBitmap(File imageFile, File imageFileAsBitmap) {
-        def image = ImageIO.read(imageFile)
+        BufferedImage image = ImageIO.read(imageFile)
 
-        new BufferedImage(image.width, image.height, image.type).with { bufferedImage ->
+        new BufferedImage(image.width, image.height, image.type).with { BufferedImage bufferedImage ->
             createGraphics().with {
                 setRenderingHint(KEY_INTERPOLATION, VALUE_INTERPOLATION_BICUBIC)
                 drawImage(image, 0, 0, image.width, image.height, null)
                 dispose()
             }
 
-            boolean successfulImageRewrite = ImageIO.write(bufferedImage, 'bmp', imageFileAsBitmap)
-            if(!successfulImageRewrite){
+            boolean imageRewriteWasSuccessful = ImageIO.write(bufferedImage, 'bmp', imageFileAsBitmap)
+            if(!imageRewriteWasSuccessful){
                 throw new BitmapImageWriterException("Failed to rewrite '$imageFile' as a 24-bit BMP file.")
             }
         }

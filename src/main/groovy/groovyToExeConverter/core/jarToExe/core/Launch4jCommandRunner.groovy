@@ -11,6 +11,7 @@ class Launch4jCommandRunner {
     }
 
     void runCommand() {
+        log.info("Executing Launch4j from the command line.")
         Process command = commandToExecute.execute()
         pipeCommandOutputToConsole(command)
     }
