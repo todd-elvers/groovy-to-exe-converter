@@ -43,7 +43,9 @@ Simply download the [latest g2exe build](https://github.com/todd-elvers/g2exe/re
 Alternatively, you could build g2exe yourself:
 
 1. Clone the repository
-2. Navigate to the repository's directory and execute: ```gradlew buildExe```
+2. Navigate to the repository's directory
+3. Set the java5Home variable in gradle.properties to a valid Java 5 JDK
+4. Execute: ```gradlew buildExe```
 
 If the gradle task `buildExe` was successful, g2exe.exe will be created on your desktop.  You can override this behavior by manipulating the arguments passed into `buildExe` in [build-executable.gradle](https://github.com/todd-elvers/groovy-to-exe-converter/blob/master/add-build-executable.gradle).
 
