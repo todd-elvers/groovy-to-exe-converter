@@ -38,7 +38,7 @@ The resolution of the java installation directory is done via registry scanning,
 <br/>
 
 ## Installation
-Simply download the [latest g2exe build](https://github.com/todd-elvers/g2exe/releases/download/1.2.0/g2exe.exe).
+Simply download the [latest g2exe build](https://github.com/todd-elvers/g2exe/releases/download/1.3.0/g2exe.exe).
 
 Alternatively, you could build g2exe yourself:
 
