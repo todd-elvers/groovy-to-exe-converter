@@ -30,6 +30,5 @@ configurations.all {
     }
 }
 
-apply from: 'add-integration-tests.gradle'      // Adds integration test support
 apply from: 'add-build-executable.gradle'       // Adds capability to build g2exe.exe
 apply from: 'add-java-5-compatibility.gradle'   // Adds Java 5 dependency checking

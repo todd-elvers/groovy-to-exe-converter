@@ -1,6 +1,6 @@
 package groovyToExeConverter.core.common.resource
 
-import testHelpers.TempDirectorySpockIntegrationTest
+import test_helpers.TempDirectorySpockIntegrationTest
 
 import static org.apache.commons.io.FileUtils.deleteDirectory
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic

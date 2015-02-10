@@ -1,8 +1,9 @@
-package groovyToExeConverter.core.groovyToJar.core
+package groovyToExeConverter.core.groovyToJar
 
+import groovyToExeConverter.core.groovyToJar.core.GroovyScriptMainMethodFinder
 import org.apache.commons.io.FileUtils
 import org.codehaus.groovy.control.CompilationUnit
-import testHelpers.TempDirectorySpockIntegrationTest
+import test_helpers.TempDirectorySpockIntegrationTest
 
 class GroovyScriptMainMethodFinderIntegrationTest extends TempDirectorySpockIntegrationTest {
     File scriptWithClassesAndMainMethodSyntaxInTempDir,

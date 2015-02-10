@@ -1,6 +1,6 @@
 package groovyToExeConverter
 
-import testHelpers.TempDirectorySpockIntegrationTest
+import test_helpers.TempDirectorySpockIntegrationTest
 
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
