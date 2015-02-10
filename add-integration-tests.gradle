@@ -2,7 +2,7 @@
 
 // Add integration directory to source sets
 sourceSets {
-    integration { sourceSet ->
+    integrationTest { sourceSet ->
         ["java", "groovy", "scala", "resources"].each {
             if (!sourceSet.hasProperty(it)) return
             sourceSet."$it".srcDir file("src/integration/${it}")
@@ -20,20 +20,27 @@ idea {
 
 // Setup dependencies for integration testing
 dependencies {
-    integrationCompile sourceSets.main.output
-    integrationCompile sourceSets.test.output
-    integrationCompile configurations.testCompile
-    integrationRuntime configurations.testRuntime
+    integrationTestCompile sourceSets.main.output
+    integrationTestCompile sourceSets.test.output
+    integrationTestCompile configurations.testCompile
+    integrationTestRuntime configurations.testRuntime
 
     // When running integration tests, use the resources from src/main/resources
-    integrationCompile files(sourceSets.main.output.resourcesDir)
+    integrationTestCompile files(sourceSets.main.output.resourcesDir)
 }
 
 // Task to run all integration tests
-task integration(type: Test) {
-    testClassesDir = sourceSets.integration.output.classesDir
-    classpath = sourceSets.integration.runtimeClasspath
+task integrationTest(type: Test) {
+    description = 'Runs the integration tests.'
+    group = 'verification'
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    reports.junitXml.destination = file("${project.testResultsDir}/$name")
+    reports.html.destination = file("${project.reporting.baseDir}/$name")
+
+    shouldRunAfter test
 }
 
 // Make sure 'check' task calls integration test
-check.dependsOn integration
+check.dependsOn integrationTest

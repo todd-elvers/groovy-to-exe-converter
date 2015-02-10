@@ -64,5 +64,7 @@ task checkDependenciesForJava5Compatibility(type: DefaultTask) {
     }
 }
 
-// Make sure 'check' task also checks dependencies for Java 5 compatibility
+// Make sure 'check','test' and 'integrationTest' tasks also checks dependencies for Java 5 compatibility
 check.dependsOn 'checkDependenciesForJava5Compatibility'
+test.dependsOn 'checkDependenciesForJava5Compatibility'
+integrationTest.dependsOn 'checkDependenciesForJava5Compatibility'

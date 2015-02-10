@@ -31,7 +31,7 @@ class JarBuilder {
     private File buildJar() {
         log.info("Bundling compiled script & groovy libraries into JAR.")
         ANT.jar(destfile: destinationFile, compress: true, index: true) {
-            fileset(dir: destinationFile.parent, includes: mainClass + '*.class')
+            fileset(dir: destinationFile.parent, includes: '*.class')
 
             zipgroupfileset(dir: GROOVY_HOME, includes: 'embeddable/groovy-all-*.jar')
             zipgroupfileset(dir: GROOVY_HOME, includes: 'lib/commons*.jar')
