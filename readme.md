@@ -14,7 +14,7 @@ This application accepts **.groovy** scripts or **.jar** files and generates Win
 
 <br/>
 
-##How it works
+## How it works
 Although g2exe only exposes a subset of Launch4j's features, it also adds support for **.groovy** scripts and for a wider range of splash image formats.  Executable files created by g2exe will automatically resolve Java's installation directory of the PC it's running on (and handle the case when there isn't one).
   
 #### Groovy scripts
