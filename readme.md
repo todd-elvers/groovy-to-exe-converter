@@ -2,8 +2,6 @@
 
 This application accepts **.groovy** scripts or **.jar** files and generates Windows executable files.  This application was written in Groovy and wraps [Launch4j](http://launch4j.sourceforge.net/), turning it into an easy-to-use command line application.
 
-<br/>
-
 ### Progress
 Expect v1.4.0 next week w/ some bugfixes and the newest version of Launch4j!
 
