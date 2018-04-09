@@ -2,9 +2,6 @@
 
 This application accepts **.groovy** scripts or **.jar** files and generates Windows executable files.  This application was written in Groovy and wraps [Launch4j](http://launch4j.sourceforge.net/), turning it into an easy-to-use command line application.
 
-### Progress
-Expect v1.3.2 next week w/ some bugfixes and the newest version of Launch4j!
-
 <br/>
 
 ## When could this be helpful?
@@ -41,7 +38,7 @@ The resolution of the java installation directory is done via registry scanning,
 <br/>
 
 ## Installation
-Simply download the [latest g2exe build](https://github.com/todd-elvers/g2exe/releases/download/1.3.1/g2exe.exe).
+Simply download the [latest g2exe build](https://github.com/todd-elvers/g2exe/releases/download/1.3.2/g2exe.exe).
 
 Alternatively, you could build g2exe yourself:
 
