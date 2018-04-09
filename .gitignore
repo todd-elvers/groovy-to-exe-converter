@@ -3,20 +3,6 @@
 .gradle
 out
 build
-*.com
-*.class
-*.dll
-*.so
-
-# Packages #
-############
-*.7z
-*.dmg
-*.gz
-*.iso
-*.rar
-*.tar
-*.zip
 
 # Logs and databases #
 ######################
