@@ -23,7 +23,7 @@ class GroovyScriptMainMethodFinder {
     }
 
     protected static CompilationUnit compileGroovyScript(File groovyScript) {
-        File directoryToPlaceClassFiles = groovyScript.parentFile
+        String directoryToPlaceClassFiles = groovyScript.parentFile.absolutePath
 
         log.info("Compiling groovy script.")
         CompilationUnit compilationUnit = new CompilationUnit(new CompilerConfiguration(targetDirectory: directoryToPlaceClassFiles))
