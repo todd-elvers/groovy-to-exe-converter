@@ -18,8 +18,8 @@ class GroovyToJarFileConverter extends FileConverter {
         String mainClassName = GroovyScriptMainMethodFinder.findNameOfClassWithMainMethod(script)
 
         new JarBuilder().with {
-            mainClass = mainClassName
-            destinationFile = jarFile
+            setMainClass(mainClassName)
+            setDestinationFile(jarFile)
             build()
         }
     }

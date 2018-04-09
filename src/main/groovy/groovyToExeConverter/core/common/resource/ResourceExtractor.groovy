@@ -53,6 +53,7 @@ class ResourceExtractor {
         RESOURCE_FILE_NAMES.each { String resourceFileName ->
             log.debug("Extracting resource '$resourceFileName' to temporary directory.")
 
+            //TODO: Make more Groovy-like
             def inputStream, tempFile
             try {
                 tempFile = new File(TEMP_DIR, resourceFileName)
