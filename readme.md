@@ -4,6 +4,11 @@ This application accepts **.groovy** scripts or **.jar** files and generates Win
 
 <br/>
 
+### Progress
+Expect v1.4.0 next week w/ some bugfixes and the newest version of Launch4j!
+
+<br/>
+
 ## When could this be helpful?
 
 1. If you have a **.groovy** script that you are planning to run on Windows machines that only have Java installed
