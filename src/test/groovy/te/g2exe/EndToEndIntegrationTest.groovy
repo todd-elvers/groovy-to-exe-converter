@@ -1,12 +1,11 @@
 package te.g2exe
 
-import te.g2exe.GroovyToExeConverterRunner
 import test_helpers.TempDirectorySpockIntegrationTest
 
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
 
-class GroovyToExeConverterRunnerIntegrationTest extends TempDirectorySpockIntegrationTest {
+class EndToEndIntegrationTest extends TempDirectorySpockIntegrationTest {
 
     void "can convert groovy scripts to executable files that function properly"() {
         given:
@@ -18,16 +17,19 @@ class GroovyToExeConverterRunnerIntegrationTest extends TempDirectorySpockIntegr
             String[] args = ['-f', groovyScriptFile, '--destDir', TEMP_DIR, '--stacktrace']
 
         when:
-            new GroovyToExeConverterRunner().run(args)
+            Startup.main(args)
 
         then:
             groovyScriptFile.exists()
             jarFile.exists()
             exeFile.exists()
 
-        then:
+        then: 'we execute the EXE file and time-box it to 2 seconds'
             Process exeProcess = "$exeFile".execute()
             exeProcess.waitForOrKill(2000)
+
+        and: 'we get the expected text in standard-out w/ graceful termination'
+            exeProcess.getText().contains("Hello World")
             assert exeProcess.exitValue() == 0 : "The exe generated ('$exeFile.name') did not return 0 after 2 seconds."
 
         where:
@@ -45,15 +47,18 @@ class GroovyToExeConverterRunnerIntegrationTest extends TempDirectorySpockIntegr
             String[] args = ['-f', jarFile, '--destDir', TEMP_DIR, '--stacktrace']
 
         when:
-            GroovyToExeConverterRunner.main(args)
+            Startup.main(args)
 
         then:
             jarFile.exists()
             exeFile.exists()
 
-        then:
+        then: 'we execute the EXE file and time-box it to 2 seconds'
             Process exeProcess = "$exeFile".execute()
             exeProcess.waitForOrKill(2000)
+
+        and: 'we get the expected text in standard-out w/ graceful termination'
+            exeProcess.getText().contains("Hello World")
             assert exeProcess.exitValue() == 0 : "The exe generated ('$exeFile.name') did not return 0 after 2 seconds."
     }
 

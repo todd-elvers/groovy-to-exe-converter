@@ -9,16 +9,14 @@ import te.g2exe.model.AppConfig
 import te.g2exe.util.ExceptionHandler
 
 //TODO: We need an overhaul on this project now that it is the flagship app on my Github
-//TODO: We can do the quick thing and get 1.3.2 out he door w/ bugfixes
-    // Or if we're impatient we can skip to the next step and then the refactor
 //TODO: Then create some e2e tests so we can add features & refactor we safety
 //TODO: Then refactor for v2.0.0
 @Log4j
 @CompileStatic
-class GroovyToExeConverterRunner {
+class Startup {
 
     static void main(String[] args) {
-        new GroovyToExeConverterRunner().run(args)
+        new Startup().run(args)
     }
 
 
