@@ -1,5 +1,5 @@
 package test_helpers
-import groovyToExeConverter.model.AppConfigDefaults
+import te.g2exe.model.AppConfigDefaults
 import org.apache.commons.io.FileUtils
 import spock.lang.Ignore
 import spock.lang.Specification
