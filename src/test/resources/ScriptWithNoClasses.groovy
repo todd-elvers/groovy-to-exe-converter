@@ -1,3 +1,1 @@
-println("I am a simple groovy script.")
-println("My arguments are: ${args}")
-println("Goodbye!")
+println("Hello World - I'm a Grooy script and my args are $args")

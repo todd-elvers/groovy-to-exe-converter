@@ -1,7 +1,7 @@
 class SomeClass {
 
     void print() {
-        println "SomeClass successfully instantiated!"
+        println "Hello World - SomeClass successfully instantiated!"
     }
 }
 

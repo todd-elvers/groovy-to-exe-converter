@@ -9,18 +9,18 @@ class ClassOne {
     }
 
     void print() {
-        println "ClassOne successfully instantiated."
+        println "Hello World - ClassOne successfully instantiated."
     }
 }
 
 class ClassTwo {
     void print() {
-        println "ClassTwo successfully instantiated."
+        println "Hello World - ClassTwo successfully instantiated."
     }
 }
 
 class ClassThree {
     void print() {
-        println "ClassThree successfully instantiated."
+        println "Hello World - ClassThree successfully instantiated."
     }
 }
