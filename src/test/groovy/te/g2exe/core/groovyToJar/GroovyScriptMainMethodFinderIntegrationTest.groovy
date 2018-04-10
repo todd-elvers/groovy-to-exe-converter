@@ -3,7 +3,7 @@ package te.g2exe.core.groovyToJar
 import te.g2exe.core.groovyToJar.core.GroovyScriptMainMethodFinder
 import org.apache.commons.io.FileUtils
 import org.codehaus.groovy.control.CompilationUnit
-import test_helpers.TempDirectorySpockIntegrationTest
+import te.test_helpers.TempDirectorySpockIntegrationTest
 
 class GroovyScriptMainMethodFinderIntegrationTest extends TempDirectorySpockIntegrationTest {
     File scriptWithClassesAndMainMethodSyntaxInTempDir,

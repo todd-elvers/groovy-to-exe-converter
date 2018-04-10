@@ -1,22 +1,30 @@
-package test_helpers
+package te.test_helpers
+
+import org.junit.BeforeClass
 import te.g2exe.model.AppConfigDefaults
 import org.apache.commons.io.FileUtils
 import spock.lang.Ignore
 import spock.lang.Specification
 
 @Ignore("Test helper class.")
-class TempDirectorySpockIntegrationTest extends Specification {
-    public static final File TEMP_DIR = new File(System.getenv("TEMP"), AppConfigDefaults.G2EXE_TEMP_DIR_NAME as String)
+abstract class TempDirectorySpockIntegrationTest extends Specification {
+    protected static final String TEMP_DIR_ENV_VAR = "TEMP"
+    protected static final File TEMP_DIR = new File(
+            System.getenv(TEMP_DIR_ENV_VAR) as String,
+            AppConfigDefaults.G2EXE_TEMP_DIR_NAME as String
+    )
 
-    def setupSpec() {
+    @BeforeClass
+    static void setupTempDirectory() {
         FileUtils.deleteQuietly(TEMP_DIR)
-        ensureTemporaryDirectoryIsAccessible()
-    }
 
-    private static void ensureTemporaryDirectoryIsAccessible(){
-        if(!System.getenv("TEMP")) throw new IOException("Unable to resolve system's temporary directory.")
+        if(!System.getenv(TEMP_DIR_ENV_VAR)) {
+            throw new IOException("Unable to resolve system's temporary directory - please set the $TEMP_DIR_ENV_VAR variable.")
+        }
+
         TEMP_DIR.mkdir()
     }
+
 
     File getFileFromResourcesDir(String fileName) {
         File file

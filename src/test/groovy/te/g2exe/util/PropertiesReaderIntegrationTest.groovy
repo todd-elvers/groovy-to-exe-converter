@@ -1,6 +1,6 @@
 package te.g2exe.util
 
-import test_helpers.TempDirectorySpockIntegrationTest
+import te.test_helpers.TempDirectorySpockIntegrationTest
 
 import static te.g2exe.util.PropertiesReader.readPropertyFromFile
 

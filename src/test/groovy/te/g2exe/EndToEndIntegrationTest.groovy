@@ -1,6 +1,6 @@
 package te.g2exe
 
-import test_helpers.TempDirectorySpockIntegrationTest
+import te.test_helpers.TempDirectorySpockIntegrationTest
 
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
