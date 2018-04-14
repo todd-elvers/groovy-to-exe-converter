@@ -1,9 +1,9 @@
 package te.g2exe.util
 
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import te.g2exe.model.AppConfig
 
-@Log4j
+@Slf4j
 class ExceptionHandler {
 
     static void handleException(Exception exception, AppConfig appConfig, String[] appArgs) {

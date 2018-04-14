@@ -17,7 +17,7 @@ class EndToEndIntegrationTest extends TempDirectorySpockIntegrationTest {
             String[] args = ['-f', groovyScriptFile, '--destDir', TEMP_DIR, '--stacktrace']
 
         when:
-            Startup.main(args)
+            Application.main(args)
 
         then:
             groovyScriptFile.exists()
@@ -47,7 +47,7 @@ class EndToEndIntegrationTest extends TempDirectorySpockIntegrationTest {
             String[] args = ['-f', jarFile, '--destDir', TEMP_DIR, '--stacktrace']
 
         when:
-            Startup.main(args)
+            Application.main(args)
 
         then:
             jarFile.exists()

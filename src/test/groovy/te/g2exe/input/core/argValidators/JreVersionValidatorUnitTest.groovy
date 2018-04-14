@@ -1,4 +1,4 @@
-package te.g2exe.input.core.parameterValidators
+package te.g2exe.input.core.argValidators
 
 import spock.lang.Specification
 import spock.lang.Unroll

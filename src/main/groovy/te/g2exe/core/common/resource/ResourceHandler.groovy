@@ -1,12 +1,12 @@
 package te.g2exe.core.common.resource
 
 import groovy.transform.CompileStatic
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import org.apache.commons.io.FileUtils
 
 import static te.g2exe.model.ResourceFileNames.LAUNCH4JC_RESOURCES
 
-@Log4j
+@Slf4j
 @CompileStatic
 class ResourceHandler {
     final ResourceExtractor resourceExtractor

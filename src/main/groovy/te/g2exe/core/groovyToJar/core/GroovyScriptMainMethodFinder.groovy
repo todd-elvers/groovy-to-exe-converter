@@ -1,14 +1,15 @@
 package te.g2exe.core.groovyToJar.core
 
 import groovy.transform.CompileStatic
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
+import groovy.util.logging.Slf4j
 import te.g2exe.model.exception.MainClassResolutionException
 import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.MethodNode
 import org.codehaus.groovy.control.CompilationUnit
 import org.codehaus.groovy.control.CompilerConfiguration
 
-@Log4j
+@Slf4j
 @CompileStatic
 class GroovyScriptMainMethodFinder {
 

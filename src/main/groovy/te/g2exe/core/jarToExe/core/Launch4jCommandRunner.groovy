@@ -1,8 +1,8 @@
 package te.g2exe.core.jarToExe.core
 
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 
-@Log4j
+@Slf4j
 class Launch4jCommandRunner {
     private String commandToExecute
 

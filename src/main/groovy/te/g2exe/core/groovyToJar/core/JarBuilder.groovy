@@ -1,8 +1,8 @@
 package te.g2exe.core.groovyToJar.core
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import te.g2exe.model.exception.CompilationException
 
-@Log4j
+@Slf4j
 class JarBuilder {
     private final GROOVY_HOME = new File(System.getenv('GROOVY_HOME'))
     private final AntBuilder ANT = new AntBuilder()

@@ -1,10 +1,10 @@
 package te.g2exe.core.jarToExe.core
 
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import groovy.xml.MarkupBuilder
 import te.g2exe.model.AppConfig
 
-@Log4j
+@Slf4j
 class Launch4jXmlHandler {
 
     private def launch4jXml

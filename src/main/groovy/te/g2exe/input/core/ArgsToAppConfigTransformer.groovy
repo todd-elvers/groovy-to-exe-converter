@@ -1,16 +1,18 @@
 package te.g2exe.input.core
 
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
+import org.springframework.stereotype.Service
 import te.g2exe.model.AppConfig
 import te.g2exe.model.ResourceFileNames
 
 import static te.g2exe.model.AppConfigDefaults.*
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
-@Log4j
-class InputTransformer {
+@Slf4j
+@Service
+class ArgsToAppConfigTransformer {
 
-    AppConfig transformIntoAppConfig(OptionAccessor input) {
+    AppConfig transform(OptionAccessor input) {
         log.debug("Transforming user input into AppConfig.")
 
         File fileToConvert = new File(input.fileToConvert as String)
@@ -33,9 +35,11 @@ class InputTransformer {
         return appConfig
     }
 
-    private def resolveIconFile = { OptionAccessor input ->
+    protected File resolveIconFile = { OptionAccessor input ->
         File tempDir = resolveTempDir(input)
-        def defaultIconFileName = ResourceFileNames.G2EXE_RESOURCES.fileNames.find { String resource -> resource.endsWith("ico") } as String
+        String defaultIconFileName = ResourceFileNames.G2EXE_RESOURCES.fileNames.find { String resource ->
+            resource.endsWith("ico")
+        }
         input.icon ? new File(input.icon as String) : new File(tempDir, defaultIconFileName)
     }
 

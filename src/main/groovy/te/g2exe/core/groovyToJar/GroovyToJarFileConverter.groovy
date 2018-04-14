@@ -1,12 +1,12 @@
 package te.g2exe.core.groovyToJar
 
 import groovy.transform.CompileStatic
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import te.g2exe.core.FileConverter
 import te.g2exe.core.groovyToJar.core.GroovyScriptMainMethodFinder
 import te.g2exe.core.groovyToJar.core.JarBuilder
 
-@Log4j
+@Slf4j
 @CompileStatic
 class GroovyToJarFileConverter extends FileConverter {
 

@@ -2,7 +2,7 @@ package te.g2exe.core.common.resource
 
 import groovy.io.FileType
 import groovy.transform.CompileStatic
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import te.g2exe.model.ResourceFileNames
 import te.g2exe.model.exception.ResourceExtractionException
 import te.g2exe.util.PropertiesReader
@@ -10,7 +10,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 
 
-@Log4j
+@Slf4j
 @CompileStatic
 class ResourceExtractor {
 

@@ -1,14 +1,21 @@
 package te.g2exe.input.core
 
-class InputParser {
+import org.springframework.stereotype.Service
+
+@Service
+class CommandLineArgsParser {
 
     @Delegate
-    CliBuilder CLI = new CliBuilder()
+    CliBuilder commandLineInterpreter = new CliBuilder()
 
-    InputParser() {
-        CLI.usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
-        CLI.header = "arguments:"
-        CLI.with {
+    CommandLineArgsParser() {
+        commandLineInterpreter.with {
+            // Decoration
+            header = "arguments:"
+            usage = "\ng2exe -f [groovyScript | jarFile] [optional-args]"
+            footer = "\n[source code @ http://github.com/todd-elvers/g2exe]"
+
+            // Arguments
             h(longOpt: 'help', 'Shows usage information')
             _(longOpt: 'version', 'Shows version information')
             _(longOpt: 'stacktrace', 'Prints the full stacktrace of any exception caught')
@@ -26,6 +33,10 @@ class InputParser {
             _(longOpt: 'launch4j', "This flag instructs g2exe to launch the Launch4j GUI directly. All other options are ignored if this flag is used.")
             _(longOpt: 'clearIconCache', "This flag instructs g2exe to clear Windows' IconCache for the current user & restart explorer.exe. All other options are ignored if this flag is used.")
         }
-        CLI.footer = "\n[source code @ http://github.com/todd-elvers/g2exe]"
     }
+
+
+
+
+
 }

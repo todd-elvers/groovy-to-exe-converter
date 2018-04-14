@@ -1,7 +1,7 @@
 package te.g2exe.core.jarToExe
 
 import groovy.transform.CompileStatic
-import groovy.util.logging.Log4j
+import groovy.util.logging.Slf4j
 import te.g2exe.core.FileConverter
 import te.g2exe.core.jarToExe.core.BitmapImageWriter
 import te.g2exe.core.jarToExe.core.Launch4jCommandRunner
@@ -9,7 +9,7 @@ import te.g2exe.core.jarToExe.core.Launch4jXmlHandler
 
 import static org.apache.commons.io.FilenameUtils.removeExtension
 
-@Log4j
+@Slf4j
 @CompileStatic
 class JarToExeFileConverter extends FileConverter {
 
