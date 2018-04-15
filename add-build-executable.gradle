@@ -8,11 +8,11 @@ task buildExe(dependsOn: [':run'])  {
     description "Generates g2exe.exe on the current user's desktop"
     run.dependsOn ':buildJar'
     run {
-        final USER_DESKTOP = new File(System.getenv("USERPROFILE"), "Desktop").absolutePath
+        final LIBS_DIR = new File(buildDir, "libs").absolutePath
         final RESOURCES_DIR = sourceSets.main.resources.getSrcDirs().iterator().next()
         final G2EXE_ICON = new File(RESOURCES_DIR, 'g2exeIcon.ico')
 
-        args "--fileToConvert", "${buildDir}/libs/g2exe.jar", "--destDir", USER_DESKTOP, "--icon", G2EXE_ICON, "--stacktrace"
+        args "--fileToConvert", "${LIBS_DIR}/g2exe.jar", "--destDir", LIBS_DIR, "--icon", G2EXE_ICON, "--stacktrace"
     }
 }
 
