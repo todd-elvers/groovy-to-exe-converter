@@ -11,22 +11,22 @@ import org.apache.commons.cli.CommandLine
 @Service
 class OneOffCommandBuilder {
     
-    Optional<Closure> build(OptionAccessor args) {
+    Optional<Closure> tryToBuild(OptionAccessor options) {
         Closure oneOffCommand = null
 
-        if (args.help) {
+        if (options.help) {
             oneOffCommand = { ->
-                new CommandLineArgsParser().usage()
+                new ArgsToOptionsParser().usage()
             }
-        } else if (args.version) {
+        } else if (options.version) {
             oneOffCommand = { ->
                 log.info("Version: ${PropertiesReader.readAppProperty("version")}")
             }
-        } else if (args.launch4j) {
+        } else if (options.launch4j) {
             oneOffCommand = { ->
                 log.info("Opening Launch4j GUI.")
 
-                AppConfig appConfigWithAllDefaultValues = new ArgsToAppConfigTransformer().transform(new OptionAccessor(new CommandLine()))
+                AppConfig appConfigWithAllDefaultValues = new OptionsToAppConfigTransformer().transform(new OptionAccessor(new CommandLine()))
                 File launch4jExe = ResourceHandlerFactory
                         .makeGroovyScriptResourceHandler(appConfigWithAllDefaultValues)
                         .findFileInLaunch4jDir("launch4j.exe")
@@ -35,7 +35,7 @@ class OneOffCommandBuilder {
                 log.debug("Opening Launch4j GUI with '$launch4jGuiCommand'")
                 launch4jGuiCommand.execute()
             }
-        } else if (args.clearIconCache) {
+        } else if (options.clearIconCache) {
             oneOffCommand = { ->
                 log.info("Clearing current user's icon cache.")
 

@@ -1,19 +1,19 @@
 package te.g2exe.input.core.argValidators
 
 import org.springframework.stereotype.Component
-import te.g2exe.input.core.CommandLineArgValidator
-import te.g2exe.input.core.ValidationAssertion
+import te.g2exe.input.core.OptionsValidator
+import te.g2exe.input.core.OptionsAssertion
 
 @Component
-class AppTypeValidator extends CommandLineArgValidator {
+class AppTypeValidator extends OptionsValidator {
 
     @Override
-    List<ValidationAssertion> getAssertions() {
+    List<OptionsAssertion> getAssertions() {
         return [
                 newAssertion(
                         "Both --console and --gui cannot be set at the same time.",
-                        { args ->
-                            return args.console && args.gui
+                        { options ->
+                            return options.console && options.gui
                         }
                 )
         ]

@@ -1,32 +1,32 @@
 package te.g2exe.input.core.argValidators
 
 import org.springframework.stereotype.Component
-import te.g2exe.input.core.CommandLineArgValidator
-import te.g2exe.input.core.ValidationAssertion
+import te.g2exe.input.core.OptionsValidator
+import te.g2exe.input.core.OptionsAssertion
 
 import static org.apache.commons.io.FilenameUtils.isExtension
 
 @Component
-class IconFileValidator extends CommandLineArgValidator {
+class IconFileValidator extends OptionsValidator {
 
     @Override
-    List<ValidationAssertion> getAssertions() {
+    List<OptionsAssertion> getAssertions() {
         return [
                 newAssertion(
                         "The 'icon' parameter points to a file that doesn't exist or is a directory.",
-                        { args ->
-                            if (!args.icon) return false
+                        { options ->
+                            if (!options.icon) return false
 
-                            File iconFile = args.icon as File
+                            File iconFile = options.icon as File
                             return !iconFile.exists() || !iconFile.isFile()
                         }
                 ),
                 newAssertion(
                         "The 'icon' parameter points to a file with an invalid file type - only .ico files are supported.",
-                        { args ->
-                            if (!args.icon) return false
+                        { options ->
+                            if (!options.icon) return false
 
-                            File iconFile = args.icon as File
+                            File iconFile = options.icon as File
                             return !isExtension(iconFile.name, "ico")
                         }
                 )

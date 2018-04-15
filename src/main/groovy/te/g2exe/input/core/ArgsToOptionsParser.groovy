@@ -3,12 +3,11 @@ package te.g2exe.input.core
 import org.springframework.stereotype.Service
 
 @Service
-class CommandLineArgsParser {
+class ArgsToOptionsParser {
 
-    @Delegate
     CliBuilder commandLineInterpreter = new CliBuilder()
 
-    CommandLineArgsParser() {
+    ArgsToOptionsParser() {
         commandLineInterpreter.with {
             // Decoration
             header = "arguments:"
@@ -35,8 +34,13 @@ class CommandLineArgsParser {
         }
     }
 
+    Optional<OptionAccessor> parse(String[] args) {
+        Optional.ofNullable(commandLineInterpreter.parse(args))
+    }
 
-
+    void usage() {
+        commandLineInterpreter.usage()
+    }
 
 
 }
