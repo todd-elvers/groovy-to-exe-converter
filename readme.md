@@ -6,8 +6,8 @@ This application accepts **.groovy** scripts or **.jar** files and generates Win
 
 ## When could this be helpful?
 
-1. If you have a **.groovy** script that you are planning to run on Windows machines that only have Java installed
-2. If you have an executable **.jar** and need to run that jar with a specified heap size, but don't want to have to include a .bat file just to set it
+1. If you have a **.groovy** script that you are planning to run on a Windows machines that only has Java installed
+2. If you have an executable **.jar** and need to run it with a specified heap size, but don't want to have to include a .bat file just to set it
 3. If you are planning on running either a **.groovy** script or a **.jar** file on a Windows machine that has Java installed, but does not have the PATH configured correctly or is missing the JAVA_HOME system environment variable
 4. If you have a **.groovy** script or a **.jar** file that executes as a GUI application and want to have a native Windows splash screen display until their application loaded, or have that GUI application treated like a native Windows GUI application
 5. If you are looking for a tool to integrate into your build process that will generate Windows executable files from **.jar** or **.groovy** files
